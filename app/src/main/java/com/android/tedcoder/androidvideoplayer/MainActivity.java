@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.android.tedcoder.wkvideoplayer.dlna.engine.DLNAContainer;
 import com.android.tedcoder.wkvideoplayer.dlna.service.DLNAService;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private SuperVideoPlayer mSuperVideoPlayer;
     private View mPlayBtnView;
+
+    private ImageView iv_pdf;
 
     private SuperVideoPlayer.VideoPlayCallbackImpl mVideoPlayCallback = new SuperVideoPlayer.VideoPlayCallbackImpl() {
         @Override
@@ -58,10 +61,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Video video = new Video();
         VideoUrl videoUrl1 = new VideoUrl();
         videoUrl1.setFormatName("720P");
-        videoUrl1.setFormatUrl("http://7xkbzx.com1.z0.glb.clouddn.com/SampleVideo_1080x720_20mb.mp4");
+        videoUrl1.setFormatUrl("http://tcw-voice.b0.upaiyun.com/ScreamVoiceResource/haikou.mp4");
         VideoUrl videoUrl2 = new VideoUrl();
         videoUrl2.setFormatName("480P");
-        videoUrl2.setFormatUrl("http://7xkbzx.com1.z0.glb.clouddn.com/SampleVideo_720x480_20mb.mp4");
+        videoUrl2.setFormatUrl("http://tcw-voice.b0.upaiyun.com/ScreamVoiceResource/haikou.mp4");
         ArrayList<VideoUrl> arrayList1 = new ArrayList<>();
         arrayList1.add(videoUrl1);
         arrayList1.add(videoUrl2);
@@ -71,10 +74,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Video video2 = new Video();
         VideoUrl videoUrl3 = new VideoUrl();
         videoUrl3.setFormatName("720P");
-        videoUrl3.setFormatUrl("http://7xkbzx.com1.z0.glb.clouddn.com/SampleVideo_1080x720_10mb.mp4");
+        videoUrl3.setFormatUrl("http://tcw-voice.b0.upaiyun.com/ScreamVoiceResource/haikou.mp4");
         VideoUrl videoUrl4 = new VideoUrl();
         videoUrl4.setFormatName("480P");
-        videoUrl4.setFormatUrl("http://7xkbzx.com1.z0.glb.clouddn.com/SampleVideo_720x480_10mb.mp4");
+        videoUrl4.setFormatUrl("http://tcw-voice.b0.upaiyun.com/ScreamVoiceResource/haikou.mp4");
         ArrayList<VideoUrl> arrayList2 = new ArrayList<>();
         arrayList2.add(videoUrl3);
         arrayList2.add(videoUrl4);
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         videoArrayList.add(video);
         videoArrayList.add(video2);
 
-        mSuperVideoPlayer.loadMultipleVideo(videoArrayList,0,0,0);
+        mSuperVideoPlayer.loadMultipleVideo(videoArrayList, 0, 0, 0);
     }
 
     @Override
@@ -132,10 +135,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mSuperVideoPlayer = (SuperVideoPlayer) findViewById(R.id.video_player_item_1);
+        iv_pdf = (ImageView) findViewById(R.id.iv_pdf);
         mPlayBtnView = findViewById(R.id.play_btn);
         mPlayBtnView.setOnClickListener(this);
         mSuperVideoPlayer.setVideoPlayCallback(mVideoPlayCallback);
         startDLNAService();
+        iv_pdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PDFViewActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /***
