@@ -7,10 +7,6 @@ import java.io.Serializable;
  */
 public class Cell implements Serializable {
     public String __type;
-    public String Diameter;
-    public String InOutTime;
     public String LocCode;
     public String LocID;
-    public String MaterialCode;
-    public String RawMaterialID;
 }

@@ -15,6 +15,7 @@ import com.android.tedcoder.androidvideoplayer.gsonfactory.GsonConverterFactory;
 import com.android.tedcoder.androidvideoplayer.rawmaterial.Host;
 import com.android.tedcoder.androidvideoplayer.rawmaterial.entity.RawMaterialResBody;
 import com.android.tedcoder.androidvideoplayer.rawmaterial.entity.RequestBody;
+import com.android.tedcoder.androidvideoplayer.rawmaterial.entity.Test;
 import com.android.tedcoder.wkvideoplayer.dlna.engine.DLNAContainer;
 import com.android.tedcoder.wkvideoplayer.dlna.service.DLNAService;
 import com.android.tedcoder.wkvideoplayer.model.Video;
@@ -25,6 +26,7 @@ import com.android.tedcoder.wkvideoplayer.view.SuperVideoPlayer;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -166,24 +168,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*new Thread(new Runnable() {
+                new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(Host.HOST)
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+                        RequestBody service = retrofit.create(RequestBody.class);
+                        Call<List<Test>> rawMaterialResBodyCall = service.contributors("square", "retrofit", "contributors");
+                        try {
+                            List<Test> rawMaterialResBody = rawMaterialResBodyCall.execute().body();
+                            Log.e("ww", rawMaterialResBody.get(0).login);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+/*                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(Host.HOST)
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+                        RequestBody service = retrofit.create(RequestBody.class);
+                        Call<RawMaterialResBody> rawMaterialResBodyCall = service.contributors("Srv", "VisualPlant.svc", "RawMaterialStockQuery");
+                        try {
+                            RawMaterialResBody rawMaterialResBody = rawMaterialResBodyCall.execute().body();
+                            Log.e("ww", rawMaterialResBody.d.Data.Cells.get(0).__type);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }*/
 
                     }
-                }).start();*/
-                Retrofit retrofit = new Retrofit.Builder()
+                }).start();
+                /*Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(Host.HOST)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 RequestBody service = retrofit.create(RequestBody.class);
                 Call<RawMaterialResBody> rawMaterialResBodyCall = service.contributors("Srv", "VisualPlant.svc", "RawMaterialStockQuery");
-                /*try {
+                try {
                     RawMaterialResBody rawMaterialResBody = rawMaterialResBodyCall.execute().body();
                     Log.e("ww", rawMaterialResBody.d.__type);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }*/
+                }
 
 
                 rawMaterialResBodyCall.enqueue(new Callback<RawMaterialResBody>() {
@@ -196,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onFailure(Call<RawMaterialResBody> call, Throwable throwable) {
                         Log.e("ww", throwable.getMessage());
                     }
-                });
+                });*/
             }
         });
     }
