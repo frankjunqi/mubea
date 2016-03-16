@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.tedcoder.androidvideoplayer.gsonfactory.GsonConverterFactory;
 import com.android.tedcoder.androidvideoplayer.rawmaterial.Host;
@@ -166,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 /*new Thread(new Runnable() {
                     @Override
                     public void run() {
+                    // 同步请求处理
                         Retrofit retrofit = new Retrofit.Builder()
                                 .baseUrl(Host.HOST)
                                 .addConverterFactory(GsonConverterFactory.create())
@@ -183,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
                 }).start();*/
+                // 异步请求处理
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(Host.HOST)
                         .addConverterFactory(GsonConverterFactory.create())
@@ -197,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.e("resbody = ", response.body().d.Data.Cells.get(0).__type);
                         Log.e("resbody = ", response.body().d.Data.Cells.get(0).__type);
                         Log.e("resbody = ", (response.body().d.Data.Cells.get(0).Diameter+"").equals("null")+"");
+                        Toast.makeText(MainActivity.this,"null",Toast.LENGTH_LONG).show();
                     }
 
                     @Override
