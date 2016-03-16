@@ -31,7 +31,7 @@ public class PDFViewActivity extends Activity implements OnPageChangeListener {
     public static final String SAMPLE_FILE = "sample.pdf";
 
     public static final String ABOUT_FILE = "about.pdf";
-    public static final String ANDROID_FILE = "Android.pdf";
+    public static final String ANDROID_FILE = "java20years.pdf";
 
     PDFView pdfView;
 

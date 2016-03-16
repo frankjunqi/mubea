@@ -5,10 +5,16 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.android.tedcoder.androidvideoplayer.gsonfactory.GsonConverterFactory;
+import com.android.tedcoder.androidvideoplayer.rawmaterial.Host;
+import com.android.tedcoder.androidvideoplayer.rawmaterial.entity.RawMaterialResBody;
+import com.android.tedcoder.androidvideoplayer.rawmaterial.entity.RequestBody;
 import com.android.tedcoder.wkvideoplayer.dlna.engine.DLNAContainer;
 import com.android.tedcoder.wkvideoplayer.dlna.service.DLNAService;
 import com.android.tedcoder.wkvideoplayer.model.Video;
@@ -17,14 +23,22 @@ import com.android.tedcoder.wkvideoplayer.util.DensityUtil;
 import com.android.tedcoder.wkvideoplayer.view.MediaController;
 import com.android.tedcoder.wkvideoplayer.view.SuperVideoPlayer;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private SuperVideoPlayer mSuperVideoPlayer;
     private View mPlayBtnView;
 
-    private ImageView iv_pdf;
+    private Button btn_pdf;
+    private Button btn_request;
 
     private SuperVideoPlayer.VideoPlayCallbackImpl mVideoPlayCallback = new SuperVideoPlayer.VideoPlayCallbackImpl() {
         @Override
@@ -135,16 +149,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mSuperVideoPlayer = (SuperVideoPlayer) findViewById(R.id.video_player_item_1);
-        iv_pdf = (ImageView) findViewById(R.id.iv_pdf);
+        btn_pdf = (Button) findViewById(R.id.btn_pdf);
+        btn_request = (Button) findViewById(R.id.btn_request);
         mPlayBtnView = findViewById(R.id.play_btn);
         mPlayBtnView.setOnClickListener(this);
         mSuperVideoPlayer.setVideoPlayCallback(mVideoPlayCallback);
         startDLNAService();
-        iv_pdf.setOnClickListener(new View.OnClickListener() {
+        btn_pdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PDFViewActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btn_request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                }).start();*/
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(Host.HOST)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                RequestBody service = retrofit.create(RequestBody.class);
+                Call<RawMaterialResBody> rawMaterialResBodyCall = service.contributors("Srv", "VisualPlant.svc", "RawMaterialStockQuery");
+                /*try {
+                    RawMaterialResBody rawMaterialResBody = rawMaterialResBodyCall.execute().body();
+                    Log.e("ww", rawMaterialResBody.d.__type);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }*/
+
+
+                rawMaterialResBodyCall.enqueue(new Callback<RawMaterialResBody>() {
+                    @Override
+                    public void onResponse(Call<RawMaterialResBody> call, Response<RawMaterialResBody> response) {
+                        Log.e("ww", response.body().d.__type);
+                    }
+
+                    @Override
+                    public void onFailure(Call<RawMaterialResBody> call, Throwable throwable) {
+                        Log.e("ww", throwable.getMessage());
+                    }
+                });
             }
         });
     }
