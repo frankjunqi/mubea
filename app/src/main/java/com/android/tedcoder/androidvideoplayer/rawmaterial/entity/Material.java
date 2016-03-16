@@ -8,6 +8,7 @@ import java.util.ArrayList;
  */
 public class Material implements Serializable{
     public String __type;
+    public String Msg;
     public ArrayList<Cell> Cells = new ArrayList<>();
 
 }

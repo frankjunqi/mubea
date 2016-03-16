@@ -9,5 +9,7 @@ public class RawMaterialObj implements Serializable {
     public String __type;
     public Material Data = new Material();
     public String Status;
+    public String Msg;
+    public String MsgList;
 
 }

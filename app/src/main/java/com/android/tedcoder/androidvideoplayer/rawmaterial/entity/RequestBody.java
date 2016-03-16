@@ -11,12 +11,8 @@ import retrofit2.http.Path;
  */
 public interface RequestBody {
     @GET("/{srv}/{svc}/{queryname}")
-    Call<List<Test>> contributors(
+   Call<RawMaterialResBody> contributors(
             @Path("srv") String srv,
             @Path("svc") String svc,
             @Path("queryname") String queryname);
-/*    Call<RawMaterialResBody> contributors(
-            @Path("srv") String srv,
-            @Path("svc") String svc,
-            @Path("queryname") String queryname);*/
 }
