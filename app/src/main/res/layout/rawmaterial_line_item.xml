@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/button_material_light"
+        android:background="@color/rawmaterial_light"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/material_blue_grey_800"
+        android:background="@color/rawmaterial_dark"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/button_material_light"
+        android:background="@color/rawmaterial_light"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -83,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/material_blue_grey_800"
+        android:background="@color/rawmaterial_dark"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -107,7 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/button_material_light"
+        android:background="@color/rawmaterial_light"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -131,7 +131,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/material_blue_grey_800"
+        android:background="@color/rawmaterial_dark"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -155,7 +155,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/button_material_light"
+        android:background="@color/rawmaterial_light"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -179,7 +179,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/material_blue_grey_800"
+        android:background="@color/rawmaterial_dark"
         android:orientation="horizontal"
         android:weightSum="2">
 
