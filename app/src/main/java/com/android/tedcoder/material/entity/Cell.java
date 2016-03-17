@@ -7,10 +7,10 @@ import java.io.Serializable;
  */
 public class Cell implements Serializable {
     public String __type;
-    public String LocCode;
-    public String LocID;
-    public String Diameter;
-    public String InOutTime;
-    public String MaterialCode;
-    public String RawMaterialID;
+    public String LocCode;// 库位代码
+    public String LocID;// 库位id
+    public String Diameter;// 线径
+    public String InOutTime;//  出入库时间
+    public String MaterialCode;// 原材料代码
+    public String RawMaterialID;// 原材料id
 }
