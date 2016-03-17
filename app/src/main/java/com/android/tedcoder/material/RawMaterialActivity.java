@@ -134,10 +134,18 @@ public class RawMaterialActivity extends AppCompatActivity {
         return (int) (dipValue * scale + 0.5f);// 小数点四舍五入取整
     }
 
+    private long mExitTime = 0;
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (System.currentTimeMillis() - mExitTime > 2000) {
+            Toast.makeText(this, "在按一次退出系统", Toast.LENGTH_LONG).show();
+            mExitTime = System.currentTimeMillis();
+        } else {
+            this.finish();
+        }
+
+
     }
 
     /**
