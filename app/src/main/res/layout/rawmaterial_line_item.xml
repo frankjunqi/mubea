@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="座位号" />
+            android:text="@string/material_name" />
 
         <TextView
             android:id="@+id/tv_data_title"
@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="线径" />
+            android:text="@string/material_value" />
 
     </LinearLayout>
 

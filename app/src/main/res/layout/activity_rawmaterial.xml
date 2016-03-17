@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:weightSum="4">
+        android:weightSum="5">
 
         <LinearLayout
             android:id="@+id/ll_a"
@@ -29,6 +29,15 @@
 
         <LinearLayout
             android:id="@+id/ll_b"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_c"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
