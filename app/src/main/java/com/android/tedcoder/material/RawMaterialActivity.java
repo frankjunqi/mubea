@@ -1,12 +1,19 @@
 package com.android.tedcoder.material;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DigitalClock;
 import android.widget.LinearLayout;
+import android.widget.TextClock;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.tedcoder.material.api.Host;
@@ -14,10 +21,12 @@ import com.android.tedcoder.material.api.MaterialService;
 import com.android.tedcoder.material.entity.Cell;
 import com.android.tedcoder.material.entity.RawMaterialResBody;
 import com.android.tedcoder.material.gsonfactory.GsonConverterFactory;
+import com.android.tedcoder.material.view.MarqueeTextView;
 import com.android.tedcoder.material.view.RawLineView;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,6 +70,14 @@ public class RawMaterialActivity extends AppCompatActivity {
     private RawLineView rawLineView_d = null;
     private RawLineView rawLineView_e = null;
 
+    // title的容器
+    private LinearLayout ll_title;
+
+    private TextClock textClock;
+    private DigitalClock digitalClock;
+    private TextView tv_weather;
+    private TextView tv_temperature;
+    private MarqueeTextView tv_info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +90,7 @@ public class RawMaterialActivity extends AppCompatActivity {
         ll_d = (LinearLayout) findViewById(R.id.ll_d);
         ll_e = (LinearLayout) findViewById(R.id.ll_e);
 
+        ll_title = (LinearLayout) findViewById(R.id.ll_title);
 
         rawLineView_a = new RawLineView(this);
         rawLineView_b = new RawLineView(this);
@@ -85,9 +103,38 @@ public class RawMaterialActivity extends AppCompatActivity {
         ll_d.addView(rawLineView_d, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         ll_e.addView(rawLineView_e, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
+        initTitleLayout();
 
         requestHandler = new RequestHandler();
         requestHandler.sendEmptyMessage(SENDFLAG);
+    }
+
+
+    /**
+     * 初始化 title layout
+     */
+    private void initTitleLayout() {
+        View view = LayoutInflater.from(this).inflate(R.layout.rawmaterial_title, null);
+        textClock = (TextClock) view.findViewById(R.id.textClock);
+        digitalClock = (DigitalClock) view.findViewById(R.id.digitalClock);
+        tv_weather = (TextView) view.findViewById(R.id.tv_weather);
+        tv_temperature = (TextView) view.findViewById(R.id.tv_temperature);
+        tv_info = (MarqueeTextView) view.findViewById(R.id.tv_info);
+
+        textClock.setFormat12Hour("yyyy/MM/dd");
+        tv_info.setFocusable(true);
+
+        // 计算高度
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int height = dm.heightPixels / 9;
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+        ll_title.addView(view);
+    }
+
+    public int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);// 小数点四舍五入取整
     }
 
 
@@ -112,6 +159,7 @@ public class RawMaterialActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RawMaterialResBody> call, Response<RawMaterialResBody> response) {
                 handleCellList(response.body().d.Data.Cells);
+                handleMarqueeText(response.body().d.Data.Msg);
                 requestHandler.sendEmptyMessageDelayed(SENDFLAG, TENLOOPER * 1000);
             }
 
@@ -125,6 +173,11 @@ public class RawMaterialActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * 处理list的数据
+     *
+     * @param cellList cell的数据源
+     */
     private void handleCellList(ArrayList<Cell> cellList) {
         ArrayList<Cell> cell_a = new ArrayList<Cell>();
         ArrayList<Cell> cell_b = new ArrayList<Cell>();
@@ -149,6 +202,16 @@ public class RawMaterialActivity extends AppCompatActivity {
         rawLineView_d.setLineCellData(cell_d);
         rawLineView_e.setLineCellData(cell_e);
 
+    }
+
+    /**
+     * 处理滚动的字幕
+     */
+    private void handleMarqueeText(String marqueeText) {
+        if (TextUtils.isEmpty(marqueeText)) {
+            marqueeText = "This is nothing to tell you. You can set the message. Tell Boss. ";
+        }
+        tv_info.setText(marqueeText);
     }
 
     /**
