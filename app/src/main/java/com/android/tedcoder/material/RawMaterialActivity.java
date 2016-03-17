@@ -23,6 +23,7 @@ import com.android.tedcoder.material.entity.RawMaterialResBody;
 import com.android.tedcoder.material.gsonfactory.GsonConverterFactory;
 import com.android.tedcoder.material.view.MarqueeTextView;
 import com.android.tedcoder.material.view.RawLineView;
+import com.android.tedcoder.material.view.TimeView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class RawMaterialActivity extends AppCompatActivity {
     private final String TAG = getClass().getSimpleName();
 
     // 发送请求的标志码
-    private static final int SENDFLAG = 1;
+    private static final int SENDFLAG = 0x10;
 
     private static RequestHandler requestHandler;
 
@@ -73,7 +74,7 @@ public class RawMaterialActivity extends AppCompatActivity {
     private LinearLayout ll_title;
 
     private TextClock textClock;
-    private DigitalClock digitalClock;
+    private TimeView digitalClock;
     private TextView tv_weather;
     private TextView tv_temperature;
     private MarqueeTextView tv_info;
@@ -118,14 +119,12 @@ public class RawMaterialActivity extends AppCompatActivity {
     private void initTitleLayout() {
         View view = LayoutInflater.from(this).inflate(R.layout.rawmaterial_title, null);
         textClock = (TextClock) view.findViewById(R.id.textClock);
-        digitalClock = (DigitalClock) view.findViewById(R.id.digitalClock);
+        digitalClock = (TimeView) view.findViewById(R.id.digitalClock);
         tv_weather = (TextView) view.findViewById(R.id.tv_weather);
         tv_temperature = (TextView) view.findViewById(R.id.tv_temperature);
         tv_info = (MarqueeTextView) view.findViewById(R.id.tv_info);
 
-        textClock.setFormat12Hour("yyyy/MM/dd");
         tv_info.setFocusable(true);
-
         // 计算高度
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -223,7 +222,7 @@ public class RawMaterialActivity extends AppCompatActivity {
      */
     private void handleMarqueeText(String marqueeText) {
         if (TextUtils.isEmpty(marqueeText)) {
-            marqueeText = "This is nothing to tell you. You can set the message. Tell Boss. ";
+            marqueeText = "This is nothing to tell you. ";
         }
         tv_info.setText(marqueeText);
     }

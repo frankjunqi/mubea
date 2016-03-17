@@ -6,4 +6,12 @@
     <string name="material_value">线径</string>
     <string name="play_error_message">Impossible to play the video.</string>
     <string name="play_progressive_error_message">Impossible to play the progressive video.</string>
+
+
+    <!-- 字符串匹配的锁定屏幕显示日期的格式. MM/dd/yyy-->
+    <string name="abbrev_wday_month_day_no_year">yyyy年MM月dd日</string>
+    <!-- Format for describing the date, for accessibility. -->
+    <string name="full_wday_month_day_no_year">EEEE, MMMM d</string>
+    <!-- Default clock style. -->
+    <string name="default_clock_style">digital</string>
 </resources>

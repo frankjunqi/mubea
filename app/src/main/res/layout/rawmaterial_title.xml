@@ -11,15 +11,30 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:gravity="center" />
+        android:format12Hour="@string/abbrev_wday_month_day_no_year"
+        android:format24Hour="@string/abbrev_wday_month_day_no_year"
+        android:gravity="center"
+        android:textSize="@dimen/big_text_size"
+        android:textStyle="bold|italic" />
 
-    <DigitalClock
+    <com.android.tedcoder.material.view.TimeView
         android:id="@+id/digitalClock"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="11:00" />
+        android:orientation="vertical"
+        android:textSize="@dimen/big_text_size"
+        android:textStyle="bold|italic">
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/big_text_size"
+            android:textStyle="bold|italic" />
+    </com.android.tedcoder.material.view.TimeView>
 
 
     <TextView
@@ -28,7 +43,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="晴" />
+        android:text="晴"
+        android:textSize="@dimen/big_text_size"
+        android:textStyle="bold|italic" />
 
     <TextView
         android:id="@+id/tv_temperature"
@@ -36,7 +53,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="1~11" />
+        android:text="~"
+        android:textSize="@dimen/big_text_size"
+        android:textStyle="bold|italic" />
 
     <com.android.tedcoder.material.view.MarqueeTextView
         android:id="@+id/tv_info"
@@ -46,9 +65,10 @@
         android:ellipsize="marquee"
         android:focusable="true"
         android:gravity="center"
-        android:marqueeRepeatLimit="12"
+        android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
-        android:text="滚动领料/入库信息滚动领料/入库信息滚动领料/入库信息滚动领料/入库信息" />
+        android:textSize="@dimen/big_text_size"
+        android:textStyle="italic" />
 
 
 </LinearLayout>
