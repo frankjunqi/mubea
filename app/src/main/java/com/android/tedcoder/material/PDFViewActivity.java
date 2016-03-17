@@ -16,26 +16,25 @@
  * You should have received a copy of the GNU General Public License
  * along with Android-pdfview.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.android.tedcoder.androidvideoplayer;
+package com.android.tedcoder.material;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.joanzapata.pdfview.PDFView;
 import com.joanzapata.pdfview.listener.OnPageChangeListener;
 
 import static java.lang.String.format;
 
-public class PDFViewActivity extends Activity implements OnPageChangeListener {
+public class PDFViewActivity extends AppCompatActivity implements OnPageChangeListener {
 
     public static final String SAMPLE_FILE = "sample.pdf";
 
     public static final String ABOUT_FILE = "about.pdf";
-    public static final String ANDROID_FILE = "java20years.pdf";
 
     PDFView pdfView;
 
-    String pdfName = ANDROID_FILE;
+    String pdfName = SAMPLE_FILE;
 
     Integer pageNumber = 1;
 

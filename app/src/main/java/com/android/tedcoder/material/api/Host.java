@@ -1,4 +1,4 @@
-package com.android.tedcoder.androidvideoplayer.rawmaterial;
+package com.android.tedcoder.material.api;
 
 /**
  * Created by kjh08490 on 2016/3/16.

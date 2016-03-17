@@ -1,4 +1,4 @@
-package com.android.tedcoder.androidvideoplayer;
+package com.android.tedcoder.material;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,4 +1,4 @@
-package com.android.tedcoder.androidvideoplayer.rawmaterial.entity;
+package com.android.tedcoder.material.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;

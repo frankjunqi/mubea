@@ -1,4 +1,4 @@
-package com.android.tedcoder.androidvideoplayer.gsonfactory;
+package com.android.tedcoder.material.gsonfactory;
 
 /**
  * Created by kjh08490 on 2016/3/16.
