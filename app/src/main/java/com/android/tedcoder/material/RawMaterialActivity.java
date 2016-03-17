@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.tedcoder.material.api.Host;
@@ -23,6 +24,8 @@ import retrofit2.Retrofit;
  * Created by kjh08490 on 2016/3/17.
  */
 public class RawMaterialActivity extends AppCompatActivity {
+
+    private final String TAG = getClass().getSimpleName();
 
     // 时隔10秒请求一次
     private static final int TENLOOPER = 10;
@@ -44,20 +47,17 @@ public class RawMaterialActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (requestHandler != null) {
-            requestHandler.sendEmptyMessageDelayed(SENDFLAG, TENLOOPER * 1000);
-        }
-    }
+
+    private TextView tv_first;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rawmaterial);
+        tv_first = (TextView) findViewById(R.id.tv_first);
+        Log.e(TAG, "onCreate");
         requestHandler = new RequestHandler();
-        asyncRequest();
+        requestHandler.sendEmptyMessage(SENDFLAG);
     }
 
 
@@ -71,6 +71,7 @@ public class RawMaterialActivity extends AppCompatActivity {
      */
     private void asyncRequest() {
         // 异步请求处理
+        Log.e(TAG, "asyncRequest");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Host.HOST)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -80,19 +81,15 @@ public class RawMaterialActivity extends AppCompatActivity {
         rawMaterialResBodyCall.enqueue(new Callback<RawMaterialResBody>() {
             @Override
             public void onResponse(Call<RawMaterialResBody> call, Response<RawMaterialResBody> response) {
-                Log.e("resbody = ", response.body().d.__type);
-                Log.e("resbody = ", response.body().d.Data.__type);
-                Log.e("resbody = ", response.body().d.Data.Cells.get(0).__type);
-                Log.e("resbody = ", response.body().d.Data.Cells.get(0).__type);
-                Log.e("resbody = ", (response.body().d.Data.Cells.get(0).Diameter + "").equals("null") + "");
-                Toast.makeText(RawMaterialActivity.this, "null", Toast.LENGTH_LONG).show();
+                tv_first.setText(response.body().d.__type + " -- " + response.body().d.Status + " -- " + response.body().d.Data.Cells.size());
                 requestHandler.sendEmptyMessageDelayed(SENDFLAG, TENLOOPER * 1000);
             }
 
             @Override
             public void onFailure(Call<RawMaterialResBody> call, Throwable throwable) {
-                Log.e("ww", throwable.getMessage());
+                Log.e(TAG, throwable.getMessage());
                 Toast.makeText(RawMaterialActivity.this, "网络出现异常，请检查网络链接", Toast.LENGTH_LONG).show();
+                requestHandler.sendEmptyMessageDelayed(SENDFLAG, TENLOOPER * 1000);
             }
         });
     }
@@ -113,9 +110,9 @@ public class RawMaterialActivity extends AppCompatActivity {
                 Call<RawMaterialResBody> rawMaterialResBodyCall = service.rawMaterialList("Srv", "VisualPlant.svc", "RawMaterialStockQuery");
                 try {
                     RawMaterialResBody rawMaterialResBody = rawMaterialResBodyCall.execute().body();
-                    Log.e("resbody : --type = %s", rawMaterialResBody.d.__type);
-                    Log.e("resbody : status = %s", rawMaterialResBody.d.Status);
-                    Log.e("resbody : cell = %s", rawMaterialResBody.d.Data.Cells.get(0).__type);
+                    Log.e(TAG, "resbody : --type = %s" + rawMaterialResBody.d.__type);
+                    Log.e(TAG, "resbody : status = %s" + rawMaterialResBody.d.Status);
+                    Log.e(TAG, "resbody : cell = %s" + rawMaterialResBody.d.Data.Cells.get(0).__type);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -125,14 +122,11 @@ public class RawMaterialActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        requestHandler.removeMessages(SENDFLAG);
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
-        requestHandler.removeMessages(SENDFLAG);
+        Log.e(TAG, "onDestroy");
+        if (requestHandler != null) {
+            requestHandler.removeMessages(SENDFLAG);
+        }
     }
 }
