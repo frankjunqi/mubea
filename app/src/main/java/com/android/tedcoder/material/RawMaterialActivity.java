@@ -174,7 +174,6 @@ public class RawMaterialActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RawMaterialResBody> call, Throwable throwable) {
-                Log.e(TAG, throwable.getMessage());
                 Toast.makeText(RawMaterialActivity.this, "网络出现异常，请检查网络链接", Toast.LENGTH_LONG).show();
                 requestHandler.sendEmptyMessageDelayed(SENDFLAG, Host.TENLOOPER * 1000);
             }

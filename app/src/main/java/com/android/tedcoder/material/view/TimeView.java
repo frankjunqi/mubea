@@ -35,10 +35,8 @@ public class TimeView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
         tvTime = (TextView) findViewById(R.id.tvTime);
-        tvTime.setText("H");
-
+        tvTime.setText("HH:hh");
         timeHandler.sendEmptyMessage(0);
     }
 
@@ -46,7 +44,6 @@ public class TimeView extends LinearLayout {
 
         public void handleMessage(Message msg) {
             refreshTime();
-
             if (getVisibility() == View.VISIBLE) {
                 timeHandler.sendEmptyMessageDelayed(0, 1000);
             }
@@ -55,23 +52,27 @@ public class TimeView extends LinearLayout {
 
     private void refreshTime() {
         Calendar c = Calendar.getInstance();
-
-        tvTime.setText(String.format("%d:%d",
-                c.get(Calendar.HOUR_OF_DAY),
-                c.get(Calendar.MINUTE)));
-//        tvTime.setText(String.format("%d:%d:%d",
-//                c.get(Calendar.HOUR_OF_DAY),
-//                c.get(Calendar.MINUTE),
-//                c.get(Calendar.SECOND)));
+        if (tvTime != null) {
+            tvTime.setText(String.format("%d:%d",
+                    c.get(Calendar.HOUR_OF_DAY),
+                    c.get(Calendar.MINUTE)));
+        }
     }
 
     @Override
     protected void onVisibilityChanged(View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
-
         if (visibility == View.VISIBLE) {
             timeHandler.sendEmptyMessage(0);
         } else {
+            timeHandler.removeMessages(0);
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (timeHandler != null) {
             timeHandler.removeMessages(0);
         }
     }
