@@ -26,7 +26,6 @@ import com.android.tedcoder.material.view.RawLineView;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,8 +40,6 @@ public class RawMaterialActivity extends AppCompatActivity {
 
     private final String TAG = getClass().getSimpleName();
 
-    // 时隔10秒请求一次
-    private static final int TENLOOPER = 10;
     // 发送请求的标志码
     private static final int SENDFLAG = 1;
 
@@ -160,14 +157,14 @@ public class RawMaterialActivity extends AppCompatActivity {
             public void onResponse(Call<RawMaterialResBody> call, Response<RawMaterialResBody> response) {
                 handleCellList(response.body().d.Data.Cells);
                 handleMarqueeText(response.body().d.Data.Msg);
-                requestHandler.sendEmptyMessageDelayed(SENDFLAG, TENLOOPER * 1000);
+                requestHandler.sendEmptyMessageDelayed(SENDFLAG, Host.TENLOOPER * 1000);
             }
 
             @Override
             public void onFailure(Call<RawMaterialResBody> call, Throwable throwable) {
                 Log.e(TAG, throwable.getMessage());
                 Toast.makeText(RawMaterialActivity.this, "网络出现异常，请检查网络链接", Toast.LENGTH_LONG).show();
-                requestHandler.sendEmptyMessageDelayed(SENDFLAG, TENLOOPER * 1000);
+                requestHandler.sendEmptyMessageDelayed(SENDFLAG, Host.TENLOOPER * 1000);
             }
         });
     }

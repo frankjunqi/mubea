@@ -5,10 +5,12 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.tedcoder.material.gsonfactory.GsonConverterFactory;
@@ -37,6 +39,85 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button btn_pdf;
     private Button btn_request;
+
+    private EditText et_host;
+    private EditText et_request_time;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mSuperVideoPlayer = (SuperVideoPlayer) findViewById(R.id.video_player_item_1);
+        btn_pdf = (Button) findViewById(R.id.btn_pdf);
+        btn_request = (Button) findViewById(R.id.btn_request);
+        mPlayBtnView = findViewById(R.id.play_btn);
+        mPlayBtnView.setOnClickListener(this);
+
+        et_host = (EditText) findViewById(R.id.et_host);
+        et_request_time = (EditText) findViewById(R.id.et_request_time);
+
+        mSuperVideoPlayer.setVideoPlayCallback(mVideoPlayCallback);
+        startDLNAService();
+        btn_pdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PDFViewActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String host = et_host.getText().toString();
+                String request_time = et_request_time.getText().toString();
+                if (!TextUtils.isEmpty(host)) {
+                    // do  something
+                    Host.HOST = host;
+                }
+
+                int time = 10;
+                if (!TextUtils.isEmpty(request_time)) {
+                    try {
+                        time = Integer.parseInt(request_time);
+                        if (time < 5) {
+                            Toast.makeText(MainActivity.this, "时间间隔必须大于5秒", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                    } catch (Exception e) {
+                        time = 10;
+                    }
+                }
+                Host.TENLOOPER = time;
+
+                Intent intent = new Intent(MainActivity.this, RawMaterialActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    /***
+     * 恢复屏幕至竖屏
+     */
+    private void resetPageToPortrait() {
+        if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            mSuperVideoPlayer.setPageType(MediaController.PageType.SHRINK);
+        }
+    }
+
+    private void startDLNAService() {
+        // Clear the device container.
+        DLNAContainer.getInstance().clear();
+        Intent intent = new Intent(getApplicationContext(), DLNAService.class);
+        startService(intent);
+    }
+
+    private void stopDLNAService() {
+        Intent intent = new Intent(getApplicationContext(), DLNAService.class);
+        stopService(intent);
+    }
 
     private SuperVideoPlayer.VideoPlayCallbackImpl mVideoPlayCallback = new SuperVideoPlayer.VideoPlayCallbackImpl() {
         @Override
@@ -139,56 +220,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mSuperVideoPlayer.getLayoutParams().height = (int) height;
             mSuperVideoPlayer.getLayoutParams().width = (int) width;
         }
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mSuperVideoPlayer = (SuperVideoPlayer) findViewById(R.id.video_player_item_1);
-        btn_pdf = (Button) findViewById(R.id.btn_pdf);
-        btn_request = (Button) findViewById(R.id.btn_request);
-        mPlayBtnView = findViewById(R.id.play_btn);
-        mPlayBtnView.setOnClickListener(this);
-        mSuperVideoPlayer.setVideoPlayCallback(mVideoPlayCallback);
-        startDLNAService();
-        btn_pdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, PDFViewActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        btn_request.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RawMaterialActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    /***
-     * 恢复屏幕至竖屏
-     */
-    private void resetPageToPortrait() {
-        if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            mSuperVideoPlayer.setPageType(MediaController.PageType.SHRINK);
-        }
-    }
-
-    private void startDLNAService() {
-        // Clear the device container.
-        DLNAContainer.getInstance().clear();
-        Intent intent = new Intent(getApplicationContext(), DLNAService.class);
-        startService(intent);
-    }
-
-    private void stopDLNAService() {
-        Intent intent = new Intent(getApplicationContext(), DLNAService.class);
-        stopService(intent);
     }
 }

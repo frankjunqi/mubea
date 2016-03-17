@@ -8,7 +8,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="200dp">
+        android:minHeight="200dp"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/play_btn"
@@ -27,18 +28,50 @@
 
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="配置信息设置"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/et_host"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="默认host：http://mes.seekersoft.cn/"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/et_request_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="默认发送一次请求间隔：10秒"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btn_request"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector_orange"
+        android:text="设  置"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+
     <Button
         android:id="@+id/btn_pdf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="pdf" />
-
-    <Button
-        android:id="@+id/btn_request"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="request" />
-
+        android:text="pdf"
+        android:visibility="gone" />
 </LinearLayout>
