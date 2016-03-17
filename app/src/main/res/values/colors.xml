@@ -10,5 +10,10 @@
     <color name="rawmaterial_dark">#ffe4e4e4</color>
     <color name="rawmaterial_light">#ffffffff</color>
 
+    <color name="main_white">#ffffffff</color>
 
+    <color name="main_click">#ffeeeeee</color>
+    <!-- 用于点击色 -->
+
+    <color name="common_text">#ff4F4F4F</color>
 </resources>

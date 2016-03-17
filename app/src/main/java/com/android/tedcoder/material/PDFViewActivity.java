@@ -32,11 +32,11 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
 
     public static final String ABOUT_FILE = "about.pdf";
 
-    PDFView pdfView;
+    private PDFView pdfView;
 
-    String pdfName = SAMPLE_FILE;
+    private String pdfName = SAMPLE_FILE;
 
-    Integer pageNumber = 1;
+    private Integer pageNumber = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
