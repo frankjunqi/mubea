@@ -90,7 +90,7 @@ public class VideoViewActivity extends AppCompatActivity implements View.OnClick
         // 网络视频
         // video_player_item.loadMultipleVideo(videoArrayList, 0, 0, 0);
         // 本地视频
-        video_player_item.loadLocalVideo("/sdcard/Movies/haikou.mp4");
+        video_player_item.loadLocalVideo("/sdcard/muber/haikou.mp4");
     }
 
     /***
