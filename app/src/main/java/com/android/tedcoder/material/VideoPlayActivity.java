@@ -43,7 +43,7 @@ public class VideoPlayActivity extends AppCompatActivity implements MediaPlayer.
         // mUri = Uri.parse("http://tcw-voice.b0.upaiyun.com/ScreamVoiceResource/haikou.mp4");
 
         // Intent File 文件路径
-        File file = new File(Environment.getExternalStorageDirectory() + "/Movies/haikou.mp4");
+        File file = new File("/sdcard/muber/haikou.mp4");
         mUri = Uri.fromFile(file);
 
         //设置MediaController

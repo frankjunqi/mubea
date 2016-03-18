@@ -19,10 +19,13 @@
 package com.android.tedcoder.material;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.joanzapata.pdfview.PDFView;
 import com.joanzapata.pdfview.listener.OnPageChangeListener;
+
+import java.io.File;
 
 import static java.lang.String.format;
 
@@ -59,7 +62,14 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
         if (jumpToFirstPage) pageNumber = 1;
         setTitle(pdfName = assetFileName);
 
-        pdfView.fromAsset(assetFileName)
+        // pdf file from asset
+        /*pdfView.fromAsset(assetFileName)
+                .defaultPage(pageNumber)
+                .onPageChange(this)
+                .load();*/
+
+        // pdf file from sdcard
+        pdfView.fromFile(new File(Environment.getExternalStorageDirectory() + "/muber/" + assetFileName))
                 .defaultPage(pageNumber)
                 .onPageChange(this)
                 .load();
