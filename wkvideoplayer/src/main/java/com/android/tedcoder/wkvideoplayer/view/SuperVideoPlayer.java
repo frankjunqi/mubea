@@ -294,11 +294,10 @@ public class SuperVideoPlayer extends RelativeLayout {
     }
 
     /***
-     *
      * @param allVideo     所有的视频
      * @param selectVideo  指定的视频
      * @param selectFormat 指定的格式
-     * @param seekTime 开始进度
+     * @param seekTime     开始进度
      */
     public void loadMultipleVideo(ArrayList<Video> allVideo, int selectVideo, int selectFormat, int seekTime) {
         if (null == allVideo || allVideo.size() == 0) {

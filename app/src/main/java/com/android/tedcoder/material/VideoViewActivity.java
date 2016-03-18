@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -27,29 +28,22 @@ public class VideoViewActivity extends AppCompatActivity implements View.OnClick
 
     private final String TAG = getClass().getSimpleName();
 
-    private ImageView play_btn;
     private SuperVideoPlayer video_player_item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
-
-        play_btn = (ImageView) findViewById(R.id.play_btn);
         video_player_item = (SuperVideoPlayer) findViewById(R.id.video_player_item);
-
-        play_btn.setOnClickListener(this);
         video_player_item.setVideoPlayCallback(mVideoPlayCallback);
-
         startDLNAService();
+        initVideoDate();
     }
 
     private SuperVideoPlayer.VideoPlayCallbackImpl mVideoPlayCallback = new SuperVideoPlayer.VideoPlayCallbackImpl() {
         @Override
         public void onCloseVideo() {
             video_player_item.close();
-            play_btn.setVisibility(View.VISIBLE);
-            video_player_item.setVisibility(View.GONE);
             resetPageToPortrait();
         }
 
@@ -72,41 +66,31 @@ public class VideoViewActivity extends AppCompatActivity implements View.OnClick
 
 
     private void initVideoDate() {
-        play_btn.setVisibility(View.GONE);
-        video_player_item.setVisibility(View.VISIBLE);
-        video_player_item.setAutoHideController(false);
+        video_player_item.setAutoHideController(true);
 
         Video video = new Video();
-        VideoUrl videoUrl1 = new VideoUrl();
-        videoUrl1.setFormatName("720P");
-        videoUrl1.setFormatUrl("http://tcw-voice.b0.upaiyun.com/ScreamVoiceResource/haikou.mp4");
-        VideoUrl videoUrl2 = new VideoUrl();
-        videoUrl2.setFormatName("480P");
-        videoUrl2.setFormatUrl("http://tcw-voice.b0.upaiyun.com/ScreamVoiceResource/haikou.mp4");
-        ArrayList<VideoUrl> arrayList1 = new ArrayList<>();
-        arrayList1.add(videoUrl1);
-        arrayList1.add(videoUrl2);
+
+        // 视频的列表
+        ArrayList<VideoUrl> videoList = new ArrayList<>();
+        // 创建 video url
+        VideoUrl videoUrl = new VideoUrl();
+        videoUrl.setFormatName("480P");
+        videoUrl.setFormatUrl("http://tcw-voice.b0.upaiyun.com/ScreamVoiceResource/haikou.mp4");
+        videoList.add(videoUrl);
+
+
+        // 设置视频的Name
         video.setVideoName("测试视频一");
-        video.setVideoUrl(arrayList1);
+        video.setVideoUrl(videoList);
 
-        Video video2 = new Video();
-        VideoUrl videoUrl3 = new VideoUrl();
-        videoUrl3.setFormatName("720P");
-        videoUrl3.setFormatUrl("http://tcw-voice.b0.upaiyun.com/ScreamVoiceResource/haikou.mp4");
-        VideoUrl videoUrl4 = new VideoUrl();
-        videoUrl4.setFormatName("480P");
-        videoUrl4.setFormatUrl("http://tcw-voice.b0.upaiyun.com/ScreamVoiceResource/haikou.mp4");
-        ArrayList<VideoUrl> arrayList2 = new ArrayList<>();
-        arrayList2.add(videoUrl3);
-        arrayList2.add(videoUrl4);
-        video2.setVideoName("测试视频二");
-        video2.setVideoUrl(arrayList2);
-
+        // 需要播放的 video 对象的列表
         ArrayList<Video> videoArrayList = new ArrayList<>();
         videoArrayList.add(video);
-        videoArrayList.add(video2);
 
-        video_player_item.loadMultipleVideo(videoArrayList, 0, 0, 0);
+        // 网络视频
+        // video_player_item.loadMultipleVideo(videoArrayList, 0, 0, 0);
+        // 本地视频
+        video_player_item.loadLocalVideo("/sdcard/Movies/haikou.mp4");
     }
 
     /***
@@ -154,6 +138,11 @@ public class VideoViewActivity extends AppCompatActivity implements View.OnClick
             video_player_item.getLayoutParams().height = (int) width;
             video_player_item.getLayoutParams().width = (int) height;
         } else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // 当切换到ORIENTATION_PORTRAIT 的屏幕的时候，默认是关闭视频播放
+            this.finish();
+
+            /*
+            正常是横竖屏切换的时候，video view 的自适应
             final WindowManager.LayoutParams attrs = getWindow().getAttributes();
             attrs.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getWindow().setAttributes(attrs);
@@ -161,16 +150,14 @@ public class VideoViewActivity extends AppCompatActivity implements View.OnClick
             float width = DensityUtil.getWidthInPx(this);
             float height = DensityUtil.dip2px(this, 200.f);
             video_player_item.getLayoutParams().height = (int) height;
-            video_player_item.getLayoutParams().width = (int) width;
+            video_player_item.getLayoutParams().width = (int) width;*/
         }
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.play_btn:
-                initVideoDate();
-                break;
+
         }
     }
 
@@ -183,5 +170,14 @@ public class VideoViewActivity extends AppCompatActivity implements View.OnClick
     protected void onDestroy() {
         super.onDestroy();
         stopDLNAService();
+    }
+
+    private String isSdCrad() {
+        boolean sdCardExist = Environment.getExternalStorageState()
+                .equals(android.os.Environment.MEDIA_MOUNTED); //判断sd卡是否存在
+        if (sdCardExist) {
+            return Environment.getExternalStorageDirectory().toString();//获取跟目录
+        }
+        return "";
     }
 }
