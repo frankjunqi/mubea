@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_pdf;
     private Button btn_setting;
     private Button btn_video;
+    private Button btn_fresco;
 
     private EditText et_host;
     private EditText et_request_time;
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btn_video = (Button) findViewById(R.id.btn_video);
         btn_video.setOnClickListener(this);
+
+        btn_fresco = (Button) findViewById(R.id.btn_fresco);
+        btn_fresco.setOnClickListener(this);
     }
 
 
@@ -54,6 +58,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_video:
                 Intent video_intent = new Intent(MainActivity.this, VideoViewActivity.class);
                 startActivity(video_intent);
+                break;
+            case R.id.btn_fresco:
+                Intent fresco_intent = new Intent(MainActivity.this, FrescoViewActivity.class);
+                startActivity(fresco_intent);
                 break;
         }
     }
