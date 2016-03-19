@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:weightSum="8">
+
+    <TextClock
+        android:id="@+id/textClock"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:format12Hour="@string/abbrev_wday_month_day_no_year"
+        android:format24Hour="@string/abbrev_wday_month_day_no_year"
+        android:gravity="center"
+        android:textSize="@dimen/big_text_size"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/digitalClock"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:textSize="@dimen/big_text_size"
+        android:textStyle="bold|italic" />
+
+
+    <TextView
+        android:id="@+id/tv_weather"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="晴"
+        android:textSize="@dimen/big_text_size"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/tv_temperature"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="~"
+        android:textSize="@dimen/big_text_size"
+        android:textStyle="bold|italic" />
+
+    <com.android.tedcoder.material.view.MarqueeTextView
+        android:id="@+id/tv_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+
+
+        android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:textSize="@dimen/big_text_size"
+        android:textStyle="italic" />
+
+
+</LinearLayout>

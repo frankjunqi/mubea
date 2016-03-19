@@ -17,7 +17,7 @@
         android:textSize="@dimen/big_text_size"
         android:textStyle="bold|italic" />
 
-    <com.android.tedcoder.material.view.TimeView
+    <TextView
         android:id="@+id/digitalClock"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -25,16 +25,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:textSize="@dimen/big_text_size"
-        android:textStyle="bold|italic">
-
-        <TextView
-            android:id="@+id/tvTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/big_text_size"
-            android:textStyle="bold|italic" />
-    </com.android.tedcoder.material.view.TimeView>
+        android:textStyle="bold|italic" />
 
 
     <TextView
@@ -62,10 +53,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
+
         android:ellipsize="marquee"
         android:focusable="true"
+        android:focusableInTouchMode="true"
+
+
         android:gravity="center"
         android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
         android:singleLine="true"
         android:textSize="@dimen/big_text_size"
         android:textStyle="italic" />

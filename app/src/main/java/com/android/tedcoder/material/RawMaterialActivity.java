@@ -3,6 +3,7 @@ package com.android.tedcoder.material;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -10,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DigitalClock;
 import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -23,10 +23,11 @@ import com.android.tedcoder.material.entity.RawMaterialResBody;
 import com.android.tedcoder.material.gsonfactory.GsonConverterFactory;
 import com.android.tedcoder.material.view.MarqueeTextView;
 import com.android.tedcoder.material.view.RawLineView;
-import com.android.tedcoder.material.view.TimeView;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -74,7 +75,7 @@ public class RawMaterialActivity extends AppCompatActivity {
     private LinearLayout ll_title;
 
     private TextClock textClock;
-    private TimeView digitalClock;
+    private TextView digitalClock;
     private TextView tv_weather;
     private TextView tv_temperature;
     private MarqueeTextView tv_info;
@@ -119,19 +120,43 @@ public class RawMaterialActivity extends AppCompatActivity {
     private void initTitleLayout() {
         View view = LayoutInflater.from(this).inflate(R.layout.rawmaterial_title, null);
         textClock = (TextClock) view.findViewById(R.id.textClock);
-        digitalClock = (TimeView) view.findViewById(R.id.digitalClock);
+        digitalClock = (TextView) view.findViewById(R.id.digitalClock);
         tv_weather = (TextView) view.findViewById(R.id.tv_weather);
         tv_temperature = (TextView) view.findViewById(R.id.tv_temperature);
         tv_info = (MarqueeTextView) view.findViewById(R.id.tv_info);
 
-        tv_info.setFocusable(true);
         // 计算高度
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int height = dm.heightPixels / 9;
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
         ll_title.addView(view);
+
+        timeHandler.sendEmptyMessage(0);
     }
+
+    private Handler timeHandler = new Handler() {
+
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    refreshTime();
+                    timeHandler.sendEmptyMessageDelayed(0, 1000);
+                    break;
+            }
+        }
+    };
+
+    private void refreshTime() {
+        Calendar c = Calendar.getInstance();
+        int day = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+        if (digitalClock != null) {
+            digitalClock.setText(String.format("%s:%s", day < 10 ? "0" + String.valueOf(day) : String.valueOf(day)
+                    , minute < 10 ? "0" + String.valueOf(minute) : String.valueOf(minute)));
+        }
+    }
+
 
     public int dip2px(Context context, float dipValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
@@ -174,6 +199,7 @@ public class RawMaterialActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RawMaterialResBody> call, Throwable throwable) {
+                Log.e("error", throwable.getMessage());
                 Toast.makeText(RawMaterialActivity.this, "网络出现异常，请检查网络链接", Toast.LENGTH_LONG).show();
                 requestHandler.sendEmptyMessageDelayed(SENDFLAG, Host.TENLOOPER * 1000);
             }
@@ -219,11 +245,15 @@ public class RawMaterialActivity extends AppCompatActivity {
     /**
      * 处理滚动的字幕
      */
-    private void handleMarqueeText(String marqueeText) {
-        if (TextUtils.isEmpty(marqueeText)) {
-            marqueeText = "This is nothing to tell you. ";
+    private void handleMarqueeText(List<String> marqueeText) {
+        String showDate = "";
+        if (marqueeText != null) {
+            for (int i = 0; i < marqueeText.size(); i++) {
+                showDate = showDate + marqueeText.get(i) + "             ";
+            }
+            tv_info.setText(showDate);
         }
-        tv_info.setText(marqueeText);
+
     }
 
     /**
@@ -259,6 +289,10 @@ public class RawMaterialActivity extends AppCompatActivity {
         Log.e(TAG, "onDestroy");
         if (requestHandler != null) {
             requestHandler.removeMessages(SENDFLAG);
+        }
+
+        if (timeHandler != null) {
+            timeHandler.removeMessages(0);
         }
     }
 }
