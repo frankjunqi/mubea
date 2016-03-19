@@ -44,16 +44,35 @@ public class RawMaterialActivity extends AppCompatActivity {
 
     // 发送请求的标志码
     private static final int SENDFLAG = 0x10;
+    private static final int TIMEFLAG = 0x11;
 
-    private static RequestHandler requestHandler;
+    // 系统退出的纪录时间
+    private long mExitTime = 0;
 
-    public class RequestHandler extends Handler {
+    private static RequestHandler requestHandler = null;
+
+    private static Handler timeHandler = null;
+
+    private class RequestHandler extends Handler {
 
         @Override
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case SENDFLAG:
                     asyncRequest();
+                    break;
+            }
+        }
+    }
+
+    private class TimeHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case TIMEFLAG:
+                    refreshTime();
+                    timeHandler.sendEmptyMessageDelayed(TIMEFLAG, 1000);
                     break;
             }
         }
@@ -86,31 +105,10 @@ public class RawMaterialActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rawmaterial);
         Log.e(TAG, "onCreate");
 
-        ll_a = (LinearLayout) findViewById(R.id.ll_a);
-        ll_b = (LinearLayout) findViewById(R.id.ll_b);
-        ll_c = (LinearLayout) findViewById(R.id.ll_c);
-        ll_d = (LinearLayout) findViewById(R.id.ll_d);
-        ll_e = (LinearLayout) findViewById(R.id.ll_e);
-
-        ll_title = (LinearLayout) findViewById(R.id.ll_title);
-
-        rawLineView_a = new RawLineView(this);
-        rawLineView_b = new RawLineView(this);
-        rawLineView_c = new RawLineView(this);
-        rawLineView_d = new RawLineView(this);
-        rawLineView_e = new RawLineView(this);
-
-
-        ll_a.addView(rawLineView_a, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ll_b.addView(rawLineView_b, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ll_c.addView(rawLineView_c, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ll_d.addView(rawLineView_d, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ll_e.addView(rawLineView_e, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
         initTitleLayout();
 
-        requestHandler = new RequestHandler();
-        requestHandler.sendEmptyMessage(SENDFLAG);
+        initContentLayout();
+
     }
 
 
@@ -118,6 +116,8 @@ public class RawMaterialActivity extends AppCompatActivity {
      * 初始化 title layout
      */
     private void initTitleLayout() {
+        ll_title = (LinearLayout) findViewById(R.id.ll_title);
+
         View view = LayoutInflater.from(this).inflate(R.layout.rawmaterial_title, null);
         textClock = (TextClock) view.findViewById(R.id.textClock);
         digitalClock = (TextView) view.findViewById(R.id.digitalClock);
@@ -132,20 +132,34 @@ public class RawMaterialActivity extends AppCompatActivity {
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
         ll_title.addView(view);
 
-        timeHandler.sendEmptyMessage(0);
+        timeHandler = new TimeHandler();
+        timeHandler.sendEmptyMessage(TIMEFLAG);
     }
 
-    private Handler timeHandler = new Handler() {
+    private void initContentLayout() {
+        ll_a = (LinearLayout) findViewById(R.id.ll_a);
+        ll_b = (LinearLayout) findViewById(R.id.ll_b);
+        ll_c = (LinearLayout) findViewById(R.id.ll_c);
+        ll_d = (LinearLayout) findViewById(R.id.ll_d);
+        ll_e = (LinearLayout) findViewById(R.id.ll_e);
 
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0:
-                    refreshTime();
-                    timeHandler.sendEmptyMessageDelayed(0, 1000);
-                    break;
-            }
-        }
-    };
+        rawLineView_a = new RawLineView(this);
+        rawLineView_b = new RawLineView(this);
+        rawLineView_c = new RawLineView(this);
+        rawLineView_d = new RawLineView(this);
+        rawLineView_e = new RawLineView(this);
+
+
+        ll_a.addView(rawLineView_a, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ll_b.addView(rawLineView_b, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ll_c.addView(rawLineView_c, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ll_d.addView(rawLineView_d, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ll_e.addView(rawLineView_e, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        requestHandler = new RequestHandler();
+        requestHandler.sendEmptyMessage(SENDFLAG);
+    }
+
 
     private void refreshTime() {
         Calendar c = Calendar.getInstance();
@@ -162,8 +176,6 @@ public class RawMaterialActivity extends AppCompatActivity {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);// 小数点四舍五入取整
     }
-
-    private long mExitTime = 0;
 
     @Override
     public void onBackPressed() {
@@ -192,14 +204,16 @@ public class RawMaterialActivity extends AppCompatActivity {
         rawMaterialResBodyCall.enqueue(new Callback<RawMaterialResBody>() {
             @Override
             public void onResponse(Call<RawMaterialResBody> call, Response<RawMaterialResBody> response) {
-                handleCellList(response.body().d.Data.Cells);
-                handleMarqueeText(response.body().d.Data.Msg);
+                if (response != null & response.body() != null) {
+                    handleCellList(response.body().d.Data.Cells);
+                    handleMarqueeText(response.body().d.Data.Msg);
+                }
                 requestHandler.sendEmptyMessageDelayed(SENDFLAG, Host.TENLOOPER * 1000);
             }
 
             @Override
             public void onFailure(Call<RawMaterialResBody> call, Throwable throwable) {
-                Log.e("error", throwable.getMessage());
+                Log.e("error", throwable != null ? throwable.getMessage() : "");
                 Toast.makeText(RawMaterialActivity.this, "网络出现异常，请检查网络链接", Toast.LENGTH_LONG).show();
                 requestHandler.sendEmptyMessageDelayed(SENDFLAG, Host.TENLOOPER * 1000);
             }
@@ -213,6 +227,10 @@ public class RawMaterialActivity extends AppCompatActivity {
      * @param cellList cell的数据源
      */
     private void handleCellList(ArrayList<Cell> cellList) {
+        if (cellList == null && cellList.size() > 0) {
+            return;
+        }
+
         ArrayList<Cell> cell_a = new ArrayList<Cell>();
         ArrayList<Cell> cell_b = new ArrayList<Cell>();
         ArrayList<Cell> cell_c = new ArrayList<Cell>();
@@ -246,12 +264,18 @@ public class RawMaterialActivity extends AppCompatActivity {
      * 处理滚动的字幕
      */
     private void handleMarqueeText(List<String> marqueeText) {
-        String showDate = "";
-        if (marqueeText != null) {
-            for (int i = 0; i < marqueeText.size(); i++) {
-                showDate = showDate + marqueeText.get(i) + "             ";
+        if (marqueeText != null && marqueeText.size() > 0) {
+            String showDate = "";
+            if (marqueeText != null) {
+                for (int i = 0; i < marqueeText.size(); i++) {
+                    showDate = showDate + marqueeText.get(i) + "       ";
+                }
+                // 判断现实的文案是否一样
+                if (showDate.equals(tv_info.getText().toString())) {
+                    return;
+                }
+                tv_info.setText(showDate);
             }
-            tv_info.setText(showDate);
         }
 
     }
@@ -292,7 +316,7 @@ public class RawMaterialActivity extends AppCompatActivity {
         }
 
         if (timeHandler != null) {
-            timeHandler.removeMessages(0);
+            timeHandler.removeMessages(TIMEFLAG);
         }
     }
 }
