@@ -1,25 +1,18 @@
 package com.android.tedcoder.material;
 
 import android.content.Intent;
-import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.facebook.common.logging.FLog;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.image.ImageInfo;
-import com.facebook.imagepipeline.image.QualityInfo;
 
 /**
  * 图片的加载 facebook
@@ -63,19 +56,18 @@ public class FrescoViewActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_jpg:
-                Uri uri = Uri.parse("http://c.hiphotos.baidu.com/image/h%3D300/sign=c8fcb684d0ca7bcb627bc12f8e086b3f/a2cc7cd98d1001e983f39b48bf0e7bec55e797ae.jpg");
-                iv_show_fresco.setImageURI(uri);
-                break;
             case R.id.btn_gif:
                 // 图片
                 Uri gif_uri = Uri.parse("http://i.imgur.com/IHiXGND.gif");
                 DraweeController controller = Fresco.newDraweeControllerBuilder()
                         .setUri(gif_uri)
                         .setAutoPlayAnimations(true)
-                        .setControllerListener(controllerListener)
                         .build();
                 iv_show_fresco.setController(controller);
+                break;
+            case R.id.btn_jpg:
+                Uri uri = Uri.parse("http://c.hiphotos.baidu.com/image/h%3D300/sign=c8fcb684d0ca7bcb627bc12f8e086b3f/a2cc7cd98d1001e983f39b48bf0e7bec55e797ae.jpg");
+                iv_show_fresco.setImageURI(uri);
                 break;
             case R.id.btn_fresco:
                 Uri web_uri = Uri.parse("http://fresco-cn.org/");
@@ -84,36 +76,5 @@ public class FrescoViewActivity extends AppCompatActivity implements View.OnClic
                 break;
         }
     }
-
-    ControllerListener controllerListener = new BaseControllerListener<ImageInfo>() {
-        @Override
-        public void onFinalImageSet(
-                String id,
-                @Nullable ImageInfo imageInfo,
-                @Nullable Animatable anim) {
-            if (imageInfo == null) {
-                return;
-            }
-            QualityInfo qualityInfo = imageInfo.getQualityInfo();
-            FLog.e("Final image received! " +
-                            "Size %d x %d",
-                    "Quality level %d, good enough: %s, full quality: %s",
-                    imageInfo.getWidth(),
-                    imageInfo.getHeight(),
-                    qualityInfo.getQuality(),
-                    qualityInfo.isOfGoodEnoughQuality(),
-                    qualityInfo.isOfFullQuality());
-        }
-
-        @Override
-        public void onIntermediateImageSet(String id, @Nullable ImageInfo imageInfo) {
-            FLog.e("Intermediate image received %s", "");
-        }
-
-        @Override
-        public void onFailure(String id, Throwable throwable) {
-            FLog.e(getClass(), throwable, "Error loading %s", id);
-        }
-    };
 
 }

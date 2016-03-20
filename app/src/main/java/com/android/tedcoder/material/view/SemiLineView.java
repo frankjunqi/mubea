@@ -117,7 +117,6 @@ public class SemiLineView extends LinearLayout {
             SemiCell cell = cellList.get(i);
             String diameter = TextUtils.isEmpty(cell.Diameter) ? "" : cellList.get(i).Diameter;
             String strength = TextUtils.isEmpty(cell.Strength) ? "" : cellList.get(i).Strength;
-            Log.e(TAG, diameter + " - " + strength);
             tv_as.get(i).setText(diameter + (TextUtils.isEmpty(strength) ? "" : "\n") + strength);
         }
 
