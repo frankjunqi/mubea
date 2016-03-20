@@ -17,14 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.tedcoder.material.api.Host;
-import com.android.tedcoder.material.api.RawMaterialService;
-import com.android.tedcoder.material.entity.rawmaterial.RawCell;
-import com.android.tedcoder.material.entity.rawmaterial.RawMaterialResBody;
+import com.android.tedcoder.material.api.SemiMaterialService;
+import com.android.tedcoder.material.entity.semimaterial.SemiCell;
+import com.android.tedcoder.material.entity.semimaterial.SemiMaterialResBody;
 import com.android.tedcoder.material.gsonfactory.GsonConverterFactory;
 import com.android.tedcoder.material.view.MarqueeTextView;
 import com.android.tedcoder.material.view.RawLineView;
+import com.android.tedcoder.material.view.SemiLineView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -35,16 +35,16 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * 材料的 主页面
+ * 库位 主页面
  * Created by kjh08490 on 2016/3/17.
  */
-public class RawMaterialActivity extends AppCompatActivity {
+public class SemiMaterialActivity extends AppCompatActivity {
 
     private final String TAG = getClass().getSimpleName();
 
     // 发送请求的标志码
-    private static final int SENDFLAG = 0x10;
-    private static final int TIMEFLAG = 0x11;
+    private static final int SENDFLAG = 0x110;
+    private static final int TIMEFLAG = 0x111;
 
     // 系统退出的纪录时间
     private long mExitTime = 0;
@@ -56,7 +56,7 @@ public class RawMaterialActivity extends AppCompatActivity {
     private class RequestHandler extends Handler {
 
         @Override
-        public void handleMessage(android.os.Message msg) {
+        public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SENDFLAG:
                     asyncRequest();
@@ -78,17 +78,25 @@ public class RawMaterialActivity extends AppCompatActivity {
         }
     }
 
+    private LinearLayout ll_0;
     private LinearLayout ll_a;
     private LinearLayout ll_b;
     private LinearLayout ll_c;
     private LinearLayout ll_d;
     private LinearLayout ll_e;
+    private LinearLayout ll_f;
+    private LinearLayout ll_g;
+    private LinearLayout ll_h;
 
-    private RawLineView rawLineView_a = null;
-    private RawLineView rawLineView_b = null;
-    private RawLineView rawLineView_c = null;
-    private RawLineView rawLineView_d = null;
-    private RawLineView rawLineView_e = null;
+    private SemiLineView semiLineView_0 = null;
+    private SemiLineView semiLineView_a = null;
+    private SemiLineView semiLineView_b = null;
+    private SemiLineView semiLineView_c = null;
+    private SemiLineView semiLineView_d = null;
+    private SemiLineView semiLineView_e = null;
+    private SemiLineView semiLineView_f = null;
+    private SemiLineView semiLineView_g = null;
+    private SemiLineView semiLineView_h = null;
 
     // title的容器
     private LinearLayout ll_title;
@@ -102,8 +110,8 @@ public class RawMaterialActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rawmaterial);
-        Log.e(TAG, "RawMaterial_onCreate");
+        setContentView(R.layout.activity_semimaterial);
+        Log.e(TAG, "Semi_Material_onCreate");
 
         initTitleLayout();
 
@@ -137,24 +145,38 @@ public class RawMaterialActivity extends AppCompatActivity {
     }
 
     private void initContentLayout() {
+        ll_0 = (LinearLayout) findViewById(R.id.ll_0);
         ll_a = (LinearLayout) findViewById(R.id.ll_a);
         ll_b = (LinearLayout) findViewById(R.id.ll_b);
         ll_c = (LinearLayout) findViewById(R.id.ll_c);
         ll_d = (LinearLayout) findViewById(R.id.ll_d);
         ll_e = (LinearLayout) findViewById(R.id.ll_e);
+        ll_f = (LinearLayout) findViewById(R.id.ll_f);
+        ll_g = (LinearLayout) findViewById(R.id.ll_g);
+        ll_h = (LinearLayout) findViewById(R.id.ll_h);
 
-        rawLineView_a = new RawLineView(this);
-        rawLineView_b = new RawLineView(this);
-        rawLineView_c = new RawLineView(this);
-        rawLineView_d = new RawLineView(this);
-        rawLineView_e = new RawLineView(this);
+        semiLineView_0 = new SemiLineView(this);
+        semiLineView_a = new SemiLineView(this);
+        semiLineView_b = new SemiLineView(this);
+        semiLineView_c = new SemiLineView(this);
+        semiLineView_d = new SemiLineView(this);
+        semiLineView_e = new SemiLineView(this);
+        semiLineView_f = new SemiLineView(this);
+        semiLineView_g = new SemiLineView(this);
+        semiLineView_h = new SemiLineView(this);
 
 
-        ll_a.addView(rawLineView_a, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ll_b.addView(rawLineView_b, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ll_c.addView(rawLineView_c, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ll_d.addView(rawLineView_d, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ll_e.addView(rawLineView_e, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ll_0.addView(semiLineView_0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        semiLineView_0.setNumberLine();
+
+        ll_a.addView(semiLineView_a, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ll_b.addView(semiLineView_b, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ll_c.addView(semiLineView_c, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ll_d.addView(semiLineView_d, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ll_e.addView(semiLineView_e, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ll_f.addView(semiLineView_f, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ll_g.addView(semiLineView_g, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ll_h.addView(semiLineView_h, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         requestHandler = new RequestHandler();
         requestHandler.sendEmptyMessage(SENDFLAG);
@@ -194,16 +216,16 @@ public class RawMaterialActivity extends AppCompatActivity {
      */
     private void asyncRequest() {
         // 异步请求处理
-        Log.e(TAG, "raw_material_async_Request");
+        Log.e(TAG, "semi_material_async_Request");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Host.HOST)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        RawMaterialService service = retrofit.create(RawMaterialService.class);
-        Call<RawMaterialResBody> rawMaterialResBodyCall = service.rawMaterialList("Srv", "VisualPlant.svc", "RawMaterialStockQuery");
-        rawMaterialResBodyCall.enqueue(new Callback<RawMaterialResBody>() {
+        SemiMaterialService service = retrofit.create(SemiMaterialService.class);
+        Call<SemiMaterialResBody> rawMaterialResBodyCall = service.semiMaterialList("Srv", "VisualPlant.svc", "SemiMaterialStockQuery");
+        rawMaterialResBodyCall.enqueue(new Callback<SemiMaterialResBody>() {
             @Override
-            public void onResponse(Call<RawMaterialResBody> call, Response<RawMaterialResBody> response) {
+            public void onResponse(Call<SemiMaterialResBody> call, Response<SemiMaterialResBody> response) {
                 if (response != null & response.body() != null) {
                     handleCellList(response.body().d.Data.Cells);
                     handleMarqueeText(response.body().d.Data.Msg);
@@ -212,9 +234,9 @@ public class RawMaterialActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<RawMaterialResBody> call, Throwable throwable) {
+            public void onFailure(Call<SemiMaterialResBody> call, Throwable throwable) {
                 Log.e("error", throwable != null ? throwable.getMessage() : "");
-                Toast.makeText(RawMaterialActivity.this, "网络出现异常，请检查网络链接", Toast.LENGTH_LONG).show();
+                Toast.makeText(SemiMaterialActivity.this, "网络出现异常，请检查网络链接", Toast.LENGTH_LONG).show();
                 requestHandler.sendEmptyMessageDelayed(SENDFLAG, Host.TENLOOPER * 1000);
             }
         });
@@ -226,19 +248,22 @@ public class RawMaterialActivity extends AppCompatActivity {
      *
      * @param cellList cell的数据源
      */
-    private void handleCellList(ArrayList<RawCell> cellList) {
+    private void handleCellList(ArrayList<SemiCell> cellList) {
         if (cellList == null && cellList.size() > 0) {
             return;
         }
 
-        ArrayList<RawCell> cell_a = new ArrayList<RawCell>();
-        ArrayList<RawCell> cell_b = new ArrayList<RawCell>();
-        ArrayList<RawCell> cell_c = new ArrayList<RawCell>();
-        ArrayList<RawCell> cell_d = new ArrayList<RawCell>();
-        ArrayList<RawCell> cell_e = new ArrayList<RawCell>();
+        ArrayList<SemiCell> cell_a = new ArrayList<SemiCell>();
+        ArrayList<SemiCell> cell_b = new ArrayList<SemiCell>();
+        ArrayList<SemiCell> cell_c = new ArrayList<SemiCell>();
+        ArrayList<SemiCell> cell_d = new ArrayList<SemiCell>();
+        ArrayList<SemiCell> cell_e = new ArrayList<SemiCell>();
+        ArrayList<SemiCell> cell_f = new ArrayList<SemiCell>();
+        ArrayList<SemiCell> cell_g = new ArrayList<SemiCell>();
+        ArrayList<SemiCell> cell_h = new ArrayList<SemiCell>();
 
         for (int i = 0; i < cellList.size(); i++) {
-            RawCell cell = cellList.get(i);
+            SemiCell cell = cellList.get(i);
             if (!TextUtils.isEmpty(cell.LocCode) && cell.LocCode.contains("A")) {
                 cell_a.add(cell);
             } else if (!TextUtils.isEmpty(cell.LocCode) && cell.LocCode.contains("B")) {
@@ -249,14 +274,24 @@ public class RawMaterialActivity extends AppCompatActivity {
                 cell_d.add(cell);
             } else if (!TextUtils.isEmpty(cell.LocCode) && cell.LocCode.contains("E")) {
                 cell_e.add(cell);
+            } else if (!TextUtils.isEmpty(cell.LocCode) && cell.LocCode.contains("F")) {
+                cell_f.add(cell);
+            } else if (!TextUtils.isEmpty(cell.LocCode) && cell.LocCode.contains("G")) {
+                cell_g.add(cell);
+            } else if (!TextUtils.isEmpty(cell.LocCode) && cell.LocCode.contains("H")) {
+                cell_h.add(cell);
             }
+
         }
 
-        rawLineView_a.setLineCellData(cell_a);
-        rawLineView_b.setLineCellData(cell_b);
-        rawLineView_c.setLineCellData(cell_c);
-        rawLineView_d.setLineCellData(cell_d);
-        rawLineView_e.setLineCellData(cell_e);
+        semiLineView_a.setLineCellData(cell_a);
+        semiLineView_b.setLineCellData(cell_b);
+        semiLineView_c.setLineCellData(cell_c);
+        semiLineView_d.setLineCellData(cell_d);
+        semiLineView_e.setLineCellData(cell_e);
+        semiLineView_f.setLineCellData(cell_f);
+        semiLineView_g.setLineCellData(cell_g);
+        semiLineView_h.setLineCellData(cell_h);
 
     }
 
@@ -280,35 +315,11 @@ public class RawMaterialActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Retrofit 同步请求
-     */
-    private void synchroRequest() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // 同步请求处理
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(Host.HOST)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                RawMaterialService service = retrofit.create(RawMaterialService.class);
-                Call<RawMaterialResBody> rawMaterialResBodyCall = service.rawMaterialList("Srv", "VisualPlant.svc", "RawMaterialStockQuery");
-                try {
-                    RawMaterialResBody rawMaterialResBody = rawMaterialResBodyCall.execute().body();
-                    Log.e(TAG, "resbody : --type = %s" + rawMaterialResBody.d.__type);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.e(TAG, "RawMaterial_onDestroy");
+        Log.e(TAG, "Semi_Material_onDestroy");
         if (requestHandler != null) {
             requestHandler.removeMessages(SENDFLAG);
         }

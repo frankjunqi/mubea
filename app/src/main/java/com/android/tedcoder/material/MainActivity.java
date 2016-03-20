@@ -15,13 +15,17 @@ import com.android.tedcoder.material.api.Host;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btn_pdf;
-    private Button btn_setting;
     private Button btn_video;
-    private Button btn_fresco;
     private Button btn_sys_video;
+    private Button btn_download;
+    private Button btn_fresco;
 
-    private EditText et_host;
     private EditText et_request_time;
+    private EditText et_host;
+
+
+    private Button btn_rawmaterial;
+    private Button btn_semimaterial;
 
 
     @Override
@@ -29,8 +33,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn_setting = (Button) findViewById(R.id.btn_setting);
-        btn_setting.setOnClickListener(this);
+        btn_rawmaterial = (Button) findViewById(R.id.btn_rawmaterial);
+        btn_rawmaterial.setOnClickListener(this);
+
+        btn_semimaterial = (Button) findViewById(R.id.btn_semimaterial);
+        btn_semimaterial.setOnClickListener(this);
 
         et_host = (EditText) findViewById(R.id.et_host);
         et_request_time = (EditText) findViewById(R.id.et_request_time);
@@ -40,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btn_video = (Button) findViewById(R.id.btn_video);
         btn_video.setOnClickListener(this);
+
+        btn_download = (Button) findViewById(R.id.btn_download);
+        btn_download.setOnClickListener(this);
 
         btn_fresco = (Button) findViewById(R.id.btn_fresco);
         btn_fresco.setOnClickListener(this);
@@ -52,8 +62,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_setting:
+            case R.id.btn_rawmaterial:
                 initSetting();
+                Intent raw_material_intent = new Intent(MainActivity.this, RawMaterialActivity.class);
+                startActivity(raw_material_intent);
+                break;
+            case R.id.btn_semimaterial:
+                initSetting();
+                Intent semi_material_intent = new Intent(MainActivity.this, SemiMaterialActivity.class);
+                startActivity(semi_material_intent);
                 break;
             case R.id.btn_pdf:
                 Intent intent = new Intent(MainActivity.this, PDFViewActivity.class);
@@ -70,6 +87,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_sys_video:
                 Intent videoplay_intent = new Intent(MainActivity.this, VideoPlayActivity.class);
                 startActivity(videoplay_intent);
+                break;
+            case R.id.btn_download:
+                Toast.makeText(MainActivity.this, "Download", Toast.LENGTH_LONG).show();
                 break;
         }
     }
@@ -95,10 +115,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         Host.TENLOOPER = time;
-
-        Intent intent = new Intent(MainActivity.this, RawMaterialActivity.class);
-        startActivity(intent);
-        this.finish();
     }
 
     @Override

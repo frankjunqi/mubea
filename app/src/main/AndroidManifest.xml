@@ -40,6 +40,12 @@
             android:screenOrientation="landscape"
             android:theme="@style/ActivityTheme.Full" />
         <activity
+            android:name="com.android.tedcoder.material.SemiMaterialActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"
+            android:theme="@style/ActivityTheme.Full" />
+        <activity
             android:name="com.android.tedcoder.material.VideoViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"

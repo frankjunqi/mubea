@@ -1,4 +1,4 @@
-package com.android.tedcoder.material.entity;
+package com.android.tedcoder.material.entity.rawmaterial;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class RawMaterialObj implements Serializable {
     public String __type;
-    public Material Data = new Material();
+    public RawMaterial Data = new RawMaterial();
     public String Status;
     public String Msg;
     public String MsgList;

@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.tedcoder.material.R;
-import com.android.tedcoder.material.entity.Cell;
+import com.android.tedcoder.material.entity.rawmaterial.RawCell;
 
 import java.util.ArrayList;
 
@@ -77,13 +77,13 @@ public class RawLineView extends LinearLayout {
         tv_data_a0s.add(tv_data_a07);
     }
 
-    public void setLineCellData(ArrayList<Cell> cellList) {
+    public void setLineCellData(ArrayList<RawCell> cellList) {
         if (cellList == null || cellList.size() == 0) {
             return;
         }
         int totolViewSize = 7;
         for (int i = 0; i < cellList.size() && i < totolViewSize; i++) {
-            Cell cell = cellList.get(i);
+            RawCell cell = cellList.get(i);
             tv_a0s.get(i).setText(TextUtils.isEmpty(cell.LocCode) ? "" : cellList.get(i).LocCode);
             tv_data_a0s.get(i).setText(TextUtils.isEmpty(cell.Diameter) ? "" : cellList.get(i).Diameter);
         }
