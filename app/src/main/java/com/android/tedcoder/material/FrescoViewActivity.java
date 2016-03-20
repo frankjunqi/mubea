@@ -70,9 +70,9 @@ public class FrescoViewActivity extends AppCompatActivity implements View.OnClic
                 iv_show_fresco.setImageURI(uri);
                 break;
             case R.id.btn_fresco:
-                Uri web_uri = Uri.parse("http://fresco-cn.org/");
+                /*Uri web_uri = Uri.parse("http://fresco-cn.org/");
                 Intent intent = new Intent(Intent.ACTION_VIEW, web_uri);
-                startActivity(intent);
+                startActivity(intent);*/
                 break;
         }
     }
