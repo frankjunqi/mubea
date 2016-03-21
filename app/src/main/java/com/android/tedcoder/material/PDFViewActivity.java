@@ -37,7 +37,7 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
 
     private PDFView pdfView;
 
-    private String pdfName = SAMPLE_FILE;
+    private String pdfName = ABOUT_FILE;
 
     private Integer pageNumber = 1;
 
@@ -63,16 +63,16 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
         setTitle(pdfName = assetFileName);
 
         // pdf file from asset
-        /*pdfView.fromAsset(assetFileName)
-                .defaultPage(pageNumber)
-                .onPageChange(this)
-                .load();*/
-
-        // pdf file from sdcard
-        pdfView.fromFile(new File(Environment.getExternalStorageDirectory() + "/muber/" + assetFileName))
+        pdfView.fromAsset(assetFileName)
                 .defaultPage(pageNumber)
                 .onPageChange(this)
                 .load();
+
+        // pdf file from sdcard
+        /*pdfView.fromFile(new File(Environment.getExternalStorageDirectory() + "/muber/" + assetFileName))
+                .defaultPage(pageNumber)
+                .onPageChange(this)
+                .load();*/
     }
 
     @Override
