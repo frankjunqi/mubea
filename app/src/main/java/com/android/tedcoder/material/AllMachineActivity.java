@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,11 +20,11 @@ import com.android.tedcoder.material.api.Host;
 import com.android.tedcoder.material.api.RawMaterialService;
 import com.android.tedcoder.material.entity.allmachine.AllMachineResBody;
 import com.android.tedcoder.material.entity.allmachine.MachineCell;
-import com.android.tedcoder.material.entity.rawmaterial.RawCell;
 import com.android.tedcoder.material.entity.rawmaterial.RawMaterialResBody;
 import com.android.tedcoder.material.gsonfactory.GsonConverterFactory;
+import com.android.tedcoder.material.view.AllMachinePageView;
+import com.android.tedcoder.material.view.AllMachineView;
 import com.android.tedcoder.material.view.MarqueeTextView;
-import com.android.tedcoder.material.view.RawLineView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,20 +80,11 @@ public class AllMachineActivity extends AppCompatActivity {
         }
     }
 
-    private LinearLayout ll_a;
-    private LinearLayout ll_b;
-    private LinearLayout ll_c;
-    private LinearLayout ll_d;
-    private LinearLayout ll_e;
-
-    private RawLineView machineLineView_a = null;
-    private RawLineView machineLineView_b = null;
-    private RawLineView machineLineView_c = null;
-    private RawLineView machineLineView_d = null;
-    private RawLineView machineLineView_e = null;
-
     // title的容器
     private LinearLayout ll_title;
+
+    // content
+    private LinearLayout ll_content;
 
     private TextClock textClock;
     private TextView digitalClock;
@@ -102,14 +92,13 @@ public class AllMachineActivity extends AppCompatActivity {
     private TextView tv_temperature;
     private MarqueeTextView tv_info;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rawmaterial);
+        setContentView(R.layout.activity_allmachine);
         Log.e(TAG, "RawMaterial_onCreate");
-
         initTitleLayout();
-
         initContentLayout();
 
     }
@@ -140,25 +129,7 @@ public class AllMachineActivity extends AppCompatActivity {
     }
 
     private void initContentLayout() {
-        ll_a = (LinearLayout) findViewById(R.id.ll_a);
-        ll_b = (LinearLayout) findViewById(R.id.ll_b);
-        ll_c = (LinearLayout) findViewById(R.id.ll_c);
-        ll_d = (LinearLayout) findViewById(R.id.ll_d);
-        ll_e = (LinearLayout) findViewById(R.id.ll_e);
-
-        machineLineView_a = new RawLineView(this);
-        machineLineView_b = new RawLineView(this);
-        machineLineView_c = new RawLineView(this);
-        machineLineView_d = new RawLineView(this);
-        machineLineView_e = new RawLineView(this);
-
-
-        ll_a.addView(machineLineView_a, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ll_b.addView(machineLineView_b, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ll_c.addView(machineLineView_c, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ll_d.addView(machineLineView_d, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ll_e.addView(machineLineView_e, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
+        ll_content = (LinearLayout) findViewById(R.id.ll_content);
         requestHandler = new RequestHandler();
         requestHandler.sendEmptyMessage(SENDFLAG);
     }
@@ -224,6 +195,8 @@ public class AllMachineActivity extends AppCompatActivity {
     }
 
 
+    private AllMachinePageView allMachinePageView;
+
     /**
      * 处理list的数据
      *
@@ -234,18 +207,17 @@ public class AllMachineActivity extends AppCompatActivity {
             return;
         }
 
-        ArrayList<RawCell> cell_a = new ArrayList<RawCell>();
-        ArrayList<RawCell> cell_b = new ArrayList<RawCell>();
-        ArrayList<RawCell> cell_c = new ArrayList<RawCell>();
-        ArrayList<RawCell> cell_d = new ArrayList<RawCell>();
-        ArrayList<RawCell> cell_e = new ArrayList<RawCell>();
+        cellList.addAll(cellList);
+        cellList.addAll(cellList);
+        cellList.addAll(cellList);
+        cellList.addAll(cellList);
 
+        if (allMachinePageView == null) {
+            allMachinePageView = new AllMachinePageView(this);
+            ll_content.addView(allMachinePageView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        }
 
-        machineLineView_a.setLineCellData(cell_a);
-        machineLineView_b.setLineCellData(cell_b);
-        machineLineView_c.setLineCellData(cell_c);
-        machineLineView_d.setLineCellData(cell_d);
-        machineLineView_e.setLineCellData(cell_e);
+        allMachinePageView.setMachineViewList(0, cellList);
 
     }
 
@@ -267,31 +239,6 @@ public class AllMachineActivity extends AppCompatActivity {
             }
         }
 
-    }
-
-    /**
-     * Retrofit 同步请求
-     */
-    private void synchroRequest() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // 同步请求处理
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(Host.HOST)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                RawMaterialService service = retrofit.create(RawMaterialService.class);
-                Call<RawMaterialResBody> rawMaterialResBodyCall = service.rawMaterialList("Srv", "VisualPlant.svc", "RawMaterialStockQuery");
-                try {
-                    RawMaterialResBody rawMaterialResBody = rawMaterialResBodyCall.execute().body();
-                    Log.e(TAG, "resbody : --type = %s" + rawMaterialResBody.d.__type);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
     }
 
     @Override
