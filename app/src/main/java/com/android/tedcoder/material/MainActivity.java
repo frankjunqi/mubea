@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button btn_rawmaterial;
     private Button btn_semimaterial;
+    private Button btn_allmachine;
 
 
     @Override
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btn_semimaterial = (Button) findViewById(R.id.btn_semimaterial);
         btn_semimaterial.setOnClickListener(this);
+
+        btn_allmachine = (Button) findViewById(R.id.btn_allmachine);
+        btn_allmachine.setOnClickListener(this);
 
         et_host = (EditText) findViewById(R.id.et_host);
         et_request_time = (EditText) findViewById(R.id.et_request_time);
@@ -71,6 +75,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 initSetting();
                 Intent semi_material_intent = new Intent(MainActivity.this, SemiMaterialActivity.class);
                 startActivity(semi_material_intent);
+                break;
+            case R.id.btn_allmachine:
+                initSetting();
+                Intent allmachine_intent = new Intent(MainActivity.this, AllMachineActivity.class);
+                startActivity(allmachine_intent);
                 break;
             case R.id.btn_pdf:
                 Intent intent = new Intent(MainActivity.this, PDFViewActivity.class);
