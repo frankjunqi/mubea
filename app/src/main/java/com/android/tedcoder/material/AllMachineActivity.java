@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import com.android.tedcoder.material.api.AllMachineService;
 import com.android.tedcoder.material.api.Host;
 import com.android.tedcoder.material.api.RawMaterialService;
+import com.android.tedcoder.material.entity.allmachine.AllMachine;
 import com.android.tedcoder.material.entity.allmachine.AllMachineResBody;
 import com.android.tedcoder.material.entity.allmachine.MachineCell;
 import com.android.tedcoder.material.entity.rawmaterial.RawMaterialResBody;
@@ -84,7 +87,8 @@ public class AllMachineActivity extends AppCompatActivity {
     private LinearLayout ll_title;
 
     // content
-    private LinearLayout ll_content;
+    private ViewPager viewPager;
+    private MachineViewPagerAdapter machineViewPagerAdapter;
 
     private TextClock textClock;
     private TextView digitalClock;
@@ -99,6 +103,8 @@ public class AllMachineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_allmachine);
         Log.e(TAG, "RawMaterial_onCreate");
         initTitleLayout();
+        // init viewpager
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
         initContentLayout();
 
     }
@@ -129,7 +135,6 @@ public class AllMachineActivity extends AppCompatActivity {
     }
 
     private void initContentLayout() {
-        ll_content = (LinearLayout) findViewById(R.id.ll_content);
         requestHandler = new RequestHandler();
         requestHandler.sendEmptyMessage(SENDFLAG);
     }
@@ -195,7 +200,8 @@ public class AllMachineActivity extends AppCompatActivity {
     }
 
 
-    private AllMachinePageView allMachinePageView;
+    private int index = 0;
+
 
     /**
      * 处理list的数据
@@ -206,19 +212,113 @@ public class AllMachineActivity extends AppCompatActivity {
         if (cellList == null && cellList.size() > 0) {
             return;
         }
+        if (index % 4 == 1 || index % 4 == 2 || index % 4 == 3) {
+            for (int i = 0; i < index % 4; i++) {
+                cellList.addAll(cellList);
+            }
+        } else {
+            cellList.removeAll(cellList);
+        }
+        index++;
 
-        cellList.addAll(cellList);
-        cellList.addAll(cellList);
-        cellList.addAll(cellList);
-        cellList.addAll(cellList);
+        ArrayList<AllMachinePageView> list = new ArrayList<AllMachinePageView>();
 
-        if (allMachinePageView == null) {
-            allMachinePageView = new AllMachinePageView(this);
-            ll_content.addView(allMachinePageView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        // 计算需要几个viewpager
+        int totolPager = cellList.size() % AllMachineService.MAXCELLCOUNT > 0 ? cellList.size() / AllMachineService.MAXCELLCOUNT + 1 : cellList.size() / AllMachineService.MAXCELLCOUNT;
+        for (int i = 0; i < totolPager; i++) {
+            AllMachinePageView allMachinePageView = new AllMachinePageView(this);
+            allMachinePageView.setMachineViewList(i, cellList);
+            list.add(allMachinePageView);
+        }
+        viewPager.setAdapter(new MachineViewPagerAdapter(list));
+
+        /*int viewpageSize = viewPagerLists.size();
+        Log.e(TAG, "totolpage" + totolPager + "---viewpagesize" + viewpageSize);
+        // 要是pageview的list不变的话，只更新数据源
+        if (viewpageSize == totolPager) {
+            for (int i = 0; i < totolPager; i++) {
+                viewPagerLists.get(i).setMachineViewList(i, cellList);
+            }
+        } else {
+            if (viewpageSize < totolPager) {
+                // add view page & notify view data
+                for (int j = viewpageSize; j < totolPager; j++) {
+                    viewPagerLists.add(j, new AllMachinePageView(this));
+                    machineViewPagerAdapter.notifyDataSetChanged();
+                }
+                for (int i = 0; i < totolPager; i++) {
+                    viewPagerLists.get(i).setMachineViewList(i, cellList);
+                }
+            } else {
+                // remove view page & notify view data
+                for (int i = 0; i < viewpageSize; i++) {
+                    if (i + 1 > totolPager) {
+                        viewPagerLists.remove(i);
+                        machineViewPagerAdapter.notifyDataSetChanged();
+                    } else {
+                        // notify view data
+                        viewPagerLists.get(i).setMachineViewList(i, cellList);
+                    }
+                }
+            }
+            machineViewPagerAdapter.notifyDataSetChanged();
+        }*/
+
+    }
+
+
+    public class MachineViewPagerAdapter extends PagerAdapter {
+
+        private ArrayList<AllMachinePageView> list;
+
+        public MachineViewPagerAdapter(ArrayList<AllMachinePageView> list) {
+            this.list = list;
         }
 
-        allMachinePageView.setMachineViewList(0, cellList);
+        @Override
+        public int getCount() {
+            if (list != null) {
+                return list.size();
+            }
+            return 0;
+        }
 
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position,
+                                Object object) {
+            try {
+                if (list.size() < position) {
+                    return;
+                }
+                container.removeView(list.get(position));
+            } catch (Exception e) {
+                // do nothing
+            }
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return super.getItemPosition(object);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "";
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            if (list.size() < position) {
+                return null;
+            }
+            container.addView(list.get(position));
+            return list.get(position);
+        }
     }
 
     /**

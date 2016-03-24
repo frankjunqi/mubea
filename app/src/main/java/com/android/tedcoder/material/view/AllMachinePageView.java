@@ -3,6 +3,7 @@ package com.android.tedcoder.material.view;
 import android.content.Context;
 import android.widget.LinearLayout;
 
+import com.android.tedcoder.material.api.AllMachineService;
 import com.android.tedcoder.material.entity.allmachine.MachineCell;
 
 import java.util.ArrayList;
@@ -14,8 +15,6 @@ import java.util.ArrayList;
  */
 public class AllMachinePageView extends LinearLayout {
 
-    // 最大的cell的行数
-    private static final int MAXCELLCOUNT = 7;
     private ArrayList<AllMachineView> allMachineViews = new ArrayList<AllMachineView>();
 
     public AllMachinePageView(Context context) {
@@ -26,8 +25,8 @@ public class AllMachinePageView extends LinearLayout {
     // 初始化此page的总的cell的view
     private void initMachinePage() {
         setOrientation(LinearLayout.VERTICAL);
-        setWeightSum(MAXCELLCOUNT);
-        for (int i = 0; i < MAXCELLCOUNT; i++) {
+        setWeightSum(AllMachineService.MAXCELLCOUNT);
+        for (int i = 0; i < AllMachineService.MAXCELLCOUNT; i++) {
             AllMachineView allMachineView = new AllMachineView(getContext());
             addView(allMachineView, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f));
             allMachineViews.add(allMachineView);
@@ -46,8 +45,8 @@ public class AllMachinePageView extends LinearLayout {
         }
 
         // 判断是否是存在的页卡
-        int startIndex = page * MAXCELLCOUNT;
-        int maxEndIndex = (page + 1) * MAXCELLCOUNT;
+        int startIndex = page * AllMachineService.MAXCELLCOUNT;
+        int maxEndIndex = (page + 1) * AllMachineService.MAXCELLCOUNT;
 
         for (int i = startIndex, j = 0; i < cellList.size() && i < maxEndIndex; i++, j++) {
             allMachineViews.get(j).setMachineCellData(cellList.get(i));
