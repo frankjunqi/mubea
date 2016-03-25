@@ -4,9 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,17 +19,13 @@ import android.widget.Toast;
 
 import com.android.tedcoder.material.api.AllMachineService;
 import com.android.tedcoder.material.api.Host;
-import com.android.tedcoder.material.api.RawMaterialService;
-import com.android.tedcoder.material.entity.allmachine.AllMachine;
 import com.android.tedcoder.material.entity.allmachine.AllMachineResBody;
 import com.android.tedcoder.material.entity.allmachine.MachineCell;
-import com.android.tedcoder.material.entity.rawmaterial.RawMaterialResBody;
 import com.android.tedcoder.material.gsonfactory.GsonConverterFactory;
 import com.android.tedcoder.material.view.AllMachinePageView;
 import com.android.tedcoder.material.view.AllMachineView;
 import com.android.tedcoder.material.view.MarqueeTextView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -50,12 +46,12 @@ public class AllMachineActivity extends AppCompatActivity {
     // 发送请求的标志码
     private static final int SENDFLAG = 0x10;
     private static final int TIMEFLAG = 0x11;
+    private static final int SCROLLTIME = 0x12;
+
 
     // 系统退出的纪录时间
     private long mExitTime = 0;
-
     private static RequestHandler requestHandler = null;
-
     private static Handler timeHandler = null;
 
     private class RequestHandler extends Handler {
@@ -65,6 +61,18 @@ public class AllMachineActivity extends AppCompatActivity {
             switch (msg.what) {
                 case SENDFLAG:
                     asyncRequest();
+                    break;
+                case SCROLLTIME:
+                    int count = recyclerview.getAdapter().getItemCount();
+                    if (count != 0) {
+                        if (visiableIndex > count) {
+                            visiableIndex = 0;
+                        }
+                        Log.e(TAG, "position = " + visiableIndex % count + "-----count ==" + count + "-----visiableIndex ==" + visiableIndex);
+                        recyclerview.scrollToPosition(visiableIndex % count);
+                        visiableIndex++;
+                    }
+                    requestHandler.sendEmptyMessageDelayed(SCROLLTIME, Host.TIME * 1000);
                     break;
             }
         }
@@ -85,10 +93,12 @@ public class AllMachineActivity extends AppCompatActivity {
 
     // title的容器
     private LinearLayout ll_title;
+    private LinearLayout ll_cell_title;
 
     // content
-    private ViewPager viewPager;
-    private MachineViewPagerAdapter machineViewPagerAdapter;
+    private RecyclerView recyclerview;
+    private SpecialCardsAdapter specialCardsAdapter;
+    private int visiableIndex = 0;
 
     private TextClock textClock;
     private TextView digitalClock;
@@ -96,19 +106,42 @@ public class AllMachineActivity extends AppCompatActivity {
     private TextView tv_temperature;
     private MarqueeTextView tv_info;
 
+    private DisplayMetrics dm;
+    private int titleHeight = 0;
+    private int contentHeight = 0;
+    private int totalHeight = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allmachine);
         Log.e(TAG, "RawMaterial_onCreate");
+        initDisplay();
         initTitleLayout();
-        // init viewpager
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        initCellTitle();
+        initRecycleView();
         initContentLayout();
-
     }
 
+    // 初始化屏幕信息
+    private void initDisplay() {
+        dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        totalHeight = dm.heightPixels;
+    }
+
+    // 初始化recycle view
+    private void initRecycleView() {
+        recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
+        // 创建一个线性布局管理器
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        // 设置布局管理器
+        recyclerview.setLayoutManager(layoutManager);
+        specialCardsAdapter = new SpecialCardsAdapter();
+        recyclerview.setAdapter(specialCardsAdapter);
+    }
 
     /**
      * 初始化 title layout
@@ -123,20 +156,34 @@ public class AllMachineActivity extends AppCompatActivity {
         tv_temperature = (TextView) view.findViewById(R.id.tv_temperature);
         tv_info = (MarqueeTextView) view.findViewById(R.id.tv_info);
 
-        // 计算高度
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int height = dm.heightPixels / 9;
-        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+        titleHeight = dm.heightPixels / (AllMachineService.MAXCELLCOUNT + 2);
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, titleHeight));
         ll_title.addView(view);
 
         timeHandler = new TimeHandler();
         timeHandler.sendEmptyMessage(TIMEFLAG);
     }
 
+    private void initCellTitle() {
+        ll_cell_title = (LinearLayout) findViewById(R.id.ll_cell_title);
+        AllMachineView allMachineView = new AllMachineView(AllMachineActivity.this);
+        MachineCell machineCell = new MachineCell();
+        machineCell.Name = "设备名";
+        machineCell.State = "设备状态";
+        machineCell.QSState = "质量释放";
+        machineCell.CustPN = "订单相关信息";
+        machineCell.ProdPlanCount = "计划数量";
+        machineCell.ProdCount = "生成数量";
+        machineCell.ProdPercent = "完成率";
+        allMachineView.setMachineCellData(machineCell);
+        allMachineView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, titleHeight));
+        ll_cell_title.addView(allMachineView);
+    }
+
     private void initContentLayout() {
         requestHandler = new RequestHandler();
         requestHandler.sendEmptyMessage(SENDFLAG);
+        requestHandler.sendEmptyMessage(SCROLLTIME);
     }
 
 
@@ -212,114 +259,20 @@ public class AllMachineActivity extends AppCompatActivity {
         if (cellList == null && cellList.size() > 0) {
             return;
         }
-        if (index % 4 == 1 || index % 4 == 2 || index % 4 == 3) {
+        /*if (index % 4 == 1 || index % 4 == 2 || index % 4 == 3) {
             for (int i = 0; i < index % 4; i++) {
                 cellList.addAll(cellList);
             }
-        } else {
-            cellList.removeAll(cellList);
         }
-        index++;
+        index++;*/
 
-        ArrayList<AllMachinePageView> list = new ArrayList<AllMachinePageView>();
-
-        // 计算需要几个viewpager
-        int totolPager = cellList.size() % AllMachineService.MAXCELLCOUNT > 0 ? cellList.size() / AllMachineService.MAXCELLCOUNT + 1 : cellList.size() / AllMachineService.MAXCELLCOUNT;
-        for (int i = 0; i < totolPager; i++) {
-            AllMachinePageView allMachinePageView = new AllMachinePageView(this);
-            allMachinePageView.setMachineViewList(i, cellList);
-            list.add(allMachinePageView);
+        for (int i = 0; i < 3; i++) {
+            cellList.addAll(cellList);
         }
-        viewPager.setAdapter(new MachineViewPagerAdapter(list));
 
-        /*int viewpageSize = viewPagerLists.size();
-        Log.e(TAG, "totolpage" + totolPager + "---viewpagesize" + viewpageSize);
-        // 要是pageview的list不变的话，只更新数据源
-        if (viewpageSize == totolPager) {
-            for (int i = 0; i < totolPager; i++) {
-                viewPagerLists.get(i).setMachineViewList(i, cellList);
-            }
-        } else {
-            if (viewpageSize < totolPager) {
-                // add view page & notify view data
-                for (int j = viewpageSize; j < totolPager; j++) {
-                    viewPagerLists.add(j, new AllMachinePageView(this));
-                    machineViewPagerAdapter.notifyDataSetChanged();
-                }
-                for (int i = 0; i < totolPager; i++) {
-                    viewPagerLists.get(i).setMachineViewList(i, cellList);
-                }
-            } else {
-                // remove view page & notify view data
-                for (int i = 0; i < viewpageSize; i++) {
-                    if (i + 1 > totolPager) {
-                        viewPagerLists.remove(i);
-                        machineViewPagerAdapter.notifyDataSetChanged();
-                    } else {
-                        // notify view data
-                        viewPagerLists.get(i).setMachineViewList(i, cellList);
-                    }
-                }
-            }
-            machineViewPagerAdapter.notifyDataSetChanged();
-        }*/
-
+        specialCardsAdapter.setCellList(cellList);
     }
 
-
-    public class MachineViewPagerAdapter extends PagerAdapter {
-
-        private ArrayList<AllMachinePageView> list;
-
-        public MachineViewPagerAdapter(ArrayList<AllMachinePageView> list) {
-            this.list = list;
-        }
-
-        @Override
-        public int getCount() {
-            if (list != null) {
-                return list.size();
-            }
-            return 0;
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position,
-                                Object object) {
-            try {
-                if (list.size() < position) {
-                    return;
-                }
-                container.removeView(list.get(position));
-            } catch (Exception e) {
-                // do nothing
-            }
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            return super.getItemPosition(object);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return "";
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            if (list.size() < position) {
-                return null;
-            }
-            container.addView(list.get(position));
-            return list.get(position);
-        }
-    }
 
     /**
      * 处理滚动的字幕
@@ -347,10 +300,56 @@ public class AllMachineActivity extends AppCompatActivity {
         Log.e(TAG, "AllMachine_onDestroy");
         if (requestHandler != null) {
             requestHandler.removeMessages(SENDFLAG);
+            requestHandler.removeMessages(SCROLLTIME);
         }
 
         if (timeHandler != null) {
             timeHandler.removeMessages(TIMEFLAG);
         }
     }
+
+    class SpecialCardsAdapter extends RecyclerView.Adapter<SpecialCardsAdapter.ViewHolder> {
+
+        private ArrayList<MachineCell> cellList;
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            AllMachinePageView view = new AllMachinePageView(AllMachineActivity.this);
+            view.setLayoutParams(new LinearLayout.LayoutParams(dm.widthPixels, totalHeight - titleHeight * 2));
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, final int position) {
+            // 绑定数据到ViewHolder上
+            holder.allMachinePageView.setMachineViewList(position, cellList);
+        }
+
+        public void setCellList(ArrayList<MachineCell> cellList) {
+            this.cellList = cellList;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getItemCount() {
+            if (cellList == null) {
+                return 0;
+            }
+            int totolPager = cellList.size() % AllMachineService.MAXCELLCOUNT > 0 ? cellList.size() / AllMachineService.MAXCELLCOUNT + 1 : cellList.size() / AllMachineService.MAXCELLCOUNT;
+            return totolPager;
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+
+            public AllMachinePageView allMachinePageView;
+
+            public ViewHolder(AllMachinePageView itemView) {
+                super(itemView);
+                this.allMachinePageView = itemView;
+            }
+        }
+
+    }
+
+
 }

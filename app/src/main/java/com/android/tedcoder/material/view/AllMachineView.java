@@ -50,22 +50,13 @@ public class AllMachineView extends LinearLayout {
     }
 
     public void setMachineCellData(MachineCell machineCell) {
-        if (machineCell == null) {
-            return;
-        }
-        tv_00.setText(TextUtils.isEmpty(machineCell.Name) ? "" : machineCell.Name);
-        tv_01.setText(TextUtils.isEmpty(machineCell.State) ? "" : machineCell.State);
-        tv_02.setText(TextUtils.isEmpty(machineCell.QSState) ? "" : machineCell.QSState);
-        tv_03.setText(TextUtils.isEmpty(machineCell.CustPN) ? "" : machineCell.CustPN);
-        tv_04.setText(TextUtils.isEmpty(machineCell.ProdPlanCount) ? "" : machineCell.ProdPlanCount);
-        tv_05.setText(TextUtils.isEmpty(machineCell.ProdCount) ? "" : machineCell.ProdCount);
-        tv_06.setText(TextUtils.isEmpty(machineCell.ProdPercent) ? "" : machineCell.ProdPercent);
+        tv_00.setText(machineCell == null || TextUtils.isEmpty(machineCell.Name) ? "" : machineCell.Name);
+        tv_01.setText(machineCell == null || TextUtils.isEmpty(machineCell.State) ? "" : machineCell.State);
+        tv_02.setText(machineCell == null || TextUtils.isEmpty(machineCell.QSState) ? "" : machineCell.QSState);
+        tv_03.setText(machineCell == null || TextUtils.isEmpty(machineCell.CustPN) ? "" : machineCell.CustPN);
+        tv_04.setText(machineCell == null || TextUtils.isEmpty(machineCell.ProdPlanCount) ? "" : machineCell.ProdPlanCount);
+        tv_05.setText(machineCell == null || TextUtils.isEmpty(machineCell.ProdCount) ? "" : machineCell.ProdCount);
+        tv_06.setText(machineCell == null || TextUtils.isEmpty(machineCell.ProdPercent) ? "" : machineCell.ProdPercent);
     }
 
-    /**
-     * 设置Title
-     */
-    public void setNumberLine() {
-
-    }
 }

@@ -8,4 +8,7 @@ public class Host {
 
     // 时隔10秒请求一次
     public static int TENLOOPER = 10;
+
+    // 动画轮播的时间间隔
+    public static int TIME = 2;
 }
