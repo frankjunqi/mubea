@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -140,6 +141,12 @@ public class AllMachineActivity extends AppCompatActivity {
         recyclerview.setLayoutManager(layoutManager);
         specialCardsAdapter = new SpecialCardsAdapter();
         recyclerview.setAdapter(specialCardsAdapter);
+        recyclerview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
     }
 
     /**
@@ -230,7 +237,6 @@ public class AllMachineActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<AllMachineResBody> call, Throwable throwable) {
-                Log.e("error", throwable != null ? throwable.getMessage() : "");
                 Toast.makeText(AllMachineActivity.this, "网络出现异常，请检查网络链接", Toast.LENGTH_LONG).show();
                 requestHandler.sendEmptyMessageDelayed(SENDFLAG, Host.TENLOOPER * 1000);
             }
@@ -260,7 +266,6 @@ public class AllMachineActivity extends AppCompatActivity {
         /*for (int i = 0; i < 3; i++) {
             cellList.addAll(cellList);
         }*/
-
         specialCardsAdapter.setCellList(cellList);
     }
 
@@ -273,7 +278,7 @@ public class AllMachineActivity extends AppCompatActivity {
             String showDate = "";
             if (marqueeText != null) {
                 for (int i = 0; i < marqueeText.size(); i++) {
-                    showDate = showDate + marqueeText.get(i) + "       ";
+                    showDate = showDate + marqueeText.get(i) + "   ";
                 }
                 // 判断现实的文案是否一样
                 if (showDate.equals(tv_info.getText().toString())) {

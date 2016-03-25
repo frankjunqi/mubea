@@ -1,14 +1,19 @@
 package com.android.tedcoder.material.view;
 
 import android.content.Context;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.tedcoder.material.R;
+import com.android.tedcoder.material.api.Host;
 import com.android.tedcoder.material.entity.allmachine.MachineCell;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.NumberFormat;
 
@@ -27,7 +32,9 @@ public class AllMachineView extends LinearLayout {
     private TextView tv_00;
     private TextView tv_01;
     private TextView tv_02;
-    private TextView tv_03;
+    private SimpleDraweeView iv_show_fresco;
+    private MarqueeTextView tv_03;
+    private View orderpercentview;
     private TextView tv_06;
     private TextView tv_07;
     private TextView tv_08;
@@ -51,7 +58,9 @@ public class AllMachineView extends LinearLayout {
         tv_00 = (TextView) findViewById(R.id.tv_00);
         tv_01 = (TextView) findViewById(R.id.tv_01);
         tv_02 = (TextView) findViewById(R.id.tv_02);
-        tv_03 = (TextView) findViewById(R.id.tv_03);
+        iv_show_fresco = (SimpleDraweeView) findViewById(R.id.iv_show_fresco);
+        tv_03 = (MarqueeTextView) findViewById(R.id.tv_03);
+        orderpercentview = (View) findViewById(R.id.orderpercentview);
         tv_06 = (TextView) findViewById(R.id.tv_06);
         tv_07 = (TextView) findViewById(R.id.tv_07);
         tv_08 = (TextView) findViewById(R.id.tv_08);
@@ -84,7 +93,38 @@ public class AllMachineView extends LinearLayout {
         } else {
             tv_02.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
-        tv_03.setText(machineCell == null || TextUtils.isEmpty(machineCell.CustPN) ? "" : machineCell.CustPN);
+
+        // 图片logo
+        if (machineCell == null || TextUtils.isEmpty(machineCell.CustomerLogo)) {
+            iv_show_fresco.setVisibility(View.INVISIBLE);
+        } else {
+            iv_show_fresco.setVisibility(View.VISIBLE);
+            Uri uri = Uri.parse(Host.HOST + "res/customer/" + machineCell.CustomerLogo);
+            iv_show_fresco.setImageURI(uri);
+        }
+
+        String PO = (machineCell == null || TextUtils.isEmpty(machineCell.PO)) ? "" : machineCell.PO;
+        String custPn = (machineCell == null || TextUtils.isEmpty(machineCell.CustPN)) ? "" : machineCell.CustPN;
+        if (!TextUtils.isEmpty(PO) && !TextUtils.isEmpty(custPn)) {
+            if (tv_03.getText().toString().equals(PO + " " + custPn)) {
+                // do nothing
+            } else {
+                tv_03.setText(PO + " " + custPn);
+            }
+        } else {
+            tv_03.setText("");
+        }
+        // 订单进度－设置进度
+        float orderPercent = 0.0f;
+        try {
+            orderPercent = Float.parseFloat(machineCell.OrderPercent);
+        } catch (Exception e) {
+            orderPercent = 0.0f;
+        }
+        float orderWidth = width / 3 * orderPercent;
+        orderpercentview.setLayoutParams(new FrameLayout.LayoutParams((int) orderWidth, FrameLayout.LayoutParams.MATCH_PARENT));
+        orderpercentview.setBackgroundResource(R.drawable.blue_shape);
+
         tv_06.setText(machineCell == null || TextUtils.isEmpty(machineCell.ProdPlanCount) ? "" : machineCell.ProdPlanCount);
         tv_07.setText(machineCell == null || TextUtils.isEmpty(machineCell.ProdCount) ? "" : machineCell.ProdCount);
         // 计算进度
@@ -94,10 +134,10 @@ public class AllMachineView extends LinearLayout {
         } catch (Exception e) {
             percent = 0.0f;
         }
-        tv_08.setText(String.valueOf(num.format(percent)));
-        float percentwidth = (width / 9 * percent);
+        tv_08.setText(percent == 0.0f ? "" : String.valueOf(num.format(percent)));
+        /*float percentwidth = (width / 9 * percent);
         tv_08.setLayoutParams(new LinearLayout.LayoutParams((int) percentwidth, LinearLayout.LayoutParams.MATCH_PARENT));
-        tv_08.setBackgroundResource(R.drawable.blue_shape);
+        tv_08.setBackgroundResource(R.drawable.blue_shape);*/
     }
 
     /**
@@ -120,6 +160,7 @@ public class AllMachineView extends LinearLayout {
         tv_07.setText(TextUtils.isEmpty(machineCell.ProdCount) ? "" : machineCell.ProdCount);
         tv_08.setText(TextUtils.isEmpty(machineCell.ProdPercent) ? "" : machineCell.ProdPercent);
         ll_08.setGravity(Gravity.CENTER);
+        tv_03.setGravity(Gravity.CENTER);
     }
 
 }
