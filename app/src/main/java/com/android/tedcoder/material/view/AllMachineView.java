@@ -24,8 +24,6 @@ public class AllMachineView extends LinearLayout {
     private TextView tv_01;
     private TextView tv_02;
     private TextView tv_03;
-    private TextView tv_04;
-    private TextView tv_05;
     private TextView tv_06;
     private TextView tv_07;
     private TextView tv_08;
@@ -42,8 +40,6 @@ public class AllMachineView extends LinearLayout {
         tv_01 = (TextView) findViewById(R.id.tv_01);
         tv_02 = (TextView) findViewById(R.id.tv_02);
         tv_03 = (TextView) findViewById(R.id.tv_03);
-        tv_04 = (TextView) findViewById(R.id.tv_04);
-        tv_05 = (TextView) findViewById(R.id.tv_05);
         tv_06 = (TextView) findViewById(R.id.tv_06);
         tv_07 = (TextView) findViewById(R.id.tv_07);
         tv_08 = (TextView) findViewById(R.id.tv_08);
@@ -54,9 +50,9 @@ public class AllMachineView extends LinearLayout {
         tv_01.setText(machineCell == null || TextUtils.isEmpty(machineCell.State) ? "" : machineCell.State);
         tv_02.setText(machineCell == null || TextUtils.isEmpty(machineCell.QSState) ? "" : machineCell.QSState);
         tv_03.setText(machineCell == null || TextUtils.isEmpty(machineCell.CustPN) ? "" : machineCell.CustPN);
-        tv_04.setText(machineCell == null || TextUtils.isEmpty(machineCell.ProdPlanCount) ? "" : machineCell.ProdPlanCount);
-        tv_05.setText(machineCell == null || TextUtils.isEmpty(machineCell.ProdCount) ? "" : machineCell.ProdCount);
-        tv_06.setText(machineCell == null || TextUtils.isEmpty(machineCell.ProdPercent) ? "" : machineCell.ProdPercent);
+        tv_06.setText(machineCell == null || TextUtils.isEmpty(machineCell.ProdPlanCount) ? "" : machineCell.ProdPlanCount);
+        tv_07.setText(machineCell == null || TextUtils.isEmpty(machineCell.ProdCount) ? "" : machineCell.ProdCount);
+        tv_08.setText(machineCell == null || TextUtils.isEmpty(machineCell.ProdPercent) ? "" : machineCell.ProdPercent);
     }
 
 }

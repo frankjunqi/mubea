@@ -31,6 +31,14 @@
         android:hint="默认发送一次请求间隔：10秒"
         android:textSize="14sp" />
 
+    <EditText
+        android:id="@+id/et_ainimation_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="换屏幕时间间隔：5秒"
+        android:textSize="14sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="38dp"

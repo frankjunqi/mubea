@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private EditText et_request_time;
     private EditText et_host;
+    private EditText et_ainimation_time;
 
 
     private Button btn_rawmaterial;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         et_host = (EditText) findViewById(R.id.et_host);
         et_request_time = (EditText) findViewById(R.id.et_request_time);
+        et_ainimation_time = (EditText) findViewById(R.id.et_ainimation_time);
 
         btn_pdf = (Button) findViewById(R.id.btn_pdf);
         btn_pdf.setOnClickListener(this);
@@ -106,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initSetting() {
         String host = et_host.getText().toString();
         String request_time = et_request_time.getText().toString();
+        String animatin_time = et_ainimation_time.getText().toString();
         if (!TextUtils.isEmpty(host)) {
             // do  something
             Host.HOST = host;
@@ -124,6 +127,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         Host.TENLOOPER = time;
+
+        int animation_time = 5;
+        if (!TextUtils.isEmpty(animatin_time)) {
+            try {
+                animation_time = Integer.parseInt(animatin_time);
+                if (animation_time < 5) {
+                    Toast.makeText(MainActivity.this, "时间间隔必须大于5秒", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            } catch (Exception e) {
+                animation_time = 5;
+            }
+        }
+        Host.TIME = animation_time;
     }
 
     @Override

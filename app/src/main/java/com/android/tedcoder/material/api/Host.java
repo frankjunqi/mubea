@@ -10,5 +10,5 @@ public class Host {
     public static int TENLOOPER = 10;
 
     // 动画轮播的时间间隔
-    public static int TIME = 2;
+    public static int TIME = 5;
 }

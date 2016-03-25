@@ -266,9 +266,9 @@ public class AllMachineActivity extends AppCompatActivity {
         }
         index++;*/
 
-        for (int i = 0; i < 3; i++) {
+        /*for (int i = 0; i < 3; i++) {
             cellList.addAll(cellList);
-        }
+        }*/
 
         specialCardsAdapter.setCellList(cellList);
     }
