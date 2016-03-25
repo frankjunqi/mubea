@@ -22,7 +22,6 @@ import com.android.tedcoder.material.entity.semimaterial.SemiCell;
 import com.android.tedcoder.material.entity.semimaterial.SemiMaterialResBody;
 import com.android.tedcoder.material.gsonfactory.GsonConverterFactory;
 import com.android.tedcoder.material.view.MarqueeTextView;
-import com.android.tedcoder.material.view.RawLineView;
 import com.android.tedcoder.material.view.SemiLineView;
 
 import java.util.ArrayList;

@@ -1,7 +1,5 @@
 package com.android.tedcoder.material.entity.rawmaterial;
 
-import com.android.tedcoder.material.entity.rawmaterial.RawMaterialObj;
-
 import java.io.Serializable;
 
 /**

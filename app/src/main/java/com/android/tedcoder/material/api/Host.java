@@ -11,4 +11,7 @@ public class Host {
 
     // 动画轮播的时间间隔
     public static int TIME = 5;
+
+    // 最大的cell的行数
+    public static final int MAXCELLCOUNT = 5;
 }

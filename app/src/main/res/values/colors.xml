@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <color name="main_orange">#ffff6815</color>
     <!-- 用于价格，警告 -->
     <color name="main_orange_press">#fff25f0e</color>
@@ -9,11 +8,12 @@
     <!-- 用于橘色按钮不可点击 -->
     <color name="rawmaterial_dark">#ffe4e4e4</color>
     <color name="rawmaterial_light">#ffffffff</color>
-
     <color name="main_white">#ffffffff</color>
-
     <color name="main_click">#ffeeeeee</color>
     <!-- 用于点击色 -->
-
     <color name="common_text">#ff4F4F4F</color>
+    <color name="holo_red_light">#ffff4444</color>
+    <color name="holo_green_dark">#ff669900</color>
+    <color name="holo_orange_dark">#ffff8800</color>
+    <color name="holo_blue_bright">#ff00ddff</color>
 </resources>

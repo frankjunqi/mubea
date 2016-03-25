@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.android.tedcoder.material.api.AllMachineService;
+import com.android.tedcoder.material.api.Host;
 import com.android.tedcoder.material.entity.allmachine.MachineCell;
 
 import java.util.ArrayList;
@@ -17,19 +17,21 @@ import java.util.ArrayList;
 public class AllMachinePageView extends LinearLayout {
 
     private ArrayList<AllMachineView> allMachineViews = new ArrayList<>();
+    private int width;
 
-    public AllMachinePageView(Context context) {
+    public AllMachinePageView(Context context, int width) {
         super(context);
+        this.width = width;
         initMachinePage();
     }
 
     // 初始化此page的总的cell的view
     private void initMachinePage() {
         setOrientation(LinearLayout.VERTICAL);
-        setWeightSum(AllMachineService.MAXCELLCOUNT);
+        setWeightSum(Host.MAXCELLCOUNT);
         setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        for (int i = 0; i < AllMachineService.MAXCELLCOUNT; i++) {
-            AllMachineView allMachineView = new AllMachineView(getContext());
+        for (int i = 0; i < Host.MAXCELLCOUNT; i++) {
+            AllMachineView allMachineView = new AllMachineView(getContext(), width);
             addView(allMachineView, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f));
             allMachineViews.add(allMachineView);
         }
@@ -47,9 +49,9 @@ public class AllMachinePageView extends LinearLayout {
         }
 
         // 判断是否是存在的页卡
-        int startIndex = page * AllMachineService.MAXCELLCOUNT;
+        int startIndex = page * Host.MAXCELLCOUNT;
 
-        for (int i = 0, j = 0; j < AllMachineService.MAXCELLCOUNT; i++, j++) {
+        for (int i = 0, j = 0; j < Host.MAXCELLCOUNT; i++, j++) {
             if (i + startIndex < cellList.size()) {
                 allMachineViews.get(j).setMachineCellData(cellList.get(i + startIndex));
             } else {

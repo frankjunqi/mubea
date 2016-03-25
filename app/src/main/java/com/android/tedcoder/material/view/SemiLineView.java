@@ -2,12 +2,10 @@ package com.android.tedcoder.material.view;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.tedcoder.material.R;
-import com.android.tedcoder.material.entity.rawmaterial.RawCell;
 import com.android.tedcoder.material.entity.semimaterial.SemiCell;
 
 import java.util.ArrayList;

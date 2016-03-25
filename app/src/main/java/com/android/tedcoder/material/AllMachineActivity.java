@@ -108,7 +108,6 @@ public class AllMachineActivity extends AppCompatActivity {
 
     private DisplayMetrics dm;
     private int titleHeight = 0;
-    private int contentHeight = 0;
     private int totalHeight = 0;
 
 
@@ -156,7 +155,7 @@ public class AllMachineActivity extends AppCompatActivity {
         tv_temperature = (TextView) view.findViewById(R.id.tv_temperature);
         tv_info = (MarqueeTextView) view.findViewById(R.id.tv_info);
 
-        titleHeight = dm.heightPixels / (AllMachineService.MAXCELLCOUNT + 2);
+        titleHeight = dm.heightPixels / (Host.MAXCELLCOUNT + 2);
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, titleHeight));
         ll_title.addView(view);
 
@@ -166,16 +165,8 @@ public class AllMachineActivity extends AppCompatActivity {
 
     private void initCellTitle() {
         ll_cell_title = (LinearLayout) findViewById(R.id.ll_cell_title);
-        AllMachineView allMachineView = new AllMachineView(AllMachineActivity.this);
-        MachineCell machineCell = new MachineCell();
-        machineCell.Name = "设备名";
-        machineCell.State = "设备状态";
-        machineCell.QSState = "质量释放";
-        machineCell.CustPN = "订单相关信息";
-        machineCell.ProdPlanCount = "计划数量";
-        machineCell.ProdCount = "生成数量";
-        machineCell.ProdPercent = "完成率";
-        allMachineView.setMachineCellData(machineCell);
+        AllMachineView allMachineView = new AllMachineView(AllMachineActivity.this, dm.widthPixels);
+        allMachineView.setDefaultTitleCell();
         allMachineView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, titleHeight));
         ll_cell_title.addView(allMachineView);
     }
@@ -314,7 +305,7 @@ public class AllMachineActivity extends AppCompatActivity {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            AllMachinePageView view = new AllMachinePageView(AllMachineActivity.this);
+            AllMachinePageView view = new AllMachinePageView(AllMachineActivity.this, dm.widthPixels);
             view.setLayoutParams(new LinearLayout.LayoutParams(dm.widthPixels, totalHeight - titleHeight * 2));
             return new ViewHolder(view);
         }
@@ -335,7 +326,7 @@ public class AllMachineActivity extends AppCompatActivity {
             if (cellList == null) {
                 return 0;
             }
-            int totolPager = cellList.size() % AllMachineService.MAXCELLCOUNT > 0 ? cellList.size() / AllMachineService.MAXCELLCOUNT + 1 : cellList.size() / AllMachineService.MAXCELLCOUNT;
+            int totolPager = cellList.size() % Host.MAXCELLCOUNT > 0 ? cellList.size() / Host.MAXCELLCOUNT + 1 : cellList.size() / Host.MAXCELLCOUNT;
             return totolPager;
         }
 
