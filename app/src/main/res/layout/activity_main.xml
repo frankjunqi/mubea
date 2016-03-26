@@ -88,7 +88,7 @@
             android:textSize="14sp" />
 
         <Button
-            android:id="@+id/btn_setting"
+            android:id="@+id/btn_nfc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -96,7 +96,7 @@
             android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:background="@drawable/selector_orange"
-            android:text="等待..."
+            android:text="NFC"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
     </LinearLayout>
