@@ -14,7 +14,6 @@ import com.android.tedcoder.material.api.Host;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btn_pdf;
     private Button btn_video;
     private Button btn_sys_video;
     private Button btn_download;
@@ -52,9 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         et_request_time = (EditText) findViewById(R.id.et_request_time);
         et_ainimation_time = (EditText) findViewById(R.id.et_ainimation_time);
 
-        btn_pdf = (Button) findViewById(R.id.btn_pdf);
-        btn_pdf.setOnClickListener(this);
-
         btn_video = (Button) findViewById(R.id.btn_video);
         btn_video.setOnClickListener(this);
 
@@ -90,11 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_nfc:
                 Intent nfc_intent = new Intent(MainActivity.this, NFCActivity.class);
                 startActivity(nfc_intent);
-                break;
-
-            case R.id.btn_pdf:
-                Intent intent = new Intent(MainActivity.this, PDFViewActivity.class);
-                startActivity(intent);
                 break;
             case R.id.btn_video:
                 Intent video_intent = new Intent(MainActivity.this, VideoViewActivity.class);
