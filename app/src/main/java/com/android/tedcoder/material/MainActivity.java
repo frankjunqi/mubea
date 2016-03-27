@@ -14,9 +14,6 @@ import com.android.tedcoder.material.api.Host;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btn_video;
-    private Button btn_sys_video;
-    private Button btn_download;
     private Button btn_fresco;
 
     private EditText et_request_time;
@@ -27,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_rawmaterial;
     private Button btn_semimaterial;
     private Button btn_allmachine;
-    private Button btn_nfc;
 
 
     @Override
@@ -44,24 +40,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_allmachine = (Button) findViewById(R.id.btn_allmachine);
         btn_allmachine.setOnClickListener(this);
 
-        btn_nfc = (Button) findViewById(R.id.btn_allmachine);
-        btn_nfc.setOnClickListener(this);
-
         et_host = (EditText) findViewById(R.id.et_host);
         et_request_time = (EditText) findViewById(R.id.et_request_time);
         et_ainimation_time = (EditText) findViewById(R.id.et_ainimation_time);
 
-        btn_video = (Button) findViewById(R.id.btn_video);
-        btn_video.setOnClickListener(this);
-
-        btn_download = (Button) findViewById(R.id.btn_download);
-        btn_download.setOnClickListener(this);
-
         btn_fresco = (Button) findViewById(R.id.btn_fresco);
         btn_fresco.setOnClickListener(this);
 
-        btn_sys_video = (Button) findViewById(R.id.btn_sys_video);
-        btn_sys_video.setOnClickListener(this);
     }
 
 
@@ -83,24 +68,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent allmachine_intent = new Intent(MainActivity.this, AllMachineActivity.class);
                 startActivity(allmachine_intent);
                 break;
-            case R.id.btn_nfc:
-                Intent nfc_intent = new Intent(MainActivity.this, NFCActivity.class);
-                startActivity(nfc_intent);
-                break;
-            case R.id.btn_video:
-                Intent video_intent = new Intent(MainActivity.this, VideoViewActivity.class);
-                startActivity(video_intent);
-                break;
             case R.id.btn_fresco:
                 Intent fresco_intent = new Intent(MainActivity.this, FrescoViewActivity.class);
                 startActivity(fresco_intent);
-                break;
-            case R.id.btn_sys_video:
-                Intent videoplay_intent = new Intent(MainActivity.this, VideoPlayActivity.class);
-                startActivity(videoplay_intent);
-                break;
-            case R.id.btn_download:
-                Toast.makeText(MainActivity.this, "Download", Toast.LENGTH_LONG).show();
                 break;
         }
     }
