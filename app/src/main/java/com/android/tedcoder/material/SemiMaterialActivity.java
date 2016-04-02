@@ -86,6 +86,7 @@ public class SemiMaterialActivity extends AppCompatActivity {
     private LinearLayout ll_f;
     private LinearLayout ll_g;
     private LinearLayout ll_h;
+    private LinearLayout ll_i;
 
     private SemiLineView semiLineView_0 = null;
     private SemiLineView semiLineView_a = null;
@@ -96,6 +97,7 @@ public class SemiMaterialActivity extends AppCompatActivity {
     private SemiLineView semiLineView_f = null;
     private SemiLineView semiLineView_g = null;
     private SemiLineView semiLineView_h = null;
+    private SemiLineView semiLineView_i = null;
 
     // title的容器
     private LinearLayout ll_title;
@@ -135,7 +137,7 @@ public class SemiMaterialActivity extends AppCompatActivity {
         // 计算高度
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int height = dm.heightPixels / 9;
+        int height = dm.heightPixels / 11;
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
         ll_title.addView(view);
 
@@ -153,6 +155,7 @@ public class SemiMaterialActivity extends AppCompatActivity {
         ll_f = (LinearLayout) findViewById(R.id.ll_f);
         ll_g = (LinearLayout) findViewById(R.id.ll_g);
         ll_h = (LinearLayout) findViewById(R.id.ll_h);
+        ll_i = (LinearLayout) findViewById(R.id.ll_i);
 
         semiLineView_0 = new SemiLineView(this);
         semiLineView_a = new SemiLineView(this);
@@ -163,6 +166,7 @@ public class SemiMaterialActivity extends AppCompatActivity {
         semiLineView_f = new SemiLineView(this);
         semiLineView_g = new SemiLineView(this);
         semiLineView_h = new SemiLineView(this);
+        semiLineView_i = new SemiLineView(this);
 
 
         ll_0.addView(semiLineView_0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -176,6 +180,7 @@ public class SemiMaterialActivity extends AppCompatActivity {
         ll_f.addView(semiLineView_f, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         ll_g.addView(semiLineView_g, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         ll_h.addView(semiLineView_h, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ll_i.addView(semiLineView_i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         requestHandler = new RequestHandler();
         requestHandler.sendEmptyMessage(SENDFLAG);
@@ -234,7 +239,6 @@ public class SemiMaterialActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<SemiMaterialResBody> call, Throwable throwable) {
-                Log.e("error", throwable != null ? throwable.getMessage() : "");
                 Toast.makeText(SemiMaterialActivity.this, "网络出现异常，请检查网络链接", Toast.LENGTH_LONG).show();
                 requestHandler.sendEmptyMessageDelayed(SENDFLAG, Host.TENLOOPER * 1000);
             }
@@ -260,6 +264,7 @@ public class SemiMaterialActivity extends AppCompatActivity {
         ArrayList<SemiCell> cell_f = new ArrayList<SemiCell>();
         ArrayList<SemiCell> cell_g = new ArrayList<SemiCell>();
         ArrayList<SemiCell> cell_h = new ArrayList<SemiCell>();
+        ArrayList<SemiCell> cell_i = new ArrayList<SemiCell>();
 
         for (int i = 0; i < cellList.size(); i++) {
             SemiCell cell = cellList.get(i);
@@ -279,6 +284,8 @@ public class SemiMaterialActivity extends AppCompatActivity {
                 cell_g.add(cell);
             } else if (!TextUtils.isEmpty(cell.LocCode) && cell.LocCode.contains("H")) {
                 cell_h.add(cell);
+            } else if (!TextUtils.isEmpty(cell.LocCode) && cell.LocCode.contains("I")) {
+                cell_i.add(cell);
             }
 
         }
@@ -291,6 +298,7 @@ public class SemiMaterialActivity extends AppCompatActivity {
         semiLineView_f.setLineCellData(cell_f);
         semiLineView_g.setLineCellData(cell_g);
         semiLineView_h.setLineCellData(cell_h);
+        semiLineView_i.setLineCellData(cell_i);
 
     }
 

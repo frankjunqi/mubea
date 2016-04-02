@@ -80,13 +80,11 @@ public class RawMaterialActivity extends AppCompatActivity {
 
     private LinearLayout ll_a;
     private LinearLayout ll_b;
-    private LinearLayout ll_c;
     private LinearLayout ll_d;
     private LinearLayout ll_e;
 
     private RawLineView rawLineView_a = null;
     private RawLineView rawLineView_b = null;
-    private RawLineView rawLineView_c = null;
     private RawLineView rawLineView_d = null;
     private RawLineView rawLineView_e = null;
 
@@ -139,20 +137,17 @@ public class RawMaterialActivity extends AppCompatActivity {
     private void initContentLayout() {
         ll_a = (LinearLayout) findViewById(R.id.ll_a);
         ll_b = (LinearLayout) findViewById(R.id.ll_b);
-        ll_c = (LinearLayout) findViewById(R.id.ll_c);
         ll_d = (LinearLayout) findViewById(R.id.ll_d);
         ll_e = (LinearLayout) findViewById(R.id.ll_e);
 
         rawLineView_a = new RawLineView(this);
         rawLineView_b = new RawLineView(this);
-        rawLineView_c = new RawLineView(this);
         rawLineView_d = new RawLineView(this);
         rawLineView_e = new RawLineView(this);
 
 
         ll_a.addView(rawLineView_a, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         ll_b.addView(rawLineView_b, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ll_c.addView(rawLineView_c, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         ll_d.addView(rawLineView_d, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         ll_e.addView(rawLineView_e, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
@@ -213,7 +208,6 @@ public class RawMaterialActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RawMaterialResBody> call, Throwable throwable) {
-                Log.e("error", throwable != null ? throwable.getMessage() : "");
                 Toast.makeText(RawMaterialActivity.this, "网络出现异常，请检查网络链接", Toast.LENGTH_LONG).show();
                 requestHandler.sendEmptyMessageDelayed(SENDFLAG, Host.TENLOOPER * 1000);
             }
@@ -233,7 +227,6 @@ public class RawMaterialActivity extends AppCompatActivity {
 
         ArrayList<RawCell> cell_a = new ArrayList<RawCell>();
         ArrayList<RawCell> cell_b = new ArrayList<RawCell>();
-        ArrayList<RawCell> cell_c = new ArrayList<RawCell>();
         ArrayList<RawCell> cell_d = new ArrayList<RawCell>();
         ArrayList<RawCell> cell_e = new ArrayList<RawCell>();
 
@@ -243,8 +236,6 @@ public class RawMaterialActivity extends AppCompatActivity {
                 cell_a.add(cell);
             } else if (!TextUtils.isEmpty(cell.LocCode) && cell.LocCode.contains("B")) {
                 cell_b.add(cell);
-            } else if (!TextUtils.isEmpty(cell.LocCode) && cell.LocCode.contains("C")) {
-                cell_c.add(cell);
             } else if (!TextUtils.isEmpty(cell.LocCode) && cell.LocCode.contains("D")) {
                 cell_d.add(cell);
             } else if (!TextUtils.isEmpty(cell.LocCode) && cell.LocCode.contains("E")) {
@@ -254,7 +245,6 @@ public class RawMaterialActivity extends AppCompatActivity {
 
         rawLineView_a.setLineCellData(cell_a);
         rawLineView_b.setLineCellData(cell_b);
-        rawLineView_c.setLineCellData(cell_c);
         rawLineView_d.setLineCellData(cell_d);
         rawLineView_e.setLineCellData(cell_e);
 

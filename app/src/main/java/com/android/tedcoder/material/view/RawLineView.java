@@ -85,7 +85,13 @@ public class RawLineView extends LinearLayout {
         for (int i = 0; i < cellList.size() && i < totolViewSize; i++) {
             RawCell cell = cellList.get(i);
             tv_a0s.get(i).setText(TextUtils.isEmpty(cell.LocCode) ? "" : cellList.get(i).LocCode);
-            tv_data_a0s.get(i).setText(TextUtils.isEmpty(cell.Diameter) ? "" : cellList.get(i).Diameter);
+            String dianmeter = cell.Diameter;
+            String inOutTime = cell.InOutTime;
+            if (TextUtils.isEmpty(dianmeter)) {
+                tv_data_a0s.get(i).setText("");
+            } else {
+                tv_data_a0s.get(i).setText(dianmeter + "\n" + inOutTime);
+            }
         }
 
     }

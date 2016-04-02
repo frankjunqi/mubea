@@ -30,13 +30,6 @@ public class SemiLineView extends LinearLayout {
     private TextView tv_07;
     private TextView tv_08;
     private TextView tv_09;
-    private TextView tv_10;
-    private TextView tv_11;
-    private TextView tv_12;
-    private TextView tv_13;
-    private TextView tv_14;
-    private TextView tv_15;
-    private TextView tv_16;
     private ArrayList<TextView> tv_as = new ArrayList<TextView>();
 
     public SemiLineView(Context context) {
@@ -57,13 +50,6 @@ public class SemiLineView extends LinearLayout {
         tv_07 = (TextView) findViewById(R.id.tv_07);
         tv_08 = (TextView) findViewById(R.id.tv_08);
         tv_09 = (TextView) findViewById(R.id.tv_09);
-        tv_10 = (TextView) findViewById(R.id.tv_10);
-        tv_11 = (TextView) findViewById(R.id.tv_11);
-        tv_12 = (TextView) findViewById(R.id.tv_12);
-        tv_13 = (TextView) findViewById(R.id.tv_13);
-        tv_14 = (TextView) findViewById(R.id.tv_14);
-        tv_15 = (TextView) findViewById(R.id.tv_15);
-        tv_16 = (TextView) findViewById(R.id.tv_16);
         tv_as.add(tv_00);
         tv_as.add(tv_01);
         tv_as.add(tv_02);
@@ -74,13 +60,6 @@ public class SemiLineView extends LinearLayout {
         tv_as.add(tv_07);
         tv_as.add(tv_08);
         tv_as.add(tv_09);
-        tv_as.add(tv_10);
-        tv_as.add(tv_11);
-        tv_as.add(tv_12);
-        tv_as.add(tv_13);
-        tv_as.add(tv_14);
-        tv_as.add(tv_15);
-        tv_as.add(tv_16);
     }
 
     public void setLineCellData(ArrayList<SemiCell> cellList) {
@@ -107,6 +86,8 @@ public class SemiLineView extends LinearLayout {
             semiCellFirst.Diameter = "G";
         } else if (semiCell.LocCode.contains("H")) {
             semiCellFirst.Diameter = "H";
+        } else if (semiCell.LocCode.contains("I")) {
+            semiCellFirst.Diameter = "I";
         }
         cellList.add(0, semiCellFirst);
 
@@ -125,7 +106,9 @@ public class SemiLineView extends LinearLayout {
      */
     public void setNumberLine() {
         for (int i = 0; i < tv_as.size(); i++) {
-            tv_as.get(i).setText(String.valueOf(i));
+            if(i != 0){
+                tv_as.get(i).setText(String.valueOf(i));
+            }
         }
     }
 }
