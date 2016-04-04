@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.android.tedcoder.material.entity.semimaterial.SemiMaterialResBody;
 import com.android.tedcoder.material.gsonfactory.GsonConverterFactory;
 import com.android.tedcoder.material.view.MarqueeTextView;
 import com.android.tedcoder.material.view.SemiLineView;
+import com.android.tedcoder.material.view.TitleLineView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,14 +45,11 @@ public class SemiMaterialActivity extends AppCompatActivity {
 
     // 发送请求的标志码
     private static final int SENDFLAG = 0x110;
-    private static final int TIMEFLAG = 0x111;
 
     // 系统退出的纪录时间
     private long mExitTime = 0;
 
     private static RequestHandler requestHandler = null;
-
-    private static Handler timeHandler = null;
 
     private class RequestHandler extends Handler {
 
@@ -59,19 +58,6 @@ public class SemiMaterialActivity extends AppCompatActivity {
             switch (msg.what) {
                 case SENDFLAG:
                     asyncRequest();
-                    break;
-            }
-        }
-    }
-
-    private class TimeHandler extends Handler {
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case TIMEFLAG:
-                    refreshTime();
-                    timeHandler.sendEmptyMessageDelayed(TIMEFLAG, 1000);
                     break;
             }
         }
@@ -101,49 +87,29 @@ public class SemiMaterialActivity extends AppCompatActivity {
 
     // title的容器
     private LinearLayout ll_title;
-
-    private TextClock textClock;
-    private TextView digitalClock;
-    private TextView tv_weather;
-    private TextView tv_temperature;
-    private MarqueeTextView tv_info;
+    private TitleLineView titleLineView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_semimaterial);
         Log.e(TAG, "Semi_Material_onCreate");
+        ll_title = (LinearLayout) findViewById(R.id.ll_title);
+        titleLineView = new TitleLineView(SemiMaterialActivity.this);
+        titleLineView.setTitle("半成品看板");
+        ll_title.addView(titleLineView);
+        // 计算高度
+        WindowManager wm = (WindowManager) getApplication()
+                .getSystemService(Context.WINDOW_SERVICE);
 
-        initTitleLayout();
+        int heightpix = wm.getDefaultDisplay().getHeight();
+        int height = heightpix / 9 - 18;
 
         initContentLayout();
 
     }
 
-
-    /**
-     * 初始化 title layout
-     */
-    private void initTitleLayout() {
-        ll_title = (LinearLayout) findViewById(R.id.ll_title);
-
-        View view = LayoutInflater.from(this).inflate(R.layout.rawmaterial_title, null);
-        textClock = (TextClock) view.findViewById(R.id.textClock);
-        digitalClock = (TextView) view.findViewById(R.id.digitalClock);
-        tv_weather = (TextView) view.findViewById(R.id.tv_weather);
-        tv_temperature = (TextView) view.findViewById(R.id.tv_temperature);
-        tv_info = (MarqueeTextView) view.findViewById(R.id.tv_info);
-
-        // 计算高度
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int height = dm.heightPixels / 11;
-        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
-        ll_title.addView(view);
-
-        timeHandler = new TimeHandler();
-        timeHandler.sendEmptyMessage(TIMEFLAG);
-    }
 
     private void initContentLayout() {
         ll_0 = (LinearLayout) findViewById(R.id.ll_0);
@@ -184,17 +150,6 @@ public class SemiMaterialActivity extends AppCompatActivity {
 
         requestHandler = new RequestHandler();
         requestHandler.sendEmptyMessage(SENDFLAG);
-    }
-
-
-    private void refreshTime() {
-        Calendar c = Calendar.getInstance();
-        int day = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
-        if (digitalClock != null) {
-            digitalClock.setText(String.format("%s:%s", day < 10 ? "0" + String.valueOf(day) : String.valueOf(day)
-                    , minute < 10 ? "0" + String.valueOf(minute) : String.valueOf(minute)));
-        }
     }
 
 
@@ -313,10 +268,10 @@ public class SemiMaterialActivity extends AppCompatActivity {
                     showDate = showDate + marqueeText.get(i) + "       ";
                 }
                 // 判断现实的文案是否一样
-                if (showDate.equals(tv_info.getText().toString())) {
+                if (showDate.equals(titleLineView.getNoticContent())) {
                     return;
                 }
-                tv_info.setText(showDate);
+                titleLineView.setNoticeContent(showDate);
             }
         }
 
@@ -329,10 +284,6 @@ public class SemiMaterialActivity extends AppCompatActivity {
         Log.e(TAG, "Semi_Material_onDestroy");
         if (requestHandler != null) {
             requestHandler.removeMessages(SENDFLAG);
-        }
-
-        if (timeHandler != null) {
-            timeHandler.removeMessages(TIMEFLAG);
         }
     }
 }

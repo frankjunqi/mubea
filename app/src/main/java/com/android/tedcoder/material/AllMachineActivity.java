@@ -9,13 +9,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.TextClock;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.tedcoder.material.api.AllMachineService;
@@ -25,10 +23,9 @@ import com.android.tedcoder.material.entity.allmachine.MachineCell;
 import com.android.tedcoder.material.gsonfactory.GsonConverterFactory;
 import com.android.tedcoder.material.view.AllMachinePageView;
 import com.android.tedcoder.material.view.AllMachineView;
-import com.android.tedcoder.material.view.MarqueeTextView;
+import com.android.tedcoder.material.view.TitleLineView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -46,14 +43,12 @@ public class AllMachineActivity extends AppCompatActivity {
 
     // 发送请求的标志码
     private static final int SENDFLAG = 0x10;
-    private static final int TIMEFLAG = 0x11;
     private static final int SCROLLTIME = 0x12;
 
 
     // 系统退出的纪录时间
     private long mExitTime = 0;
     private static RequestHandler requestHandler = null;
-    private static Handler timeHandler = null;
 
     private class RequestHandler extends Handler {
 
@@ -79,33 +74,15 @@ public class AllMachineActivity extends AppCompatActivity {
         }
     }
 
-    private class TimeHandler extends Handler {
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case TIMEFLAG:
-                    refreshTime();
-                    timeHandler.sendEmptyMessageDelayed(TIMEFLAG, 1000);
-                    break;
-            }
-        }
-    }
-
     // title的容器
     private LinearLayout ll_title;
+    private TitleLineView titleLineView;
     private LinearLayout ll_cell_title;
 
     // content
     private RecyclerView recyclerview;
     private SpecialCardsAdapter specialCardsAdapter;
     private int visiableIndex = 0;
-
-    private TextClock textClock;
-    private TextView digitalClock;
-    private TextView tv_weather;
-    private TextView tv_temperature;
-    private MarqueeTextView tv_info;
 
     private DisplayMetrics dm;
     private int titleHeight = 0;
@@ -115,6 +92,7 @@ public class AllMachineActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_allmachine);
         Log.e(TAG, "RawMaterial_onCreate");
         initDisplay();
@@ -154,20 +132,9 @@ public class AllMachineActivity extends AppCompatActivity {
      */
     private void initTitleLayout() {
         ll_title = (LinearLayout) findViewById(R.id.ll_title);
-
-        View view = LayoutInflater.from(this).inflate(R.layout.rawmaterial_title, null);
-        textClock = (TextClock) view.findViewById(R.id.textClock);
-        digitalClock = (TextView) view.findViewById(R.id.digitalClock);
-        tv_weather = (TextView) view.findViewById(R.id.tv_weather);
-        tv_temperature = (TextView) view.findViewById(R.id.tv_temperature);
-        tv_info = (MarqueeTextView) view.findViewById(R.id.tv_info);
-
-        titleHeight = dm.heightPixels / (Host.MAXCELLCOUNT + 2);
-        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, titleHeight));
-        ll_title.addView(view);
-
-        timeHandler = new TimeHandler();
-        timeHandler.sendEmptyMessage(TIMEFLAG);
+        titleLineView = new TitleLineView(AllMachineActivity.this);
+        titleLineView.setTitle("生产看板");
+        ll_title.addView(titleLineView);
     }
 
     private void initCellTitle() {
@@ -182,17 +149,6 @@ public class AllMachineActivity extends AppCompatActivity {
         requestHandler = new RequestHandler();
         requestHandler.sendEmptyMessage(SENDFLAG);
         requestHandler.sendEmptyMessage(SCROLLTIME);
-    }
-
-
-    private void refreshTime() {
-        Calendar c = Calendar.getInstance();
-        int day = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
-        if (digitalClock != null) {
-            digitalClock.setText(String.format("%s:%s", day < 10 ? "0" + String.valueOf(day) : String.valueOf(day)
-                    , minute < 10 ? "0" + String.valueOf(minute) : String.valueOf(minute)));
-        }
     }
 
 
@@ -244,9 +200,6 @@ public class AllMachineActivity extends AppCompatActivity {
     }
 
 
-    private int index = 0;
-
-
     /**
      * 处理list的数据
      *
@@ -256,16 +209,6 @@ public class AllMachineActivity extends AppCompatActivity {
         if (cellList == null && cellList.size() > 0) {
             return;
         }
-        /*if (index % 4 == 1 || index % 4 == 2 || index % 4 == 3) {
-            for (int i = 0; i < index % 4; i++) {
-                cellList.addAll(cellList);
-            }
-        }
-        index++;*/
-
-        /*for (int i = 0; i < 3; i++) {
-            cellList.addAll(cellList);
-        }*/
         specialCardsAdapter.setCellList(cellList);
     }
 
@@ -281,10 +224,10 @@ public class AllMachineActivity extends AppCompatActivity {
                     showDate = showDate + marqueeText.get(i) + "   ";
                 }
                 // 判断现实的文案是否一样
-                if (showDate.equals(tv_info.getText().toString())) {
+                if (showDate.equals(titleLineView.getNoticContent())) {
                     return;
                 }
-                tv_info.setText(showDate);
+                titleLineView.setNoticeContent(showDate);
             }
         }
 
@@ -297,10 +240,6 @@ public class AllMachineActivity extends AppCompatActivity {
         if (requestHandler != null) {
             requestHandler.removeMessages(SENDFLAG);
             requestHandler.removeMessages(SCROLLTIME);
-        }
-
-        if (timeHandler != null) {
-            timeHandler.removeMessages(TIMEFLAG);
         }
     }
 

@@ -23,13 +23,13 @@
             android:src="@drawable/logo" />
 
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="left|center_vertical"
             android:singleLine="true"
-            android:text="@string/raw_title"
             android:textColor="@color/main_white"
             android:textSize="@dimen/title_title_size"
             android:textStyle="bold" />
@@ -115,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="气温："
+                    android:text="天气："
                     android:textColor="@color/main_white"
                     android:textSize="@dimen/title_small_size"
                     android:textStyle="bold" />

@@ -3,18 +3,12 @@ package com.android.tedcoder.material;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.TextClock;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.tedcoder.material.api.Host;
@@ -22,13 +16,10 @@ import com.android.tedcoder.material.api.RawMaterialService;
 import com.android.tedcoder.material.entity.rawmaterial.RawCell;
 import com.android.tedcoder.material.entity.rawmaterial.RawMaterialResBody;
 import com.android.tedcoder.material.gsonfactory.GsonConverterFactory;
-import com.android.tedcoder.material.view.MarqueeTextView;
 import com.android.tedcoder.material.view.RawLineView;
 import com.android.tedcoder.material.view.TitleLineView;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -84,6 +75,7 @@ public class RawMaterialActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_rawmaterial);
         Log.e(TAG, "RawMaterial_onCreate");
 
@@ -98,6 +90,7 @@ public class RawMaterialActivity extends AppCompatActivity {
         ll_bottom = (LinearLayout) findViewById(R.id.ll_bottom);
         ll_content = (LinearLayout) findViewById(R.id.ll_content);
         titleLineView = new TitleLineView(RawMaterialActivity.this);
+        titleLineView.setTitle("原材料库存");
         ll_title.addView(titleLineView);
         ll_content.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, heightpix * 8 / 9));
         ll_bottom.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 18));
@@ -224,7 +217,6 @@ public class RawMaterialActivity extends AppCompatActivity {
                 }
                 // 判断现实的文案是否一样
                 if (showDate.equals(titleLineView.getNoticContent())) {
-                    Log.e(TAG, showDate + "    " + titleLineView.getNoticContent());
                     return;
                 }
                 titleLineView.setNoticeContent(showDate);

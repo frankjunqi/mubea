@@ -25,6 +25,7 @@ public class TitleLineView extends LinearLayout {
 
     private TextClock textClock;
     private TextView digitalClock;
+    private TextView tv_title;
     private TextView tv_weather;
     private TextView tv_temperature;
     private MarqueeTextView tv_info;
@@ -37,7 +38,7 @@ public class TitleLineView extends LinearLayout {
             switch (msg.what) {
                 case TIMEFLAG:
                     refreshTime();
-                    timeHandler.sendEmptyMessageDelayed(TIMEFLAG, 1000);
+                    timeHandler.sendEmptyMessageDelayed(TIMEFLAG, 30000);
                     break;
             }
         }
@@ -53,6 +54,7 @@ public class TitleLineView extends LinearLayout {
         textClock = (TextClock) findViewById(R.id.textClock);
         digitalClock = (TextView) findViewById(R.id.digitalClock);
         tv_weather = (TextView) findViewById(R.id.tv_weather);
+        tv_title = (TextView) findViewById(R.id.tv_title);
         tv_temperature = (TextView) findViewById(R.id.tv_temperature);
         tv_info = (MarqueeTextView) findViewById(R.id.tv_info);
 
@@ -89,6 +91,12 @@ public class TitleLineView extends LinearLayout {
     public void setNoticeContent(String noticeContent) {
         if (tv_info != null) {
             tv_info.setText(noticeContent);
+        }
+    }
+
+    public void setTitle(String titleName){
+        if(tv_title != null){
+            tv_title.setText(titleName);
         }
     }
 
