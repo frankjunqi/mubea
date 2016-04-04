@@ -9,17 +9,19 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/rawmaterial_light"
+        android:background="@drawable/bg_table_title"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:paddingLeft="@dimen/padding_left"
+        android:weightSum="8">
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
             android:text="@string/material_name"
+            android:textColor="@color/title_dark"
             android:textSize="@dimen/title_text_size"
             android:textStyle="bold" />
 
@@ -27,28 +29,47 @@
             android:id="@+id/tv_data_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
             android:text="@string/material_value"
+            android:textColor="@color/title_dark"
             android:textSize="@dimen/title_text_size"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tv_inouttime"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:text="@string/intime_value"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/title_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/rawmaterial_dark"
+        android:background="@color/bg_content_drak"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:paddingLeft="@dimen/padding_left"
+        android:weightSum="8">
 
         <TextView
             android:id="@+id/tv_a01"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
+            android:textColor="@color/title_blue"
             android:textSize="@dimen/middle_text_size"
             android:textStyle="bold" />
 
@@ -56,10 +77,27 @@
             android:id="@+id/tv_data_a01"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
-            android:textSize="@dimen/cell_data_text_size"
-            android:textStyle="italic" />
+            android:textColor="@color/title_green"
+            android:textSize="@dimen/middle_text_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_intime_a01"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
 
     </LinearLayout>
 
@@ -67,16 +105,18 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/rawmaterial_light"
+        android:background="@color/bg_content_light"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:paddingLeft="@dimen/padding_left"
+        android:weightSum="8">
 
         <TextView
             android:id="@+id/tv_a02"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
+            android:textColor="@color/title_blue"
             android:textSize="@dimen/middle_text_size"
             android:textStyle="bold" />
 
@@ -84,27 +124,45 @@
             android:id="@+id/tv_data_a02"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
-            android:textSize="@dimen/cell_data_text_size"
-            android:textStyle="italic" />
+            android:textColor="@color/title_green"
+            android:textSize="@dimen/middle_text_size"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tv_intime_a02"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/rawmaterial_dark"
+        android:background="@color/bg_content_drak"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:paddingLeft="@dimen/padding_left"
+        android:weightSum="8">
 
         <TextView
             android:id="@+id/tv_a03"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
+            android:textColor="@color/title_blue"
             android:textSize="@dimen/middle_text_size"
             android:textStyle="bold" />
 
@@ -112,27 +170,45 @@
             android:id="@+id/tv_data_a03"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
-            android:textSize="@dimen/cell_data_text_size"
-            android:textStyle="italic" />
+            android:textColor="@color/title_green"
+            android:textSize="@dimen/middle_text_size"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tv_intime_a03"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/rawmaterial_light"
+        android:background="@color/bg_content_light"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:paddingLeft="@dimen/padding_left"
+        android:weightSum="8">
 
         <TextView
             android:id="@+id/tv_a04"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
+            android:textColor="@color/title_blue"
             android:textSize="@dimen/middle_text_size"
             android:textStyle="bold" />
 
@@ -140,27 +216,45 @@
             android:id="@+id/tv_data_a04"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
-            android:textSize="@dimen/cell_data_text_size"
-            android:textStyle="italic" />
+            android:textColor="@color/title_green"
+            android:textSize="@dimen/middle_text_size"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tv_intime_a04"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/rawmaterial_dark"
+        android:background="@color/bg_content_drak"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:paddingLeft="@dimen/padding_left"
+        android:weightSum="8">
 
         <TextView
             android:id="@+id/tv_a05"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
+            android:textColor="@color/title_blue"
             android:textSize="@dimen/middle_text_size"
             android:textStyle="bold" />
 
@@ -168,27 +262,45 @@
             android:id="@+id/tv_data_a05"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
-            android:textSize="@dimen/cell_data_text_size"
-            android:textStyle="italic" />
+            android:textColor="@color/title_green"
+            android:textSize="@dimen/middle_text_size"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tv_intime_a05"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/rawmaterial_light"
+        android:background="@color/bg_content_light"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:paddingLeft="@dimen/padding_left"
+        android:weightSum="8">
 
         <TextView
             android:id="@+id/tv_a06"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
+            android:textColor="@color/title_blue"
             android:textSize="@dimen/middle_text_size"
             android:textStyle="bold" />
 
@@ -196,39 +308,74 @@
             android:id="@+id/tv_data_a06"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
-            android:textSize="@dimen/cell_data_text_size"
-            android:textStyle="italic" />
+            android:textColor="@color/title_green"
+            android:textSize="@dimen/middle_text_size"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tv_intime_a06"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/rawmaterial_dark"
+        android:background="@color/bg_content_drak"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:paddingLeft="@dimen/padding_left"
+        android:weightSum="8">
 
         <TextView
             android:id="@+id/tv_a07"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
+            android:textColor="@color/title_blue"
             android:textSize="@dimen/middle_text_size"
             android:textStyle="bold" />
+
 
         <TextView
             android:id="@+id/tv_data_a07"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
-            android:textSize="@dimen/cell_data_text_size"
-            android:textStyle="italic" />
+            android:textColor="@color/title_green"
+            android:textSize="@dimen/middle_text_size"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tv_intime_a07"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
     </LinearLayout>
 
 

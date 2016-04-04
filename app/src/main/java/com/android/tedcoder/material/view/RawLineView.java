@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.android.tedcoder.material.R;
 import com.android.tedcoder.material.entity.rawmaterial.RawCell;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -36,6 +38,15 @@ public class RawLineView extends LinearLayout {
     private TextView tv_data_a06;
     private TextView tv_data_a07;
     private ArrayList<TextView> tv_data_a0s = new ArrayList<TextView>();
+
+    private TextView tv_intime_a01;
+    private TextView tv_intime_a02;
+    private TextView tv_intime_a03;
+    private TextView tv_intime_a04;
+    private TextView tv_intime_a05;
+    private TextView tv_intime_a06;
+    private TextView tv_intime_a07;
+    private ArrayList<TextView> tv_intime_a0s = new ArrayList<>();
 
 
     public RawLineView(Context context) {
@@ -75,6 +86,21 @@ public class RawLineView extends LinearLayout {
         tv_data_a0s.add(tv_data_a05);
         tv_data_a0s.add(tv_data_a06);
         tv_data_a0s.add(tv_data_a07);
+
+        tv_intime_a01 = (TextView) findViewById(R.id.tv_intime_a01);
+        tv_intime_a02 = (TextView) findViewById(R.id.tv_intime_a02);
+        tv_intime_a03 = (TextView) findViewById(R.id.tv_intime_a03);
+        tv_intime_a04 = (TextView) findViewById(R.id.tv_intime_a04);
+        tv_intime_a05 = (TextView) findViewById(R.id.tv_intime_a05);
+        tv_intime_a06 = (TextView) findViewById(R.id.tv_intime_a06);
+        tv_intime_a07 = (TextView) findViewById(R.id.tv_intime_a07);
+        tv_intime_a0s.add(tv_intime_a01);
+        tv_intime_a0s.add(tv_intime_a02);
+        tv_intime_a0s.add(tv_intime_a03);
+        tv_intime_a0s.add(tv_intime_a04);
+        tv_intime_a0s.add(tv_intime_a05);
+        tv_intime_a0s.add(tv_intime_a06);
+        tv_intime_a0s.add(tv_intime_a07);
     }
 
     public void setLineCellData(ArrayList<RawCell> cellList) {
@@ -89,10 +115,11 @@ public class RawLineView extends LinearLayout {
             String inOutTime = cell.InOutTime;
             if (TextUtils.isEmpty(dianmeter)) {
                 tv_data_a0s.get(i).setText("");
+                tv_intime_a0s.get(i).setText("");
             } else {
-                tv_data_a0s.get(i).setText(dianmeter + "\n" + inOutTime);
+                tv_data_a0s.get(i).setText(dianmeter);
+                tv_intime_a0s.get(i).setText(inOutTime);
             }
         }
-
     }
 }

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.android.tedcoder.material.entity.rawmaterial.RawMaterialResBody;
 import com.android.tedcoder.material.gsonfactory.GsonConverterFactory;
 import com.android.tedcoder.material.view.MarqueeTextView;
 import com.android.tedcoder.material.view.RawLineView;
+import com.android.tedcoder.material.view.TitleLineView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,14 +46,11 @@ public class RawMaterialActivity extends AppCompatActivity {
 
     // 发送请求的标志码
     private static final int SENDFLAG = 0x10;
-    private static final int TIMEFLAG = 0x11;
 
     // 系统退出的纪录时间
     private long mExitTime = 0;
 
     private static RequestHandler requestHandler = null;
-
-    private static Handler timeHandler = null;
 
     private class RequestHandler extends Handler {
 
@@ -60,19 +59,6 @@ public class RawMaterialActivity extends AppCompatActivity {
             switch (msg.what) {
                 case SENDFLAG:
                     asyncRequest();
-                    break;
-            }
-        }
-    }
-
-    private class TimeHandler extends Handler {
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case TIMEFLAG:
-                    refreshTime();
-                    timeHandler.sendEmptyMessageDelayed(TIMEFLAG, 1000);
                     break;
             }
         }
@@ -90,12 +76,10 @@ public class RawMaterialActivity extends AppCompatActivity {
 
     // title的容器
     private LinearLayout ll_title;
+    private LinearLayout ll_bottom;
+    private LinearLayout ll_content;
 
-    private TextClock textClock;
-    private TextView digitalClock;
-    private TextView tv_weather;
-    private TextView tv_temperature;
-    private MarqueeTextView tv_info;
+    private TitleLineView titleLineView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,35 +87,24 @@ public class RawMaterialActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rawmaterial);
         Log.e(TAG, "RawMaterial_onCreate");
 
-        initTitleLayout();
+        // 计算高度
+        WindowManager wm = (WindowManager) getApplication()
+                .getSystemService(Context.WINDOW_SERVICE);
+
+        int heightpix = wm.getDefaultDisplay().getHeight();
+        int height = heightpix / 9 - 18;
+
+        ll_title = (LinearLayout) findViewById(R.id.ll_title);
+        ll_bottom = (LinearLayout) findViewById(R.id.ll_bottom);
+        ll_content = (LinearLayout) findViewById(R.id.ll_content);
+        titleLineView = new TitleLineView(RawMaterialActivity.this);
+        ll_title.addView(titleLineView);
+        ll_content.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, heightpix * 8 / 9));
+        ll_bottom.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 18));
+
 
         initContentLayout();
 
-    }
-
-
-    /**
-     * 初始化 title layout
-     */
-    private void initTitleLayout() {
-        ll_title = (LinearLayout) findViewById(R.id.ll_title);
-
-        View view = LayoutInflater.from(this).inflate(R.layout.rawmaterial_title, null);
-        textClock = (TextClock) view.findViewById(R.id.textClock);
-        digitalClock = (TextView) view.findViewById(R.id.digitalClock);
-        tv_weather = (TextView) view.findViewById(R.id.tv_weather);
-        tv_temperature = (TextView) view.findViewById(R.id.tv_temperature);
-        tv_info = (MarqueeTextView) view.findViewById(R.id.tv_info);
-
-        // 计算高度
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int height = dm.heightPixels / 9;
-        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
-        ll_title.addView(view);
-
-        timeHandler = new TimeHandler();
-        timeHandler.sendEmptyMessage(TIMEFLAG);
     }
 
     private void initContentLayout() {
@@ -153,17 +126,6 @@ public class RawMaterialActivity extends AppCompatActivity {
 
         requestHandler = new RequestHandler();
         requestHandler.sendEmptyMessage(SENDFLAG);
-    }
-
-
-    private void refreshTime() {
-        Calendar c = Calendar.getInstance();
-        int day = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
-        if (digitalClock != null) {
-            digitalClock.setText(String.format("%s:%s", day < 10 ? "0" + String.valueOf(day) : String.valueOf(day)
-                    , minute < 10 ? "0" + String.valueOf(minute) : String.valueOf(minute)));
-        }
     }
 
 
@@ -258,41 +220,17 @@ public class RawMaterialActivity extends AppCompatActivity {
             String showDate = "";
             if (marqueeText != null) {
                 for (int i = 0; i < marqueeText.size(); i++) {
-                    showDate = showDate + marqueeText.get(i) + "       ";
+                    showDate = showDate + marqueeText.get(i);
                 }
                 // 判断现实的文案是否一样
-                if (showDate.equals(tv_info.getText().toString())) {
+                if (showDate.equals(titleLineView.getNoticContent())) {
+                    Log.e(TAG, showDate + "    " + titleLineView.getNoticContent());
                     return;
                 }
-                tv_info.setText(showDate);
+                titleLineView.setNoticeContent(showDate);
             }
         }
 
-    }
-
-    /**
-     * Retrofit 同步请求
-     */
-    private void synchroRequest() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // 同步请求处理
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(Host.HOST)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                RawMaterialService service = retrofit.create(RawMaterialService.class);
-                Call<RawMaterialResBody> rawMaterialResBodyCall = service.rawMaterialList("Srv", "VisualPlant.svc", "RawMaterialStockQuery");
-                try {
-                    RawMaterialResBody rawMaterialResBody = rawMaterialResBodyCall.execute().body();
-                    Log.e(TAG, "resbody : --type = %s" + rawMaterialResBody.d.__type);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
     }
 
     @Override
@@ -301,10 +239,6 @@ public class RawMaterialActivity extends AppCompatActivity {
         Log.e(TAG, "RawMaterial_onDestroy");
         if (requestHandler != null) {
             requestHandler.removeMessages(SENDFLAG);
-        }
-
-        if (timeHandler != null) {
-            timeHandler.removeMessages(TIMEFLAG);
         }
     }
 }
