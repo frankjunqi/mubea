@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.tedcoder.material.api.Host;
@@ -82,22 +83,17 @@ public class RawMaterialActivity extends AppCompatActivity {
         // 计算高度
         WindowManager wm = (WindowManager) getApplication()
                 .getSystemService(Context.WINDOW_SERVICE);
-
         int heightpix = wm.getDefaultDisplay().getHeight();
-        int height = heightpix / 9 - 18;
 
         ll_title = (LinearLayout) findViewById(R.id.ll_title);
         ll_bottom = (LinearLayout) findViewById(R.id.ll_bottom);
         ll_content = (LinearLayout) findViewById(R.id.ll_content);
         titleLineView = new TitleLineView(RawMaterialActivity.this);
         titleLineView.setTitle("原材料库存");
-        ll_title.addView(titleLineView);
-        ll_content.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, heightpix * 8 / 9));
+        ll_title.addView(titleLineView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (heightpix - 18) / 9));
         ll_bottom.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 18));
-
-
+        ll_content.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, heightpix - 18 - (heightpix - 18) / 9));
         initContentLayout();
-
     }
 
     private void initContentLayout() {

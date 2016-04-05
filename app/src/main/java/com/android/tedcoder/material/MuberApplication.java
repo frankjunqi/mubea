@@ -13,5 +13,7 @@ public class MuberApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(getApplicationContext());
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(getApplicationContext());
     }
 }

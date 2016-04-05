@@ -63,7 +63,7 @@ public class TitleLineView extends LinearLayout {
                 .getSystemService(Context.WINDOW_SERVICE);
 
         int heightpix = wm.getDefaultDisplay().getHeight();
-        int height = heightpix / 9 - 18;
+        int height = (heightpix - 18) / 9;
         this.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
 
         timeHandler = new TimeHandler();
@@ -94,8 +94,8 @@ public class TitleLineView extends LinearLayout {
         }
     }
 
-    public void setTitle(String titleName){
-        if(tv_title != null){
+    public void setTitle(String titleName) {
+        if (tv_title != null) {
             tv_title.setText(titleName);
         }
     }
