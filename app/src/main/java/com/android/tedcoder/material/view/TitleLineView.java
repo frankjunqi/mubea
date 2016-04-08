@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -28,6 +29,8 @@ public class TitleLineView extends LinearLayout {
     private TextView tv_title;
     private TextView tv_weather;
     private TextView tv_temperature;
+
+    private ImageView iv_logo;
     private MarqueeTextView tv_info;
 
 
@@ -57,6 +60,7 @@ public class TitleLineView extends LinearLayout {
         tv_title = (TextView) findViewById(R.id.tv_title);
         tv_temperature = (TextView) findViewById(R.id.tv_temperature);
         tv_info = (MarqueeTextView) findViewById(R.id.tv_info);
+        iv_logo = (ImageView) findViewById(R.id.iv_logo);
 
         // 计算高度
         WindowManager wm = (WindowManager) getContext()

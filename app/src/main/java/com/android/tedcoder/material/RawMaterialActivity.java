@@ -96,7 +96,7 @@ public class RawMaterialActivity extends AppCompatActivity {
         // 设置bottom的height
         ll_bottom.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 18));
         // 设置content的height
-        ll_content.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, heightpix - 18 - (heightpix - 18) / 9));
+        ll_content.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, heightpix + Host.BOTTOM_HEIGHT - 18 - (heightpix - 18) / 9));
 
         initContentLayout();
     }

@@ -119,7 +119,7 @@ public class AllMachineActivity extends AppCompatActivity {
         titleHeight = (totalHeight - 18) / 9;
         titleCellHeight = titleHeight;
         bottomHeight = 18;
-        contentHeight = totalHeight - titleHeight - titleCellHeight - bottomHeight;
+        contentHeight = totalHeight + Host.BOTTOM_HEIGHT - titleHeight - titleCellHeight - bottomHeight;
 
     }
 

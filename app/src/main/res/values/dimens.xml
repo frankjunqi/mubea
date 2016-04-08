@@ -22,7 +22,9 @@
 
     <!--看板的间隔距离-->
     <dimen name="padding_left">10dp</dimen>
+    <dimen name="text_padding_left">8dp</dimen>
     <dimen name="padding_right">10dp</dimen>
+    <dimen name="notice_icon_margin_left">10dp</dimen>
 
 
     <dimen name="title_title_size">12sp</dimen>

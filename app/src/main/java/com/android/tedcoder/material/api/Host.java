@@ -17,4 +17,7 @@ public class Host {
 
     // 最大的cell的行数
     public static final int MAXCELLCOUNT = 8;
+
+
+    public static int BOTTOM_HEIGHT = 48;
 }
