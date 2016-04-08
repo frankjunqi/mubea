@@ -102,7 +102,7 @@ public class SemiMaterialActivity extends AppCompatActivity {
         ll_bottom = (LinearLayout) findViewById(R.id.ll_bottom);
         ll_content = (LinearLayout) findViewById(R.id.ll_content);
         titleLineView = new TitleLineView(SemiMaterialActivity.this);
-        titleLineView.setTitle("半成品看板");
+        titleLineView.setTitle("半成品库存");
 
         // 计算高度
         WindowManager wm = (WindowManager) getApplication()

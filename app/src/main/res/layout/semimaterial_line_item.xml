@@ -5,90 +5,235 @@
     android:orientation="vertical"
     android:weightSum="10">
 
-    <TextView
-        android:id="@+id/tv_00"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:textSize="@dimen/middle_text_size" />
+        android:background="@drawable/bg_table_title"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_01"
+        <TextView
+            android:id="@+id/tv_00"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/semi_title_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/rawmaterial_dark"
-        android:gravity="center"
-        android:textSize="@dimen/middle_text_size" />
+        android:background="@color/bg_content_drak">
 
-    <TextView
-        android:id="@+id/tv_02"
+        <TextView
+            android:id="@+id/tv_01"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/semi_middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:textSize="@dimen/middle_text_size" />
+        android:background="@color/main_white">
 
-    <TextView
-        android:id="@+id/tv_03"
+        <TextView
+            android:id="@+id/tv_02"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/semi_middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/rawmaterial_dark"
-        android:gravity="center"
-        android:textSize="@dimen/middle_text_size" />
+        android:background="@color/bg_content_drak">
 
-    <TextView
-        android:id="@+id/tv_04"
+        <TextView
+            android:id="@+id/tv_03"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/semi_middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:textSize="@dimen/middle_text_size" />
+        android:background="@color/main_white">
 
-    <TextView
-        android:id="@+id/tv_05"
+        <TextView
+            android:id="@+id/tv_04"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/semi_middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/rawmaterial_dark"
-        android:gravity="center"
-        android:textSize="@dimen/middle_text_size" />
+        android:background="@color/bg_content_drak">
 
-    <TextView
-        android:id="@+id/tv_06"
+        <TextView
+            android:id="@+id/tv_05"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/semi_middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:textSize="@dimen/middle_text_size" />
+        android:background="@color/main_white">
 
-    <TextView
-        android:id="@+id/tv_07"
+        <TextView
+            android:id="@+id/tv_06"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/semi_middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/rawmaterial_dark"
-        android:gravity="center"
-        android:textSize="@dimen/middle_text_size" />
+        android:background="@color/bg_content_drak">
 
-    <TextView
-        android:id="@+id/tv_08"
+        <TextView
+            android:id="@+id/tv_07"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/semi_middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:textSize="@dimen/middle_text_size" />
+        android:background="@color/main_white">
 
-    <TextView
-        android:id="@+id/tv_09"
+        <TextView
+            android:id="@+id/tv_08"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/semi_middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/rawmaterial_dark"
-        android:gravity="center"
-        android:textSize="@dimen/middle_text_size" />
+        android:background="@color/bg_content_drak">
 
+        <TextView
+            android:id="@+id/tv_09"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/title_dark"
+            android:textSize="@dimen/semi_middle_text_size"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/split_table_title" />
+    </RelativeLayout>
 
 </LinearLayout>
