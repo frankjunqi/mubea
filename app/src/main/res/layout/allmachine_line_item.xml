@@ -22,6 +22,7 @@
             android:id="@+id/tv_01"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:drawablePadding="@dimen/machine_padding_left"
             android:layout_weight="1"
             android:background="@color/rawmaterial_dark"
             android:gravity="center"
@@ -32,10 +33,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:drawablePadding="@dimen/machine_padding_left"
             android:gravity="center"
             android:textSize="@dimen/middle_text_size" />
 
-        <FrameLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
@@ -47,12 +49,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
 
+            <TextView
+                android:id="@+id/tv_machine_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
+
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/iv_show_fresco"
                 android:layout_width="@dimen/logo_width"
                 android:layout_height="@dimen/logo_width"
                 android:layout_gravity="center_vertical"
                 android:visibility="invisible"
+                android:layout_centerVertical="true"
                 fresco:failureImage="@color/default_img"
                 fresco:placeholderImage="@color/main_unclick" />
 
@@ -72,7 +82,7 @@
                 android:textSize="@dimen/middle_text_size"
                 android:textStyle="bold" />
 
-        </FrameLayout>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_06"
@@ -106,11 +116,7 @@
                 android:textSize="@dimen/middle_text_size" />
         </LinearLayout>
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/line_color" />
+
 </RelativeLayout>
 
 

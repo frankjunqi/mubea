@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.tedcoder.material.R;
@@ -35,6 +36,9 @@ public class AllMachineView extends LinearLayout {
     private SimpleDraweeView iv_show_fresco;
     private MarqueeTextView tv_03;
     private View orderpercentview;
+
+    private TextView tv_machine_progress;
+
     private TextView tv_06;
     private TextView tv_07;
     private TextView tv_08;
@@ -61,6 +65,7 @@ public class AllMachineView extends LinearLayout {
         iv_show_fresco = (SimpleDraweeView) findViewById(R.id.iv_show_fresco);
         tv_03 = (MarqueeTextView) findViewById(R.id.tv_03);
         orderpercentview = (View) findViewById(R.id.orderpercentview);
+        tv_machine_progress = (TextView) findViewById(R.id.tv_machine_progress);
         tv_06 = (TextView) findViewById(R.id.tv_06);
         tv_07 = (TextView) findViewById(R.id.tv_07);
         tv_08 = (TextView) findViewById(R.id.tv_08);
@@ -118,12 +123,21 @@ public class AllMachineView extends LinearLayout {
         float orderPercent = 0.0f;
         try {
             orderPercent = Float.parseFloat(machineCell.OrderPercent);
+            if (orderPercent >= 1) {
+                orderPercent = 1;
+            }
         } catch (Exception e) {
             orderPercent = 0.0f;
         }
         float orderWidth = width / 3 * orderPercent;
-        orderpercentview.setLayoutParams(new FrameLayout.LayoutParams((int) orderWidth, FrameLayout.LayoutParams.MATCH_PARENT));
+        orderpercentview.setLayoutParams(new RelativeLayout.LayoutParams((int) orderWidth, RelativeLayout.LayoutParams.MATCH_PARENT));
         orderpercentview.setBackgroundResource(R.drawable.blue_shape);
+
+        if (orderPercent == 0) {
+            tv_machine_progress.setText("");
+        } else {
+            tv_machine_progress.setText("已完成" + (orderPercent * 100) + "%");
+        }
 
         tv_06.setText(machineCell == null || TextUtils.isEmpty(machineCell.ProdPlanCount) ? "" : machineCell.ProdPlanCount);
         tv_07.setText(machineCell == null || TextUtils.isEmpty(machineCell.ProdCount) ? "" : machineCell.ProdCount);
