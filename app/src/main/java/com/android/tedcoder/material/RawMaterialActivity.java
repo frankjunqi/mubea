@@ -90,9 +90,14 @@ public class RawMaterialActivity extends AppCompatActivity {
         ll_content = (LinearLayout) findViewById(R.id.ll_content);
         titleLineView = new TitleLineView(RawMaterialActivity.this);
         titleLineView.setTitle("原材料库存");
+
+        // 设置title的height
         ll_title.addView(titleLineView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (heightpix - 18) / 9));
+        // 设置bottom的height
         ll_bottom.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 18));
+        // 设置content的height
         ll_content.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, heightpix - 18 - (heightpix - 18) / 9));
+
         initContentLayout();
     }
 

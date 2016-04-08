@@ -50,6 +50,8 @@ public class AllMachineActivity extends AppCompatActivity {
     private long mExitTime = 0;
     private static RequestHandler requestHandler = null;
 
+    private int visiableIndex = 0;
+
     private class RequestHandler extends Handler {
 
         @Override
@@ -60,8 +62,10 @@ public class AllMachineActivity extends AppCompatActivity {
                     break;
                 case SCROLLTIME:
                     int count = recyclerview.getAdapter().getItemCount();
-                    if (count != 0) {
-                        if (visiableIndex > count) {
+                    if (count == 0) {
+                        // do nothing
+                    } else {
+                        if (visiableIndex >= count) {
                             visiableIndex = 0;
                         }
                         Log.e(TAG, "position = " + visiableIndex % count + "-----count ==" + count + "-----visiableIndex ==" + visiableIndex);
@@ -78,15 +82,17 @@ public class AllMachineActivity extends AppCompatActivity {
     private LinearLayout ll_title;
     private TitleLineView titleLineView;
     private LinearLayout ll_cell_title;
+    private LinearLayout ll_bottom;
 
     // content
     private RecyclerView recyclerview;
     private SpecialCardsAdapter specialCardsAdapter;
-    private int visiableIndex = 0;
 
     private DisplayMetrics dm;
     private int titleHeight = 0;
-    private int totalHeight = 0;
+    private int titleCellHeight = 0;
+    private int contentHeight = 0;
+    private int bottomHeight = 0;
 
 
     @Override
@@ -99,19 +105,46 @@ public class AllMachineActivity extends AppCompatActivity {
         initTitleLayout();
         initCellTitle();
         initRecycleView();
-        initContentLayout();
+        initBottomView();
+        requestHandler = new RequestHandler();
+        requestHandler.sendEmptyMessage(SENDFLAG);
+        requestHandler.sendEmptyMessage(SCROLLTIME);
     }
 
     // 初始化屏幕信息
     private void initDisplay() {
         dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        totalHeight = dm.heightPixels;
+        int totalHeight = dm.heightPixels;
+        titleHeight = (totalHeight - 18) / 9;
+        titleCellHeight = titleHeight;
+        bottomHeight = 18;
+        contentHeight = totalHeight - titleHeight - titleCellHeight - bottomHeight;
+
+    }
+
+    /**
+     * 初始化 title layout
+     */
+    private void initTitleLayout() {
+        ll_title = (LinearLayout) findViewById(R.id.ll_title);
+        titleLineView = new TitleLineView(AllMachineActivity.this);
+        titleLineView.setTitle("生产看板");
+        ll_title.addView(titleLineView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, titleHeight));
+    }
+
+    private void initCellTitle() {
+        ll_cell_title = (LinearLayout) findViewById(R.id.ll_cell_title);
+        AllMachineView allMachineView = new AllMachineView(AllMachineActivity.this, dm.widthPixels);
+        allMachineView.setDefaultTitleCell();
+        allMachineView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, titleCellHeight));
+        ll_cell_title.addView(allMachineView);
     }
 
     // 初始化recycle view
     private void initRecycleView() {
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
+        recyclerview.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, contentHeight));
         // 创建一个线性布局管理器
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -127,34 +160,9 @@ public class AllMachineActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * 初始化 title layout
-     */
-    private void initTitleLayout() {
-        ll_title = (LinearLayout) findViewById(R.id.ll_title);
-        titleLineView = new TitleLineView(AllMachineActivity.this);
-        titleLineView.setTitle("生产看板");
-        ll_title.addView(titleLineView);
-    }
-
-    private void initCellTitle() {
-        ll_cell_title = (LinearLayout) findViewById(R.id.ll_cell_title);
-        AllMachineView allMachineView = new AllMachineView(AllMachineActivity.this, dm.widthPixels);
-        allMachineView.setDefaultTitleCell();
-        allMachineView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, titleHeight));
-        ll_cell_title.addView(allMachineView);
-    }
-
-    private void initContentLayout() {
-        requestHandler = new RequestHandler();
-        requestHandler.sendEmptyMessage(SENDFLAG);
-        requestHandler.sendEmptyMessage(SCROLLTIME);
-    }
-
-
-    public int dip2px(Context context, float dipValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dipValue * scale + 0.5f);// 小数点四舍五入取整
+    private void initBottomView() {
+        ll_bottom = (LinearLayout) findViewById(R.id.ll_bottom);
+        ll_bottom.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, bottomHeight));
     }
 
     @Override
@@ -165,8 +173,6 @@ public class AllMachineActivity extends AppCompatActivity {
         } else {
             this.finish();
         }
-
-
     }
 
     /**
@@ -250,7 +256,7 @@ public class AllMachineActivity extends AppCompatActivity {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             AllMachinePageView view = new AllMachinePageView(AllMachineActivity.this, dm.widthPixels);
-            view.setLayoutParams(new LinearLayout.LayoutParams(dm.widthPixels, totalHeight - titleHeight * 2));
+            view.setLayoutParams(new LinearLayout.LayoutParams(dm.widthPixels, contentHeight));
             return new ViewHolder(view);
         }
 

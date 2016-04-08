@@ -87,6 +87,8 @@ public class SemiMaterialActivity extends AppCompatActivity {
 
     // title的容器
     private LinearLayout ll_title;
+    private LinearLayout ll_bottom;
+    private LinearLayout ll_content;
     private TitleLineView titleLineView = null;
 
     @Override
@@ -95,21 +97,29 @@ public class SemiMaterialActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_semimaterial);
         Log.e(TAG, "Semi_Material_onCreate");
+        // 初始化title
         ll_title = (LinearLayout) findViewById(R.id.ll_title);
+        ll_bottom = (LinearLayout) findViewById(R.id.ll_bottom);
+        ll_content = (LinearLayout) findViewById(R.id.ll_content);
         titleLineView = new TitleLineView(SemiMaterialActivity.this);
         titleLineView.setTitle("半成品看板");
-        ll_title.addView(titleLineView);
+
         // 计算高度
         WindowManager wm = (WindowManager) getApplication()
                 .getSystemService(Context.WINDOW_SERVICE);
 
         int heightpix = wm.getDefaultDisplay().getHeight();
-        int height = heightpix / 9 - 18;
+
+        // 设置title的height
+        ll_title.addView(titleLineView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (heightpix - 18) / 9));
+        // 设置bottom的height
+        ll_bottom.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 18));
+        // 设置content的height
+        ll_content.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, heightpix - 18 - (heightpix - 18) / 9));
 
         initContentLayout();
 
     }
-
 
     private void initContentLayout() {
         ll_0 = (LinearLayout) findViewById(R.id.ll_0);
