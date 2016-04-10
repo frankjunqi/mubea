@@ -149,9 +149,6 @@ public class AllMachineView extends LinearLayout {
             percent = 0.0f;
         }
         tv_08.setText(percent == 0.0f ? "" : String.valueOf(num.format(percent)));
-        /*float percentwidth = (width / 9 * percent);
-        tv_08.setLayoutParams(new LinearLayout.LayoutParams((int) percentwidth, LinearLayout.LayoutParams.MATCH_PARENT));
-        tv_08.setBackgroundResource(R.drawable.blue_shape);*/
     }
 
     /**
@@ -164,7 +161,7 @@ public class AllMachineView extends LinearLayout {
         machineCell.QSState = "质量释放";
         machineCell.CustPN = "订单相关信息";
         machineCell.ProdPlanCount = "计划数量";
-        machineCell.ProdCount = "生成数量";
+        machineCell.ProdCount = "生产数量";
         machineCell.ProdPercent = "完成率";
         tv_00.setText(TextUtils.isEmpty(machineCell.Name) ? "" : machineCell.Name);
         tv_01.setText(TextUtils.isEmpty(machineCell.State) ? "" : machineCell.State);

@@ -22,6 +22,7 @@ import com.android.tedcoder.material.entity.allmachine.AllMachineResBody;
 import com.android.tedcoder.material.entity.allmachine.MachineCell;
 import com.android.tedcoder.material.gsonfactory.GsonConverterFactory;
 import com.android.tedcoder.material.view.AllMachinePageView;
+import com.android.tedcoder.material.view.AllMachineTitle;
 import com.android.tedcoder.material.view.AllMachineView;
 import com.android.tedcoder.material.view.TitleLineView;
 
@@ -135,10 +136,10 @@ public class AllMachineActivity extends AppCompatActivity {
 
     private void initCellTitle() {
         ll_cell_title = (LinearLayout) findViewById(R.id.ll_cell_title);
-        AllMachineView allMachineView = new AllMachineView(AllMachineActivity.this, dm.widthPixels);
-        allMachineView.setDefaultTitleCell();
-        allMachineView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, titleCellHeight));
-        ll_cell_title.addView(allMachineView);
+        AllMachineTitle allMachineTitle = new AllMachineTitle(AllMachineActivity.this, dm.widthPixels);
+        allMachineTitle.setDefaultTitleCell();
+        allMachineTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, titleCellHeight));
+        ll_cell_title.addView(allMachineTitle);
     }
 
     // 初始化recycle view

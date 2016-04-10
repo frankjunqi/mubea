@@ -2,6 +2,7 @@ package com.android.tedcoder.material.view;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -108,7 +109,7 @@ public class SemiLineView extends LinearLayout {
     public void setNumberLine() {
         for (int i = 0; i < tv_as.size(); i++) {
             if (i != 0) {
-                tv_as.get(i).setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.semi_title_text_size));
+                tv_as.get(i).setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.semi_title_text_size));
                 tv_as.get(i).setText(String.valueOf(i));
             }
         }

@@ -23,7 +23,7 @@
     <dimen name="machine_padding_left">10dp</dimen>
     <dimen name="middle_text_size">22sp</dimen>
     <dimen name="semi_middle_text_size">20sp</dimen>
-    <dimen name="semi_title_text_size">26sp</dimen>
+    <dimen name="semi_title_text_size">28sp</dimen>
 
 
     <dimen name="title_title_size">23sp</dimen>
