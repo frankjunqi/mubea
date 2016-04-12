@@ -99,6 +99,15 @@ public class SemiLineView extends LinearLayout {
             String diameter = TextUtils.isEmpty(cell.Diameter) ? "" : cellList.get(i).Diameter;
             String strength = TextUtils.isEmpty(cell.Strength) ? "" : cellList.get(i).Strength;
             tv_as.get(i).setText(diameter + (TextUtils.isEmpty(strength) ? "" : "\n") + strength);
+            if (cell.Is24H) {
+                tv_as.get(i).setBackgroundColor(getResources().getColor(R.color.semi_material));
+            } else {
+                if (i % 2 == 0) {
+                    tv_as.get(i).setBackgroundColor(getResources().getColor(R.color.bg_content_drak));
+                } else {
+                    tv_as.get(i).setBackgroundColor(getResources().getColor(R.color.main_white));
+                }
+            }
         }
 
     }

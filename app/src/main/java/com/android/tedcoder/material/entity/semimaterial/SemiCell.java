@@ -19,4 +19,6 @@ public class SemiCell {
     public String SemiProdID;
     // 强度等级
     public String Strength;
+    // 是否满足24h
+    public boolean Is24H;
 }

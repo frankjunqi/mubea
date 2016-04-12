@@ -36,6 +36,7 @@
     <color name="machine_red">#fff03a3a</color>
     <color name="machine_green">#ff5ac718</color>
     <color name="machine_progress">#ff99d9ed</color>
+    <color name="semi_material">#ff737373</color>
 
 
 </resources>
