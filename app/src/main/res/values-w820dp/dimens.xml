@@ -17,6 +17,7 @@
 
     <dimen name="logo_width">30dp</dimen>
     <dimen name="logo_margin_width">34dp</dimen>
+    <dimen name="logo_margin_left">4dp</dimen>
 
     <!--table title text size-->
     <dimen name="title_text_size">22sp</dimen>

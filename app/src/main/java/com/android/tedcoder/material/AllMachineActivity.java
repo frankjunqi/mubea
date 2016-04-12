@@ -136,7 +136,7 @@ public class AllMachineActivity extends AppCompatActivity {
 
     private void initCellTitle() {
         ll_cell_title = (LinearLayout) findViewById(R.id.ll_cell_title);
-        AllMachineTitle allMachineTitle = new AllMachineTitle(AllMachineActivity.this, dm.widthPixels);
+        AllMachineTitle allMachineTitle = new AllMachineTitle(AllMachineActivity.this);
         allMachineTitle.setDefaultTitleCell();
         allMachineTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, titleCellHeight));
         ll_cell_title.addView(allMachineTitle);

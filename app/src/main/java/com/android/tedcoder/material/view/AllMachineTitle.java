@@ -36,18 +36,10 @@ public class AllMachineTitle extends LinearLayout {
     private TextView tv_06;
     private TextView tv_07;
     private TextView tv_08;
-    private LinearLayout ll_08;
 
-    private int width = 0;
-    private NumberFormat num;
-
-    public AllMachineTitle(Context context, int width) {
+    public AllMachineTitle(Context context) {
         super(context);
         this.mContext = context;
-        this.width = width;
-        num = NumberFormat.getPercentInstance();
-        num.setMaximumIntegerDigits(3);
-        num.setMaximumFractionDigits(2);
         initView();
     }
 
@@ -60,7 +52,6 @@ public class AllMachineTitle extends LinearLayout {
         tv_06 = (TextView) findViewById(R.id.tv_06);
         tv_07 = (TextView) findViewById(R.id.tv_07);
         tv_08 = (TextView) findViewById(R.id.tv_08);
-        ll_08 = (LinearLayout) findViewById(R.id.ll_08);
     }
 
     /**
@@ -71,7 +62,7 @@ public class AllMachineTitle extends LinearLayout {
         machineCell.Name = "设备名";
         machineCell.State = "设备状态";
         machineCell.QSState = "质量释放";
-        machineCell.CustPN = "订单相关信息";
+        machineCell.CustPN = "订单信息";
         machineCell.ProdPlanCount = "计划数量";
         machineCell.ProdCount = "生产数量";
         machineCell.ProdPercent = "完成率";
@@ -82,7 +73,6 @@ public class AllMachineTitle extends LinearLayout {
         tv_06.setText(TextUtils.isEmpty(machineCell.ProdPlanCount) ? "" : machineCell.ProdPlanCount);
         tv_07.setText(TextUtils.isEmpty(machineCell.ProdCount) ? "" : machineCell.ProdCount);
         tv_08.setText(TextUtils.isEmpty(machineCell.ProdPercent) ? "" : machineCell.ProdPercent);
-        ll_08.setGravity(Gravity.CENTER);
         tv_03.setGravity(Gravity.CENTER);
     }
 

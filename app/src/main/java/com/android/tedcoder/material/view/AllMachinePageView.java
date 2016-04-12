@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.android.tedcoder.material.R;
 import com.android.tedcoder.material.api.Host;
 import com.android.tedcoder.material.entity.allmachine.MachineCell;
 
@@ -32,6 +33,11 @@ public class AllMachinePageView extends LinearLayout {
         setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         for (int i = 0; i < Host.MAXCELLCOUNT; i++) {
             AllMachineView allMachineView = new AllMachineView(getContext(), width);
+            if (i % 2 == 0) {
+                allMachineView.setBackgroundColor(getResources().getColor(R.color.bg_content_drak));
+            } else {
+                allMachineView.setBackgroundColor(getResources().getColor(R.color.main_white));
+            }
             addView(allMachineView, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f));
             allMachineViews.add(allMachineView);
         }

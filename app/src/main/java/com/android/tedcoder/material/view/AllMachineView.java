@@ -3,10 +3,7 @@ package com.android.tedcoder.material.view;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,7 +39,6 @@ public class AllMachineView extends LinearLayout {
     private TextView tv_06;
     private TextView tv_07;
     private TextView tv_08;
-    private LinearLayout ll_08;
 
     private int width = 0;
     private NumberFormat num;
@@ -69,7 +65,6 @@ public class AllMachineView extends LinearLayout {
         tv_06 = (TextView) findViewById(R.id.tv_06);
         tv_07 = (TextView) findViewById(R.id.tv_07);
         tv_08 = (TextView) findViewById(R.id.tv_08);
-        ll_08 = (LinearLayout) findViewById(R.id.ll_08);
     }
 
     public void setMachineCellData(MachineCell machineCell) {
@@ -100,8 +95,11 @@ public class AllMachineView extends LinearLayout {
         }
 
         // 图片logo
+        /*if (machineCell != null) {
+            machineCell.CustomerLogo = "svw.png";
+        }*/
         if (machineCell == null || TextUtils.isEmpty(machineCell.CustomerLogo)) {
-            iv_show_fresco.setVisibility(View.INVISIBLE);
+            iv_show_fresco.setVisibility(View.GONE);
         } else {
             iv_show_fresco.setVisibility(View.VISIBLE);
             Uri uri = Uri.parse(Host.HOST + "res/customer/" + machineCell.CustomerLogo);
@@ -130,7 +128,10 @@ public class AllMachineView extends LinearLayout {
             orderPercent = 0.0f;
         }
         float orderWidth = width / 3 * orderPercent;
-        orderpercentview.setLayoutParams(new RelativeLayout.LayoutParams((int) orderWidth, RelativeLayout.LayoutParams.MATCH_PARENT));
+        // float orderWidth = width / 3 * 0.4f;
+        RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams((int) orderWidth, RelativeLayout.LayoutParams.MATCH_PARENT);
+        rl.setMargins(0, 1, 0, 1);
+        orderpercentview.setLayoutParams(rl);
         orderpercentview.setBackgroundResource(R.drawable.blue_shape);
 
         if (orderPercent == 0) {
@@ -150,28 +151,4 @@ public class AllMachineView extends LinearLayout {
         }
         tv_08.setText(percent == 0.0f ? "" : String.valueOf(num.format(percent)));
     }
-
-    /**
-     * 设置标题
-     */
-    public void setDefaultTitleCell() {
-        MachineCell machineCell = new MachineCell();
-        machineCell.Name = "设备名";
-        machineCell.State = "设备状态";
-        machineCell.QSState = "质量释放";
-        machineCell.CustPN = "订单相关信息";
-        machineCell.ProdPlanCount = "计划数量";
-        machineCell.ProdCount = "生产数量";
-        machineCell.ProdPercent = "完成率";
-        tv_00.setText(TextUtils.isEmpty(machineCell.Name) ? "" : machineCell.Name);
-        tv_01.setText(TextUtils.isEmpty(machineCell.State) ? "" : machineCell.State);
-        tv_02.setText(TextUtils.isEmpty(machineCell.QSState) ? "" : machineCell.QSState);
-        tv_03.setText(TextUtils.isEmpty(machineCell.CustPN) ? "" : machineCell.CustPN);
-        tv_06.setText(TextUtils.isEmpty(machineCell.ProdPlanCount) ? "" : machineCell.ProdPlanCount);
-        tv_07.setText(TextUtils.isEmpty(machineCell.ProdCount) ? "" : machineCell.ProdCount);
-        tv_08.setText(TextUtils.isEmpty(machineCell.ProdPercent) ? "" : machineCell.ProdPercent);
-        ll_08.setGravity(Gravity.CENTER);
-        tv_03.setGravity(Gravity.CENTER);
-    }
-
 }

@@ -19,5 +19,5 @@ public class Host {
     public static final int MAXCELLCOUNT = 8;
 
 
-    public static int BOTTOM_HEIGHT = 48;
+    public static int BOTTOM_HEIGHT = 0;
 }

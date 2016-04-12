@@ -7,14 +7,23 @@
     <string name="intime_value">入库时间</string>
     <string name="play_error_message">Impossible to play the video.</string>
     <string name="play_progressive_error_message">Impossible to play the progressive video.</string>
-
-
     <string name="raw_title">原材料库存</string>
-
     <!-- 字符串匹配的锁定屏幕显示日期的格式. MM/dd/yyy-->
     <string name="abbrev_wday_month_day_no_year">yyyy/MM/dd</string>
     <!-- Format for describing the date, for accessibility. -->
     <string name="full_wday_month_day_no_year">EEEE, MMMM d</string>
     <!-- Default clock style. -->
     <string name="default_clock_style">digital</string>
+
+
+    <string name="machine_title_name">设备名</string>
+    <string name="machine_status">设备状态</string>
+    <string name="machine_quailty_out">质量释放</string>
+    <string name="machine_order">订单信息</string>
+    <string name="machine_order_number">计划数量</string>
+    <string name="machine_true_number">生产数量</string>
+    <string name="machine_true_cometrue">完成率</string>
+    <string name="machine_percent">已完成40%</string>
+
+
 </resources>
