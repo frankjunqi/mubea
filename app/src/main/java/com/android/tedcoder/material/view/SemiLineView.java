@@ -102,7 +102,7 @@ public class SemiLineView extends LinearLayout {
             if (cell.Is24H) {
                 tv_as.get(i).setBackgroundColor(getResources().getColor(R.color.semi_material));
             } else {
-                if (i % 2 == 0) {
+                if (i % 2 == 1) {
                     tv_as.get(i).setBackgroundColor(getResources().getColor(R.color.bg_content_drak));
                 } else {
                     tv_as.get(i).setBackgroundColor(getResources().getColor(R.color.main_white));

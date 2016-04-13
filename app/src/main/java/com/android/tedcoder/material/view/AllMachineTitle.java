@@ -1,20 +1,13 @@
 package com.android.tedcoder.material.view;
 
 import android.content.Context;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.tedcoder.material.R;
-import com.android.tedcoder.material.api.Host;
 import com.android.tedcoder.material.entity.allmachine.MachineCell;
-import com.facebook.drawee.view.SimpleDraweeView;
-
-import java.text.NumberFormat;
 
 /**
  * 看板 cell view的显示
