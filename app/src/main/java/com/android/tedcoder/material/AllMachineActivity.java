@@ -109,7 +109,7 @@ public class AllMachineActivity extends AppCompatActivity {
         initBottomView();
         requestHandler = new RequestHandler();
         requestHandler.sendEmptyMessage(SENDFLAG);
-        requestHandler.sendEmptyMessage(SCROLLTIME);
+        // requestHandler.sendEmptyMessage(SCROLLTIME);
     }
 
     // 初始化屏幕信息

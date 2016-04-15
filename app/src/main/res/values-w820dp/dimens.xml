@@ -44,4 +44,13 @@
     <dimen name="big_text_size">22sp</dimen>
     <dimen name="cell_data_text_size">22sp</dimen>
     <dimen name="small_text_size">22sp</dimen>
+
+    <!--生产看板-->
+    <dimen name="machine_title_size">23sp</dimen>
+    <dimen name="machine_content_size">21sp</dimen>
+    <dimen name="machine_percent_content">21sp</dimen>
+    <dimen name="machine_padding_text">6sp</dimen>
+
+
+
 </resources>

@@ -46,7 +46,7 @@
         android:background="@android:color/white"
         android:orientation="horizontal"
         android:visibility="visible"
-        android:weightSum="4">
+        android:weightSum="3">
 
         <Button
             android:id="@+id/btn_rawmaterial"
@@ -87,18 +87,6 @@
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
-        <Button
-            android:id="@+id/btn_nfc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/selector_orange"
-            android:text="..."
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
     </LinearLayout>
 
     <LinearLayout
