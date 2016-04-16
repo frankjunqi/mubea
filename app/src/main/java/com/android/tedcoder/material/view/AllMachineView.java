@@ -137,7 +137,7 @@ public class AllMachineView extends LinearLayout {
         if (orderPercent == 0) {
             tv_machine_progress.setText("");
         } else {
-            tv_machine_progress.setText("已完成" + (orderPercent * 100) + "%");
+            tv_machine_progress.setText("已完成" + String.valueOf(num.format(orderPercent)));
         }
 
         tv_06.setText(machineCell == null || TextUtils.isEmpty(machineCell.ProdPlanCount) ? "" : machineCell.ProdPlanCount);

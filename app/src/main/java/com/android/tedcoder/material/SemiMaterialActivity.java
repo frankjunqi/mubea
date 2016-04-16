@@ -6,15 +6,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.TextClock;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.tedcoder.material.api.Host;
@@ -22,12 +17,10 @@ import com.android.tedcoder.material.api.SemiMaterialService;
 import com.android.tedcoder.material.entity.semimaterial.SemiCell;
 import com.android.tedcoder.material.entity.semimaterial.SemiMaterialResBody;
 import com.android.tedcoder.material.gsonfactory.GsonConverterFactory;
-import com.android.tedcoder.material.view.MarqueeTextView;
 import com.android.tedcoder.material.view.SemiLineView;
 import com.android.tedcoder.material.view.TitleLineView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -72,7 +65,6 @@ public class SemiMaterialActivity extends AppCompatActivity {
     private LinearLayout ll_f;
     private LinearLayout ll_g;
     private LinearLayout ll_h;
-    private LinearLayout ll_i;
 
     private SemiLineView semiLineView_0 = null;
     private SemiLineView semiLineView_a = null;
@@ -83,7 +75,6 @@ public class SemiMaterialActivity extends AppCompatActivity {
     private SemiLineView semiLineView_f = null;
     private SemiLineView semiLineView_g = null;
     private SemiLineView semiLineView_h = null;
-    private SemiLineView semiLineView_i = null;
 
     // title的容器
     private LinearLayout ll_title;
@@ -131,7 +122,6 @@ public class SemiMaterialActivity extends AppCompatActivity {
         ll_f = (LinearLayout) findViewById(R.id.ll_f);
         ll_g = (LinearLayout) findViewById(R.id.ll_g);
         ll_h = (LinearLayout) findViewById(R.id.ll_h);
-        ll_i = (LinearLayout) findViewById(R.id.ll_i);
 
         semiLineView_0 = new SemiLineView(this);
         semiLineView_a = new SemiLineView(this);
@@ -142,7 +132,6 @@ public class SemiMaterialActivity extends AppCompatActivity {
         semiLineView_f = new SemiLineView(this);
         semiLineView_g = new SemiLineView(this);
         semiLineView_h = new SemiLineView(this);
-        semiLineView_i = new SemiLineView(this);
 
 
         ll_0.addView(semiLineView_0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -156,7 +145,6 @@ public class SemiMaterialActivity extends AppCompatActivity {
         ll_f.addView(semiLineView_f, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         ll_g.addView(semiLineView_g, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         ll_h.addView(semiLineView_h, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ll_i.addView(semiLineView_i, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         requestHandler = new RequestHandler();
         requestHandler.sendEmptyMessage(SENDFLAG);
@@ -229,7 +217,6 @@ public class SemiMaterialActivity extends AppCompatActivity {
         ArrayList<SemiCell> cell_f = new ArrayList<SemiCell>();
         ArrayList<SemiCell> cell_g = new ArrayList<SemiCell>();
         ArrayList<SemiCell> cell_h = new ArrayList<SemiCell>();
-        ArrayList<SemiCell> cell_i = new ArrayList<SemiCell>();
 
         for (int i = 0; i < cellList.size(); i++) {
             SemiCell cell = cellList.get(i);
@@ -249,8 +236,6 @@ public class SemiMaterialActivity extends AppCompatActivity {
                 cell_g.add(cell);
             } else if (!TextUtils.isEmpty(cell.LocCode) && cell.LocCode.contains("H")) {
                 cell_h.add(cell);
-            } else if (!TextUtils.isEmpty(cell.LocCode) && cell.LocCode.contains("I")) {
-                cell_i.add(cell);
             }
 
         }
@@ -263,7 +248,6 @@ public class SemiMaterialActivity extends AppCompatActivity {
         semiLineView_f.setLineCellData(cell_f);
         semiLineView_g.setLineCellData(cell_g);
         semiLineView_h.setLineCellData(cell_h);
-        semiLineView_i.setLineCellData(cell_i);
 
     }
 

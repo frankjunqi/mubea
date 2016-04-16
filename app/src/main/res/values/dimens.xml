@@ -36,7 +36,7 @@
     <!--生产看板-->
     <dimen name="machine_title_size">14sp</dimen>
     <dimen name="machine_content_size">14sp</dimen>
-    <dimen name="machine_percent_content">8sp</dimen>
+    <dimen name="machine_percent_content">6sp</dimen>
     <dimen name="machine_padding_text">4sp</dimen>
 
 

@@ -16,8 +16,8 @@ public class Host {
     public static int TIME = 5;
 
     // 最大的cell的行数
-    public static final int MAXCELLCOUNT = 8;
+    public static final int MAXCELLCOUNT = 12;
 
 
-    public static int BOTTOM_HEIGHT = 0;
+    public static int BOTTOM_HEIGHT = 48;
 }
