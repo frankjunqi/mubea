@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String host = getSP(Host.KWYHOST);
         if (TextUtils.isEmpty(host)) {
             et_host.setText(Host.HOST);
-        }else{
+        } else {
             et_host.setText(host);
         }
 
@@ -111,7 +111,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String animatin_time = et_ainimation_time.getText().toString();
         if (!TextUtils.isEmpty(host)) {
             // do  something
-            Host.HOST = host;
+            String saveHost = "http://" + host + "/";
+            Host.HOST = saveHost;
             savaSP(Host.KWYHOST, host);
         }
 

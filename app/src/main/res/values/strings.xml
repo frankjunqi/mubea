@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RawMaterial</string>
+    <string name="app_name">KanBan</string>
 
     <string name="action_settings">Settings</string>
     <string name="material_name">库位</string>
