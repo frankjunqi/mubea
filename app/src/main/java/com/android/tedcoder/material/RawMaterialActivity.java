@@ -1,11 +1,13 @@
 package com.android.tedcoder.material;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -90,7 +92,12 @@ public class RawMaterialActivity extends AppCompatActivity {
         ll_content = (LinearLayout) findViewById(R.id.ll_content);
         titleLineView = new TitleLineView(RawMaterialActivity.this);
         titleLineView.setTitle("原材料库存");
-
+        titleLineView.setLogoClickListen(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RawMaterialActivity.this, SecretActivity.class));
+            }
+        });
         // 设置title的height
         ll_title.addView(titleLineView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (heightpix - 18) / 9));
         // 设置bottom的height

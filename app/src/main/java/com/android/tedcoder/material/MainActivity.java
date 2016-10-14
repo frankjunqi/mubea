@@ -23,9 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText et_ainimation_time;
 
 
-    private Button btn_rawmaterial;
-    private Button btn_semimaterial;
-    private Button btn_allmachine;
+    private Button btn_setting;
 
 
     @Override
@@ -33,14 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn_rawmaterial = (Button) findViewById(R.id.btn_rawmaterial);
-        btn_rawmaterial.setOnClickListener(this);
-
-        btn_semimaterial = (Button) findViewById(R.id.btn_semimaterial);
-        btn_semimaterial.setOnClickListener(this);
-
-        btn_allmachine = (Button) findViewById(R.id.btn_allmachine);
-        btn_allmachine.setOnClickListener(this);
+        btn_setting = (Button) findViewById(R.id.btn_setting);
+        btn_setting.setOnClickListener(this);
 
         et_host = (EditText) findViewById(R.id.et_host);
         et_request_time = (EditText) findViewById(R.id.et_request_time);
@@ -62,24 +54,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_rawmaterial:
+            case R.id.btn_setting:
                 initSetting();
-                Intent raw_material_intent = new Intent(MainActivity.this, RawMaterialActivity.class);
-                startActivity(raw_material_intent);
-                break;
-            case R.id.btn_semimaterial:
-                initSetting();
-                Intent semi_material_intent = new Intent(MainActivity.this, SemiMaterialActivity.class);
-                startActivity(semi_material_intent);
-                break;
-            case R.id.btn_allmachine:
-                initSetting();
-                Intent allmachine_intent = new Intent(MainActivity.this, AllMachineActivity.class);
-                startActivity(allmachine_intent);
-                break;
-            case R.id.btn_fresco:
-                Intent fresco_intent = new Intent(MainActivity.this, FrescoViewActivity.class);
-                startActivity(fresco_intent);
+                this.finish();
                 break;
         }
     }

@@ -1,12 +1,14 @@
 package com.android.tedcoder.material;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -94,7 +96,12 @@ public class SemiMaterialActivity extends AppCompatActivity {
         ll_content = (LinearLayout) findViewById(R.id.ll_content);
         titleLineView = new TitleLineView(SemiMaterialActivity.this);
         titleLineView.setTitle("半成品库存");
-
+        titleLineView.setLogoClickListen(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SemiMaterialActivity.this, SecretActivity.class));
+            }
+        });
         // 计算高度
         WindowManager wm = (WindowManager) getApplication()
                 .getSystemService(Context.WINDOW_SERVICE);

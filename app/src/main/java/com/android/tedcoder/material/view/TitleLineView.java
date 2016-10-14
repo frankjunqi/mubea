@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -110,5 +111,11 @@ public class TitleLineView extends LinearLayout {
             noticeContent = tv_info.getText().toString();
         }
         return noticeContent;
+    }
+
+    public void setLogoClickListen(OnClickListener onClickListener) {
+        if (iv_logo != null) {
+            iv_logo.setOnClickListener(onClickListener);
+        }
     }
 }

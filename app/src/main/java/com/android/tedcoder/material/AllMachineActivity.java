@@ -1,6 +1,7 @@
 package com.android.tedcoder.material;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -131,6 +132,12 @@ public class AllMachineActivity extends AppCompatActivity {
         ll_title = (LinearLayout) findViewById(R.id.ll_title);
         titleLineView = new TitleLineView(AllMachineActivity.this);
         titleLineView.setTitle("生产看板");
+        titleLineView.setLogoClickListen(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AllMachineActivity.this, SecretActivity.class));
+            }
+        });
         ll_title.addView(titleLineView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, titleHeight));
     }
 
