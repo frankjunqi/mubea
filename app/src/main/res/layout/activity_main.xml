@@ -15,28 +15,43 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="16sp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="设置请求地址： http://IP地址:端口/" />
+
     <EditText
         android:id="@+id/et_host"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="192.168.163.11:8077"
+        android:text="http://192.168.163.11:8077/"
         android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="默认发送一次请求间隔：10秒" />
 
     <EditText
         android:id="@+id/et_request_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="默认发送一次请求间隔：10秒"
+        android:text="10s"
         android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="换屏幕时间间隔：5秒" />
 
     <EditText
         android:id="@+id/et_ainimation_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="换屏幕时间间隔：5秒"
+        android:hint="5s"
         android:textSize="14sp" />
 
     <LinearLayout

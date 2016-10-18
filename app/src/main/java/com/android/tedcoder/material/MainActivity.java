@@ -55,8 +55,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_setting:
-                initSetting();
-                this.finish();
+                if (Host.HOST.startsWith("http://") && Host.HOST.endsWith("/")) {
+                    initSetting();
+                    this.finish();
+                } else {
+                    Toast.makeText(this, "地址：http://IP地址:端口/", Toast.LENGTH_LONG).show();
+                }
                 break;
         }
     }
@@ -88,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String animatin_time = et_ainimation_time.getText().toString();
         if (!TextUtils.isEmpty(host)) {
             // do  something
-            String saveHost = "http://" + host + "/";
+            String saveHost = host;
             Host.HOST = saveHost;
             savaSP(Host.KWYHOST, host);
         }
